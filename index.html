@@ -1,0 +1,1391 @@
+<title>VegFit Pro</title>
+<style>
+:root {
+  --bg-primary: #0f1114;
+  --bg-secondary: #1a1d23;
+  --bg-card: #22262e;
+  --bg-card-hover: #2a2f38;
+  --bg-input: #181b20;
+  --border: #2e3340;
+  --border-focus: #4caf50;
+  --text-primary: #e8eaed;
+  --text-secondary: #9aa0a6;
+  --text-muted: #6b7280;
+  --accent: #4caf50;
+  --accent-light: #66bb6a;
+  --accent-dark: #388e3c;
+  --accent-bg: rgba(76,175,80,0.1);
+  --accent-bg-strong: rgba(76,175,80,0.18);
+  --red: #ef5350;
+  --orange: #ffa726;
+  --blue: #42a5f5;
+  --purple: #ab47bc;
+  --yellow: #ffee58;
+  --cyan: #26c6da;
+  --shadow: 0 2px 12px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-xs: 6px;
+  --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Header */
+.header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.5px;
+}
+.logo-icon {
+  width: 36px; height: 36px;
+  background: var(--accent);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+}
+
+/* Navigation */
+nav { display: flex; gap: 2px; }
+nav button {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  white-space: nowrap;
+  font-family: inherit;
+}
+nav button:hover { color: var(--text-primary); background: var(--bg-card); }
+nav button.active {
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
+/* Mobile nav toggle */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-family: inherit;
+}
+
+/* Main */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.section { display: none; animation: fadeIn 0.3s ease; }
+.section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+  transition: var(--transition);
+}
+.card:hover { border-color: rgba(76,175,80,0.3); }
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Grid layouts */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+/* Stat cards */
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  transition: var(--transition);
+}
+.stat-card:hover { border-color: rgba(76,175,80,0.3); transform: translateY(-2px); box-shadow: var(--shadow); }
+.stat-icon { font-size: 1.8rem; margin-bottom: 8px; }
+.stat-value { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+.stat-label { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+
+/* Section headers */
+.section-header {
+  margin-bottom: 24px;
+}
+.section-header h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.section-header p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* Macro bars */
+.macro-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.macro-label {
+  width: 70px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.macro-bar-bg {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-input);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.macro-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+.macro-bar.protein { background: var(--accent); }
+.macro-bar.carbs { background: var(--blue); }
+.macro-bar.fat { background: var(--orange); }
+.macro-val {
+  width: 50px;
+  text-align: right;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Tabs */
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  background: var(--bg-input);
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+}
+.tab-btn {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+  transition: var(--transition);
+  white-space: nowrap;
+  font-family: inherit;
+}
+.tab-btn:hover { color: var(--text-primary); }
+.tab-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+.tab-content { display: none; animation: fadeIn 0.3s ease; }
+.tab-content.active { display: block; }
+
+/* Meal cards */
+.meal-card {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.meal-time {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.meal-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.meal-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+.meal-macros {
+  display: flex;
+  gap: 16px;
+  font-size: 0.8rem;
+}
+.meal-macros span {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.meal-macros .cal { background: rgba(76,175,80,0.15); color: var(--accent-light); }
+.meal-macros .pro { background: rgba(66,165,245,0.15); color: var(--blue); }
+.meal-macros .carb { background: rgba(255,167,38,0.15); color: var(--orange); }
+.meal-macros .fat { background: rgba(171,71,188,0.15); color: var(--purple); }
+
+/* Workout */
+.exercise-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  font-size: 0.9rem;
+}
+.exercise-row:last-child { border-bottom: none; }
+.exercise-header {
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.exercise-name { font-weight: 500; }
+.exercise-detail { color: var(--text-secondary); text-align: center; }
+.workout-note {
+  background: var(--accent-bg);
+  border-left: 3px solid var(--accent);
+  padding: 12px 16px;
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+  margin: 16px 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+.workout-note strong { color: var(--accent-light); }
+
+/* Tables */
+.table-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+th {
+  background: var(--bg-input);
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  position: sticky;
+  top: 0;
+}
+td {
+  padding: 11px 16px;
+  border-top: 1px solid var(--border);
+}
+tr:hover td { background: var(--bg-card-hover); }
+
+/* Forms */
+input, select {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 10px 14px;
+  border-radius: var(--radius-xs);
+  font-size: 0.9rem;
+  width: 100%;
+  transition: var(--transition);
+  font-family: inherit;
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(76,175,80,0.15);
+}
+input::placeholder { color: var(--text-muted); }
+label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.form-group { margin-bottom: 16px; }
+.form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border: none;
+  border-radius: var(--radius-xs);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(76,175,80,0.3); }
+.btn-danger {
+  background: rgba(239,83,80,0.15);
+  color: var(--red);
+  border: 1px solid rgba(239,83,80,0.3);
+}
+.btn-danger:hover { background: rgba(239,83,80,0.25); }
+.btn-sm { padding: 6px 14px; font-size: 0.8rem; }
+
+/* Supplement cards */
+.supp-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: var(--transition);
+}
+.supp-card:hover { border-color: rgba(76,175,80,0.3); }
+.supp-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.supp-icon {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+}
+.supp-name { font-weight: 600; font-size: 1rem; }
+.supp-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.supp-tag {
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.supp-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Chart */
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  margin-top: 16px;
+}
+.chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Summary row */
+.summary-row {
+  display: flex;
+  gap: 16px;
+  background: var(--accent-bg);
+  border: 1px solid rgba(76,175,80,0.2);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.summary-item {
+  text-align: center;
+  flex: 1;
+  min-width: 80px;
+}
+.summary-item .val { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+.summary-item .lbl { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; }
+
+/* Protein badge */
+.protein-badge {
+  display: inline-block;
+  background: var(--accent-bg-strong);
+  color: var(--accent);
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+/* Search bar */
+.search-bar {
+  position: relative;
+  margin-bottom: 16px;
+}
+.search-bar input {
+  padding-left: 40px;
+}
+.search-bar::before {
+  content: '\1F50D';
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  z-index: 1;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.badge-green { background: rgba(76,175,80,0.15); color: var(--accent-light); }
+.badge-blue { background: rgba(66,165,245,0.15); color: var(--blue); }
+.badge-orange { background: rgba(255,167,38,0.15); color: var(--orange); }
+.badge-red { background: rgba(239,83,80,0.15); color: var(--red); }
+.badge-purple { background: rgba(171,71,188,0.15); color: var(--purple); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .header-inner { height: 56px; }
+  nav { display: none; position: absolute; top: 56px; left: 0; right: 0; background: var(--bg-secondary); border-bottom: 1px solid var(--border); flex-direction: column; padding: 8px; z-index: 99; }
+  nav.open { display: flex; }
+  .nav-toggle { display: block; }
+  main { padding: 16px; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .exercise-row { grid-template-columns: 1.5fr 1fr 1fr 1fr; font-size: 0.8rem; }
+  .stat-value { font-size: 1.4rem; }
+  .section-header h2 { font-size: 1.3rem; }
+  .form-row { grid-template-columns: 1fr 1fr; }
+  .summary-row { gap: 8px; padding: 12px; }
+}
+@media (max-width: 480px) {
+  .exercise-row { grid-template-columns: 1fr; gap: 4px; text-align: left; }
+  .exercise-detail { text-align: left; }
+  .exercise-header { display: none; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">&#x1F331;</div>
+      VegFit Pro
+    </div>
+    <button class="nav-toggle" onclick="document.querySelector('nav').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+    <nav id="mainNav">
+      <button class="active" onclick="showSection('dashboard', this)">&#x1F4CA; Dashboard</button>
+      <button onclick="showSection('meals', this)">&#x1F957; Meal Plans</button>
+      <button onclick="showSection('workout', this)">&#x1F4AA; Workouts</button>
+      <button onclick="showSection('tracker', this)">&#x1F4C8; Tracker</button>
+      <button onclick="showSection('foods', this)">&#x1F96C; Foods</button>
+      <button onclick="showSection('supplements', this)">&#x1F48A; Supplements</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- =================== DASHBOARD =================== -->
+<div id="dashboard" class="section active">
+  <div class="section-header">
+    <h2>&#x1F331; Vegetarian Bodybuilder Dashboard</h2>
+    <p>Your personalized fitness overview and nutrition targets</p>
+  </div>
+
+  <div class="grid-4" id="statsGrid">
+    <div class="stat-card">
+      <div class="stat-icon">&#x1F4CF;</div>
+      <div class="stat-value">178<small style="font-size:0.5em">cm</small></div>
+      <div class="stat-label">Height</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">&#x2696;&#xFE0F;</div>
+      <div class="stat-value">80<small style="font-size:0.5em">kg</small></div>
+      <div class="stat-label">Weight</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">&#x1F4CA;</div>
+      <div class="stat-value" id="bmiValue">--</div>
+      <div class="stat-label">BMI</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">&#x1F525;</div>
+      <div class="stat-value" id="bmrValue">--</div>
+      <div class="stat-label">BMR (kcal)</div>
+    </div>
+  </div>
+
+  <div class="grid-3" id="calorieCards"></div>
+
+  <div class="card">
+    <div class="card-title">&#x1F4CA; Macro Breakdown by Goal</div>
+    <div class="grid-3" id="macroBreakdown"></div>
+  </div>
+</div>
+
+<!-- =================== MEAL PLANS =================== -->
+<div id="meals" class="section">
+  <div class="section-header">
+    <h2>&#x1F957; Vegetarian Meal Plans</h2>
+    <p>Complete daily nutrition plans tailored to your goals</p>
+  </div>
+
+  <div class="tab-bar" id="mealTabs">
+    <button class="tab-btn active" onclick="showMealPlan('bulking', this)">&#x1F4AA; Bulking</button>
+    <button class="tab-btn" onclick="showMealPlan('maintenance', this)">&#x2696;&#xFE0F; Maintenance</button>
+    <button class="tab-btn" onclick="showMealPlan('cutting', this)">&#x1F525; Cutting</button>
+  </div>
+
+  <div id="mealPlanContent"></div>
+</div>
+
+<!-- =================== WORKOUT =================== -->
+<div id="workout" class="section">
+  <div class="section-header">
+    <h2>&#x1F4AA; 5-Day Workout Program</h2>
+    <p>Push / Pull / Legs / Upper / Lower split for maximum hypertrophy</p>
+  </div>
+
+  <div class="workout-note">
+    <strong>Progressive Overload:</strong> Increase weight by 2.5% when you can complete all sets at the top of the rep range with good form. Track your lifts and aim to progress every 1-2 weeks.
+  </div>
+
+  <div class="tab-bar" id="workoutTabs">
+    <button class="tab-btn active" onclick="showWorkoutDay(0, this)">Day 1: Push</button>
+    <button class="tab-btn" onclick="showWorkoutDay(1, this)">Day 2: Pull</button>
+    <button class="tab-btn" onclick="showWorkoutDay(2, this)">Day 3: Legs</button>
+    <button class="tab-btn" onclick="showWorkoutDay(3, this)">Day 4: Upper</button>
+    <button class="tab-btn" onclick="showWorkoutDay(4, this)">Day 5: Lower</button>
+  </div>
+
+  <div id="workoutContent"></div>
+
+  <div class="card" style="margin-top:20px">
+    <div class="card-title">&#x1F4A1; Rest Day Recommendations</div>
+    <div class="grid-2">
+      <div>
+        <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:8px"><strong style="color:var(--accent-light)">Days 6-7: Active Recovery</strong></p>
+        <ul style="color:var(--text-secondary);font-size:0.875rem;padding-left:18px;list-style:disc">
+          <li>Light walking or cycling for 20-30 minutes</li>
+          <li>Yoga or mobility work for 15-20 minutes</li>
+          <li>Foam rolling and stretching</li>
+          <li>Focus on sleep quality (7-9 hours)</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:8px"><strong style="color:var(--accent-light)">Recovery Tips</strong></p>
+        <ul style="color:var(--text-secondary);font-size:0.875rem;padding-left:18px;list-style:disc">
+          <li>Consume protein within 2 hours post-workout</li>
+          <li>Stay hydrated: 3-4 liters of water daily</li>
+          <li>Manage stress with meditation or deep breathing</li>
+          <li>Take a deload week every 4-6 weeks</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== PROGRESS TRACKER =================== -->
+<div id="tracker" class="section">
+  <div class="section-header">
+    <h2>&#x1F4C8; Progress Tracker</h2>
+    <p>Log your measurements and track changes over time</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">&#x1F4DD; Log Entry</div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="logDate">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Weight (kg)</label>
+          <input type="number" id="logWeight" step="0.1" placeholder="80.0">
+        </div>
+        <div class="form-group">
+          <label>Chest (cm)</label>
+          <input type="number" id="logChest" step="0.1" placeholder="100">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Waist (cm)</label>
+          <input type="number" id="logWaist" step="0.1" placeholder="82">
+        </div>
+        <div class="form-group">
+          <label>Arms (cm)</label>
+          <input type="number" id="logArms" step="0.1" placeholder="38">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Thighs (cm)</label>
+          <input type="number" id="logThighs" step="0.1" placeholder="58">
+        </div>
+        <div class="form-group" style="display:flex;align-items:flex-end">
+          <button class="btn btn-primary" onclick="saveEntry()" style="width:100%">&#x1F4BE; Save Entry</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#x1F4C9; Weight Trend</div>
+      <div class="chart-container">
+        <canvas id="weightChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="justify-content:space-between">
+      &#x1F4CB; History
+      <button class="btn btn-danger btn-sm" onclick="clearHistory()">&#x1F5D1; Clear All</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Weight (kg)</th>
+            <th>Chest (cm)</th>
+            <th>Waist (cm)</th>
+            <th>Arms (cm)</th>
+            <th>Thighs (cm)</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="historyBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- =================== FOODS =================== -->
+<div id="foods" class="section">
+  <div class="section-header">
+    <h2>&#x1F96C; Protein-Rich Vegetarian Foods</h2>
+    <p>Your go-to reference for high-protein vegetarian foods</p>
+  </div>
+
+  <div class="card">
+    <div class="search-bar">
+      <input type="text" id="foodSearch" placeholder="Search foods..." oninput="filterFoods()">
+    </div>
+    <div class="table-wrap" style="max-height:600px;overflow-y:auto">
+      <table>
+        <thead>
+          <tr>
+            <th style="cursor:pointer" onclick="sortFoods('name')">Food &#x25B2;&#x25BC;</th>
+            <th style="cursor:pointer" onclick="sortFoods('serving')">Serving</th>
+            <th style="cursor:pointer" onclick="sortFoods('calories')">Calories</th>
+            <th style="cursor:pointer" onclick="sortFoods('protein')">Protein (g)</th>
+            <th style="cursor:pointer" onclick="sortFoods('carbs')">Carbs (g)</th>
+            <th style="cursor:pointer" onclick="sortFoods('fat')">Fat (g)</th>
+          </tr>
+        </thead>
+        <tbody id="foodsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- =================== SUPPLEMENTS =================== -->
+<div id="supplements" class="section">
+  <div class="section-header">
+    <h2>&#x1F48A; Supplement Guide</h2>
+    <p>Essential supplements for vegetarian bodybuilders</p>
+  </div>
+
+  <div class="grid-2" id="suppGrid"></div>
+</div>
+</main>
+
+<footer style="text-align:center;padding:32px;color:var(--text-muted);font-size:0.8rem;border-top:1px solid var(--border);margin-top:40px">
+  VegFit Pro &mdash; Vegetarian Bodybuilding Companion &mdash; All data stored locally in your browser
+</footer>
+
+<script>
+/* ========== DATA ========== */
+const USER = { height: 178, weight: 80, age: 28, activityFactor: 1.55 };
+
+// BMI & BMR
+const bmi = (USER.weight / ((USER.height / 100) ** 2)).toFixed(1);
+const bmr = Math.round(10 * USER.weight + 6.25 * USER.height - 5 * USER.age + 5);
+const tdee = Math.round(bmr * USER.activityFactor);
+
+const goals = {
+  bulking: { label: 'Bulking', cal: tdee + 400, pPct: 0.30, cPct: 0.45, fPct: 0.25, color: 'var(--accent)', icon: '\u{1F4AA}' },
+  maintenance: { label: 'Maintenance', cal: tdee, pPct: 0.30, cPct: 0.40, fPct: 0.30, color: 'var(--blue)', icon: '⚖️' },
+  cutting: { label: 'Cutting', cal: tdee - 500, pPct: 0.35, cPct: 0.35, fPct: 0.30, color: 'var(--orange)', icon: '\u{1F525}' }
+};
+
+function macros(g) {
+  const p = Math.round(g.cal * g.pPct / 4);
+  const c = Math.round(g.cal * g.cPct / 4);
+  const f = Math.round(g.cal * g.fPct / 9);
+  return { protein: p, carbs: c, fat: f };
+}
+
+/* Meal Plans */
+const mealPlans = {
+  bulking: {
+    label: 'Bulking Plan', cal: goals.bulking.cal,
+    meals: [
+      { time: 'Breakfast', name: 'Protein Oat Bowl', desc: 'Oats (100g) cooked with whole milk, topped with 1 scoop whey, banana, almonds (30g), and honey', cal: 680, p: 38, c: 82, f: 22 },
+      { time: 'Morning Snack', name: 'Greek Yogurt & Trail Mix', desc: 'Greek yogurt (200g) with mixed nuts (30g), dried cranberries, and chia seeds (1 tbsp)', cal: 420, p: 26, c: 36, f: 18 },
+      { time: 'Lunch', name: 'Paneer Tikka Rice Bowl', desc: 'Paneer tikka (150g), brown rice (200g cooked), raita, mixed greens, and roasted vegetables', cal: 750, p: 42, c: 78, f: 26 },
+      { time: 'Afternoon Snack', name: 'PB & Banana Sandwich', desc: 'Whole wheat bread (2 slices), peanut butter (2 tbsp), banana, and a glass of soy milk', cal: 520, p: 22, c: 62, f: 20 },
+      { time: 'Dinner', name: 'Tofu Stir-Fry with Quinoa', desc: 'Firm tofu (200g) stir-fried with sesame oil, broccoli, bell peppers, quinoa (180g cooked)', cal: 620, p: 40, c: 56, f: 24 },
+      { time: 'Evening Snack', name: 'Cottage Cheese & Seeds', desc: 'Cottage cheese (200g) with hemp seeds (2 tbsp), walnuts, and a drizzle of honey', cal: 380, p: 32, c: 18, f: 20 }
+    ]
+  },
+  maintenance: {
+    label: 'Maintenance Plan', cal: goals.maintenance.cal,
+    meals: [
+      { time: 'Breakfast', name: 'Veggie Egg Scramble', desc: '3 whole eggs scrambled with spinach, tomatoes, mushrooms, whole wheat toast (2 slices)', cal: 450, p: 28, c: 34, f: 22 },
+      { time: 'Morning Snack', name: 'Protein Smoothie', desc: '1 scoop whey protein, banana, spinach, soy milk (250ml), 1 tbsp flaxseed', cal: 320, p: 30, c: 32, f: 8 },
+      { time: 'Lunch', name: 'Chickpea Buddha Bowl', desc: 'Chickpeas (150g), quinoa (150g cooked), roasted sweet potato, tahini dressing, mixed greens', cal: 580, p: 24, c: 72, f: 18 },
+      { time: 'Afternoon Snack', name: 'Edamame & Hummus', desc: 'Edamame (100g shelled) with hummus (3 tbsp) and carrot sticks', cal: 280, p: 18, c: 22, f: 12 },
+      { time: 'Dinner', name: 'Lentil Dal with Rice', desc: 'Red lentil dal (200g cooked) with brown rice (150g cooked), cucumber raita, papadums', cal: 520, p: 26, c: 74, f: 8 },
+      { time: 'Evening Snack', name: 'Casein Shake', desc: 'Casein protein (1 scoop) blended with milk (200ml) and 1 tbsp almond butter', cal: 310, p: 34, c: 14, f: 14 }
+    ]
+  },
+  cutting: {
+    label: 'Cutting Plan', cal: goals.cutting.cal,
+    meals: [
+      { time: 'Breakfast', name: 'Egg White Veggie Omelette', desc: '5 egg whites + 1 whole egg with spinach, mushrooms, bell peppers, and 1 slice whole wheat toast', cal: 280, p: 30, c: 18, f: 8 },
+      { time: 'Morning Snack', name: 'Greek Yogurt & Berries', desc: 'Fat-free Greek yogurt (200g) with mixed berries (100g) and a sprinkle of stevia', cal: 180, p: 22, c: 20, f: 2 },
+      { time: 'Lunch', name: 'Tempeh Salad Bowl', desc: 'Grilled tempeh (150g), mixed greens, cherry tomatoes, cucumber, lemon-tahini dressing (1 tbsp)', cal: 420, p: 32, c: 22, f: 18 },
+      { time: 'Afternoon Snack', name: 'Protein Shake', desc: '1 scoop whey isolate with water and 10 almonds', cal: 200, p: 28, c: 4, f: 8 },
+      { time: 'Dinner', name: 'Seitan & Vegetable Stir-Fry', desc: 'Seitan (150g), zucchini, broccoli, snap peas, soy sauce, served over cauliflower rice', cal: 380, p: 42, c: 18, f: 10 },
+      { time: 'Evening Snack', name: 'Cottage Cheese', desc: 'Low-fat cottage cheese (150g) with cucumber slices and a pinch of black pepper', cal: 130, p: 20, c: 6, f: 2 }
+    ]
+  }
+};
+
+/* Workout Data */
+const workoutDays = [
+  {
+    name: 'Day 1: Push (Chest, Shoulders, Triceps)',
+    warmup: '5 min light cardio + arm circles + band pull-aparts (2x15)',
+    cooldown: 'Chest and shoulder stretches, 3 min deep breathing',
+    exercises: [
+      { name: 'Barbell Bench Press', sets: '4', reps: '6-8', rest: '3 min' },
+      { name: 'Incline Dumbbell Press', sets: '3', reps: '8-10', rest: '2 min' },
+      { name: 'Dumbbell Fly', sets: '3', reps: '10-12', rest: '90 sec' },
+      { name: 'Overhead Press (Barbell)', sets: '4', reps: '6-8', rest: '3 min' },
+      { name: 'Lateral Raises', sets: '3', reps: '12-15', rest: '60 sec' },
+      { name: 'Tricep Dips (Weighted)', sets: '3', reps: '8-10', rest: '2 min' },
+      { name: 'Overhead Tricep Extension', sets: '3', reps: '10-12', rest: '90 sec' },
+      { name: 'Cable Pushdown', sets: '3', reps: '12-15', rest: '60 sec' }
+    ]
+  },
+  {
+    name: 'Day 2: Pull (Back, Biceps, Rear Delts)',
+    warmup: '5 min rowing machine + band pull-aparts (2x15) + cat-cow stretches',
+    cooldown: 'Lat stretch, bicep stretch, foam roll upper back',
+    exercises: [
+      { name: 'Deadlift (Conventional)', sets: '4', reps: '5-6', rest: '3 min' },
+      { name: 'Weighted Pull-Ups', sets: '4', reps: '6-8', rest: '2.5 min' },
+      { name: 'Barbell Bent-Over Row', sets: '3', reps: '8-10', rest: '2 min' },
+      { name: 'Seated Cable Row', sets: '3', reps: '10-12', rest: '90 sec' },
+      { name: 'Face Pulls', sets: '3', reps: '15-20', rest: '60 sec' },
+      { name: 'Barbell Curl', sets: '3', reps: '8-10', rest: '90 sec' },
+      { name: 'Hammer Curls', sets: '3', reps: '10-12', rest: '60 sec' },
+      { name: 'Incline Dumbbell Curl', sets: '2', reps: '12-15', rest: '60 sec' }
+    ]
+  },
+  {
+    name: 'Day 3: Legs (Quads, Hamstrings, Glutes, Calves)',
+    warmup: '5 min cycling + leg swings (20 each) + bodyweight squats (2x15)',
+    cooldown: 'Quad, hamstring, and hip flexor stretches, foam roll IT band',
+    exercises: [
+      { name: 'Barbell Back Squat', sets: '4', reps: '6-8', rest: '3 min' },
+      { name: 'Romanian Deadlift', sets: '3', reps: '8-10', rest: '2.5 min' },
+      { name: 'Leg Press', sets: '3', reps: '10-12', rest: '2 min' },
+      { name: 'Walking Lunges', sets: '3', reps: '12 each', rest: '90 sec' },
+      { name: 'Leg Curl (Lying)', sets: '3', reps: '10-12', rest: '90 sec' },
+      { name: 'Leg Extension', sets: '3', reps: '12-15', rest: '60 sec' },
+      { name: 'Standing Calf Raise', sets: '4', reps: '12-15', rest: '60 sec' },
+      { name: 'Hip Thrust', sets: '3', reps: '10-12', rest: '2 min' }
+    ]
+  },
+  {
+    name: 'Day 4: Upper (Chest, Back, Shoulders, Arms)',
+    warmup: '5 min jump rope + shoulder dislocations with band + push-ups (2x10)',
+    cooldown: 'Full upper body stretch routine, 3 min of controlled breathing',
+    exercises: [
+      { name: 'Incline Barbell Press', sets: '3', reps: '8-10', rest: '2.5 min' },
+      { name: 'T-Bar Row', sets: '3', reps: '8-10', rest: '2 min' },
+      { name: 'Dumbbell Shoulder Press', sets: '3', reps: '8-10', rest: '2 min' },
+      { name: 'Lat Pulldown (Wide Grip)', sets: '3', reps: '10-12', rest: '90 sec' },
+      { name: 'Cable Chest Fly', sets: '3', reps: '12-15', rest: '60 sec' },
+      { name: 'Dumbbell Shrugs', sets: '3', reps: '12-15', rest: '60 sec' },
+      { name: 'EZ-Bar Curl', sets: '3', reps: '10-12', rest: '60 sec' },
+      { name: 'Close-Grip Bench Press', sets: '3', reps: '8-10', rest: '90 sec' }
+    ]
+  },
+  {
+    name: 'Day 5: Lower (Quads, Hamstrings, Glutes, Calves)',
+    warmup: '5 min stair climber + hip circles + glute bridges (2x15)',
+    cooldown: 'Pigeon pose, hamstring stretch, ankle mobility drills',
+    exercises: [
+      { name: 'Front Squat', sets: '4', reps: '6-8', rest: '3 min' },
+      { name: 'Sumo Deadlift', sets: '3', reps: '8-10', rest: '2.5 min' },
+      { name: 'Bulgarian Split Squat', sets: '3', reps: '10 each', rest: '90 sec' },
+      { name: 'Glute-Ham Raise', sets: '3', reps: '8-10', rest: '2 min' },
+      { name: 'Hack Squat', sets: '3', reps: '10-12', rest: '2 min' },
+      { name: 'Seated Leg Curl', sets: '3', reps: '10-12', rest: '90 sec' },
+      { name: 'Seated Calf Raise', sets: '4', reps: '15-20', rest: '60 sec' },
+      { name: 'Cable Pull-Through', sets: '3', reps: '12-15', rest: '60 sec' }
+    ]
+  }
+];
+
+/* Foods Database */
+const foodsData = [
+  { name: 'Paneer', serving: '100g', calories: 265, protein: 18.3, carbs: 1.2, fat: 20.8 },
+  { name: 'Tofu (Firm)', serving: '100g', calories: 144, protein: 17.3, carbs: 2.8, fat: 8.7 },
+  { name: 'Tempeh', serving: '100g', calories: 192, protein: 20.3, carbs: 7.6, fat: 10.8 },
+  { name: 'Red Lentils (cooked)', serving: '100g', calories: 116, protein: 9.0, carbs: 20.1, fat: 0.4 },
+  { name: 'Chickpeas (cooked)', serving: '100g', calories: 164, protein: 8.9, carbs: 27.4, fat: 2.6 },
+  { name: 'Greek Yogurt (plain)', serving: '170g', calories: 100, protein: 17.0, carbs: 6.0, fat: 0.7 },
+  { name: 'Cottage Cheese (2%)', serving: '100g', calories: 98, protein: 11.1, carbs: 3.4, fat: 4.3 },
+  { name: 'Eggs (whole)', serving: '2 large', calories: 156, protein: 12.6, carbs: 1.1, fat: 10.6 },
+  { name: 'Quinoa (cooked)', serving: '100g', calories: 120, protein: 4.4, carbs: 21.3, fat: 1.9 },
+  { name: 'Edamame (shelled)', serving: '100g', calories: 121, protein: 11.9, carbs: 8.6, fat: 5.2 },
+  { name: 'Seitan', serving: '100g', calories: 370, protein: 75.2, carbs: 14.0, fat: 1.9 },
+  { name: 'Whey Protein (isolate)', serving: '1 scoop (30g)', calories: 120, protein: 27.0, carbs: 1.0, fat: 0.5 },
+  { name: 'Peanut Butter', serving: '2 tbsp (32g)', calories: 188, protein: 8.0, carbs: 6.0, fat: 16.0 },
+  { name: 'Almonds', serving: '30g', calories: 173, protein: 6.3, carbs: 5.5, fat: 15.0 },
+  { name: 'Black Beans (cooked)', serving: '100g', calories: 132, protein: 8.9, carbs: 23.7, fat: 0.5 },
+  { name: 'Kidney Beans (cooked)', serving: '100g', calories: 127, protein: 8.7, carbs: 22.8, fat: 0.5 },
+  { name: 'Hemp Seeds', serving: '30g', calories: 166, protein: 9.5, carbs: 2.6, fat: 14.6 },
+  { name: 'Chia Seeds', serving: '2 tbsp (28g)', calories: 138, protein: 4.7, carbs: 12.0, fat: 8.7 },
+  { name: 'Whole Milk', serving: '250ml', calories: 150, protein: 8.0, carbs: 12.0, fat: 8.0 },
+  { name: 'Soy Milk (fortified)', serving: '250ml', calories: 105, protein: 8.0, carbs: 12.0, fat: 3.5 },
+  { name: 'Green Peas (cooked)', serving: '100g', calories: 81, protein: 5.4, carbs: 14.5, fat: 0.4 },
+  { name: 'Nutritional Yeast', serving: '2 tbsp (16g)', calories: 60, protein: 8.0, carbs: 5.0, fat: 0.5 },
+  { name: 'Spirulina', serving: '1 tbsp (7g)', calories: 20, protein: 4.0, carbs: 1.7, fat: 0.5 },
+  { name: 'Oats (dry)', serving: '80g', calories: 303, protein: 10.6, carbs: 54.0, fat: 5.4 },
+  { name: 'Cheddar Cheese', serving: '30g', calories: 120, protein: 7.5, carbs: 0.4, fat: 10.0 },
+  { name: 'Pea Protein Powder', serving: '1 scoop (33g)', calories: 120, protein: 24.0, carbs: 1.0, fat: 2.0 },
+  { name: 'Brown Rice (cooked)', serving: '100g', calories: 112, protein: 2.6, carbs: 23.5, fat: 0.9 },
+  { name: 'Mozzarella Cheese', serving: '30g', calories: 85, protein: 6.3, carbs: 0.7, fat: 6.3 },
+  { name: 'Walnuts', serving: '30g', calories: 196, protein: 4.6, carbs: 4.0, fat: 19.5 },
+  { name: 'Sunflower Seeds', serving: '30g', calories: 175, protein: 6.2, carbs: 5.6, fat: 15.0 }
+];
+
+let foodSortKey = 'protein';
+let foodSortAsc = false;
+
+/* Supplements Data */
+const supplementsData = [
+  {
+    name: 'Creatine Monohydrate', icon: '⚡', iconBg: 'rgba(66,165,245,0.15)',
+    dosage: '5g daily', timing: 'Post-workout or with any meal',
+    tags: [{ text: 'Essential', cls: 'badge-green' }, { text: '5g/day', cls: 'badge-blue' }],
+    desc: 'The most researched supplement in sports nutrition. Improves strength, power output, and muscle recovery. Especially important for vegetarians who get zero creatine from diet. Studies show vegetarians respond even better to creatine supplementation than omnivores.'
+  },
+  {
+    name: 'Vitamin B12', icon: '\u{1F534}', iconBg: 'rgba(239,83,80,0.15)',
+    dosage: '1000-2500 mcg daily (cyanocobalamin or methylcobalamin)', timing: 'Morning with breakfast',
+    tags: [{ text: 'Critical', cls: 'badge-red' }, { text: '1000+ mcg', cls: 'badge-blue' }],
+    desc: 'Essential for nerve function, DNA synthesis, and red blood cell formation. Vegetarians are at high risk of deficiency since B12 is primarily found in animal products. Even with eggs and dairy, supplementation is strongly recommended. Deficiency causes fatigue, weakness, and neurological issues.'
+  },
+  {
+    name: 'Omega-3 (Algae-Based DHA/EPA)', icon: '\u{1F41F}', iconBg: 'rgba(38,198,218,0.15)',
+    dosage: '250-500 mg combined DHA/EPA daily', timing: 'With a fat-containing meal',
+    tags: [{ text: 'Important', cls: 'badge-orange' }, { text: '500mg', cls: 'badge-blue' }],
+    desc: 'Supports cardiovascular health, brain function, and reduces exercise-induced inflammation. Algae-based omega-3 provides DHA and EPA directly, unlike flaxseed oil which only provides ALA (poorly converted to DHA/EPA). Look for algal oil supplements for best bioavailability.'
+  },
+  {
+    name: 'Vitamin D3', icon: '☀️', iconBg: 'rgba(255,238,88,0.15)',
+    dosage: '2000-4000 IU daily', timing: 'Morning with a fat-containing meal',
+    tags: [{ text: 'Important', cls: 'badge-orange' }, { text: '2000-4000 IU', cls: 'badge-blue' }],
+    desc: 'Critical for calcium absorption, bone health, immune function, and testosterone production. Many people are deficient, especially those training indoors. Supports muscle function and recovery. Use D3 (cholecalciferol) from lichen sources for a vegetarian-friendly option.'
+  },
+  {
+    name: 'Iron (if needed)', icon: '\u{1F9F2}', iconBg: 'rgba(239,83,80,0.15)',
+    dosage: '18-27 mg daily (check blood levels first)', timing: 'On empty stomach with vitamin C; away from calcium and tea/coffee',
+    tags: [{ text: 'Test First', cls: 'badge-purple' }, { text: '18-27mg', cls: 'badge-blue' }],
+    desc: 'Plant-based (non-heme) iron is less bioavailable than heme iron from meat. Vegetarians may need 1.8x more iron. Important for oxygen transport and energy. Always test ferritin levels before supplementing, as excess iron is harmful. Pair with vitamin C to boost absorption by up to 6x.'
+  },
+  {
+    name: 'Zinc', icon: '\u{1F6E1}️', iconBg: 'rgba(171,71,188,0.15)',
+    dosage: '15-30 mg daily (zinc picolinate or citrate)', timing: 'With a meal to avoid nausea',
+    tags: [{ text: 'Recommended', cls: 'badge-green' }, { text: '15-30mg', cls: 'badge-blue' }],
+    desc: 'Supports immune function, testosterone production, protein synthesis, and wound healing. Phytates in grains and legumes reduce zinc absorption, so vegetarians often need more. Zinc picolinate has superior bioavailability. Do not exceed 40mg/day to avoid copper depletion.'
+  },
+  {
+    name: 'Whey or Plant Protein Powder', icon: '\u{1F4AA}', iconBg: 'rgba(76,175,80,0.15)',
+    dosage: '1-2 scoops daily (25-50g protein)', timing: 'Post-workout and/or between meals',
+    tags: [{ text: 'Convenient', cls: 'badge-green' }, { text: '25-50g', cls: 'badge-blue' }],
+    desc: 'Helps meet the higher protein requirements of bodybuilding (1.6-2.2g per kg bodyweight). Whey is excellent if you consume dairy; pea + rice protein blend is a great plant-based alternative with complete amino acids. Prioritize whole food protein sources and use powder to fill gaps.'
+  }
+];
+
+
+/* ========== INITIALIZATION ========== */
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('bmiValue').textContent = bmi;
+  document.getElementById('bmrValue').textContent = bmr;
+  renderCalorieCards();
+  renderMacroBreakdown();
+  showMealPlan('bulking', document.querySelector('#mealTabs .tab-btn'));
+  showWorkoutDay(0, document.querySelector('#workoutTabs .tab-btn'));
+  renderFoods();
+  renderSupplements();
+  loadHistory();
+  document.getElementById('logDate').valueAsDate = new Date();
+});
+
+
+/* ========== NAVIGATION ========== */
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelector('nav').classList.remove('open');
+  if (id === 'tracker') setTimeout(drawChart, 50);
+}
+
+
+/* ========== DASHBOARD ========== */
+function renderCalorieCards() {
+  const container = document.getElementById('calorieCards');
+  container.innerHTML = Object.entries(goals).map(([key, g]) => {
+    const m = macros(g);
+    return `<div class="card">
+      <div class="card-title">${g.icon} ${g.label}</div>
+      <div style="text-align:center;margin-bottom:16px">
+        <div style="font-size:2rem;font-weight:700;color:${g.color}">${g.cal}</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary)">calories / day</div>
+      </div>
+      <div class="macro-row">
+        <span class="macro-label">Protein</span>
+        <div class="macro-bar-bg"><div class="macro-bar protein" style="width:${g.pPct*100}%"></div></div>
+        <span class="macro-val">${m.protein}g</span>
+      </div>
+      <div class="macro-row">
+        <span class="macro-label">Carbs</span>
+        <div class="macro-bar-bg"><div class="macro-bar carbs" style="width:${g.cPct*100}%"></div></div>
+        <span class="macro-val">${m.carbs}g</span>
+      </div>
+      <div class="macro-row">
+        <span class="macro-label">Fat</span>
+        <div class="macro-bar-bg"><div class="macro-bar fat" style="width:${g.fPct*100}%"></div></div>
+        <span class="macro-val">${m.fat}g</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderMacroBreakdown() {
+  const container = document.getElementById('macroBreakdown');
+  container.innerHTML = Object.entries(goals).map(([key, g]) => {
+    const m = macros(g);
+    const total = m.protein + m.carbs + m.fat;
+    return `<div style="text-align:center">
+      <div style="font-weight:600;margin-bottom:12px;color:${g.color}">${g.icon} ${g.label}</div>
+      <div style="display:flex;gap:4px;height:12px;border-radius:6px;overflow:hidden;margin-bottom:12px">
+        <div style="flex:${m.protein};background:var(--accent)"></div>
+        <div style="flex:${m.carbs};background:var(--blue)"></div>
+        <div style="flex:${m.fat};background:var(--orange)"></div>
+      </div>
+      <div style="display:flex;justify-content:space-around;font-size:0.8rem">
+        <div><div style="color:var(--accent);font-weight:700">${Math.round(g.pPct*100)}%</div><div style="color:var(--text-muted)">Protein</div></div>
+        <div><div style="color:var(--blue);font-weight:700">${Math.round(g.cPct*100)}%</div><div style="color:var(--text-muted)">Carbs</div></div>
+        <div><div style="color:var(--orange);font-weight:700">${Math.round(g.fPct*100)}%</div><div style="color:var(--text-muted)">Fat</div></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+
+/* ========== MEAL PLANS ========== */
+function showMealPlan(plan, btn) {
+  document.querySelectorAll('#mealTabs .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const p = mealPlans[plan];
+  let totalCal = 0, totalP = 0, totalC = 0, totalF = 0;
+  const mealsHTML = p.meals.map(m => {
+    totalCal += m.cal; totalP += m.p; totalC += m.c; totalF += m.f;
+    return `<div class="meal-card">
+      <div class="meal-time">${m.time}</div>
+      <div class="meal-name">${m.name}</div>
+      <div class="meal-desc">${m.desc}</div>
+      <div class="meal-macros">
+        <span class="cal">${m.cal} kcal</span>
+        <span class="pro">${m.p}g protein</span>
+        <span class="carb">${m.c}g carbs</span>
+        <span class="fat">${m.f}g fat</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('mealPlanContent').innerHTML = `
+    <div class="card">
+      <div class="card-title">${p.label}</div>
+      ${mealsHTML}
+      <div class="summary-row">
+        <div class="summary-item"><div class="val">${totalCal}</div><div class="lbl">Calories</div></div>
+        <div class="summary-item"><div class="val">${totalP}g</div><div class="lbl">Protein</div></div>
+        <div class="summary-item"><div class="val">${totalC}g</div><div class="lbl">Carbs</div></div>
+        <div class="summary-item"><div class="val">${totalF}g</div><div class="lbl">Fat</div></div>
+      </div>
+    </div>`;
+}
+
+
+/* ========== WORKOUT ========== */
+function showWorkoutDay(idx, btn) {
+  document.querySelectorAll('#workoutTabs .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const day = workoutDays[idx];
+  const exercisesHTML = day.exercises.map(e => `
+    <div class="exercise-row">
+      <div class="exercise-name">${e.name}</div>
+      <div class="exercise-detail">${e.sets} sets</div>
+      <div class="exercise-detail">${e.reps} reps</div>
+      <div class="exercise-detail">${e.rest}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('workoutContent').innerHTML = `
+    <div class="card">
+      <div class="card-title">${day.name}</div>
+      <div class="workout-note"><strong>Warm-Up:</strong> ${day.warmup}</div>
+      <div class="exercise-row exercise-header">
+        <div>Exercise</div>
+        <div style="text-align:center">Sets</div>
+        <div style="text-align:center">Reps</div>
+        <div style="text-align:center">Rest</div>
+      </div>
+      ${exercisesHTML}
+      <div class="workout-note" style="margin-top:16px"><strong>Cool-Down:</strong> ${day.cooldown}</div>
+    </div>`;
+}
+
+
+/* ========== PROGRESS TRACKER ========== */
+function getEntries() {
+  try { return JSON.parse(localStorage.getItem('vegfit_entries') || '[]'); }
+  catch { return []; }
+}
+
+function saveEntries(entries) {
+  localStorage.setItem('vegfit_entries', JSON.stringify(entries));
+}
+
+function saveEntry() {
+  const date = document.getElementById('logDate').value;
+  const weight = parseFloat(document.getElementById('logWeight').value);
+  if (!date || isNaN(weight)) { alert('Please enter at least a date and weight.'); return; }
+
+  const entry = {
+    date,
+    weight,
+    chest: parseFloat(document.getElementById('logChest').value) || null,
+    waist: parseFloat(document.getElementById('logWaist').value) || null,
+    arms: parseFloat(document.getElementById('logArms').value) || null,
+    thighs: parseFloat(document.getElementById('logThighs').value) || null
+  };
+
+  const entries = getEntries();
+  const existIdx = entries.findIndex(e => e.date === date);
+  if (existIdx >= 0) entries[existIdx] = entry;
+  else entries.push(entry);
+
+  entries.sort((a, b) => a.date.localeCompare(b.date));
+  saveEntries(entries);
+  loadHistory();
+
+  // Clear inputs except date
+  ['logWeight','logChest','logWaist','logArms','logThighs'].forEach(id => document.getElementById(id).value = '');
+}
+
+function deleteEntry(idx) {
+  const entries = getEntries();
+  entries.splice(idx, 1);
+  saveEntries(entries);
+  loadHistory();
+}
+
+function clearHistory() {
+  if (!confirm('Clear all progress entries?')) return;
+  localStorage.removeItem('vegfit_entries');
+  loadHistory();
+}
+
+function loadHistory() {
+  const entries = getEntries();
+  const tbody = document.getElementById('historyBody');
+
+  if (entries.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:32px">No entries yet. Start tracking your progress above.</td></tr>';
+  } else {
+    tbody.innerHTML = entries.map((e, i) => `
+      <tr>
+        <td>${formatDate(e.date)}</td>
+        <td>${e.weight}</td>
+        <td>${e.chest || '-'}</td>
+        <td>${e.waist || '-'}</td>
+        <td>${e.arms || '-'}</td>
+        <td>${e.thighs || '-'}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="deleteEntry(${i})" title="Delete">&times;</button></td>
+      </tr>
+    `).join('');
+  }
+
+  drawChart();
+}
+
+function formatDate(d) {
+  const parts = d.split('-');
+  return `${parts[2]}/${parts[1]}/${parts[0]}`;
+}
+
+function drawChart() {
+  const canvas = document.getElementById('weightChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const container = canvas.parentElement;
+  const dpr = window.devicePixelRatio || 1;
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  ctx.scale(dpr, dpr);
+
+  const entries = getEntries().filter(e => e.weight);
+  ctx.clearRect(0, 0, w, h);
+
+  // Background
+  ctx.fillStyle = 'rgba(15,17,20,0.5)';
+  ctx.fillRect(0, 0, w, h);
+
+  if (entries.length < 2) {
+    ctx.fillStyle = '#6b7280';
+    ctx.font = '14px -apple-system, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Add at least 2 entries to see the trend', w / 2, h / 2);
+    return;
+  }
+
+  const pad = { top: 20, right: 20, bottom: 40, left: 50 };
+  const cw = w - pad.left - pad.right;
+  const ch = h - pad.top - pad.bottom;
+
+  const weights = entries.map(e => e.weight);
+  const minW = Math.floor(Math.min(...weights) - 1);
+  const maxW = Math.ceil(Math.max(...weights) + 1);
+  const range = maxW - minW || 1;
+
+  // Grid lines
+  ctx.strokeStyle = '#2e3340';
+  ctx.lineWidth = 1;
+  ctx.font = '11px -apple-system, sans-serif';
+  ctx.fillStyle = '#6b7280';
+  ctx.textAlign = 'right';
+
+  const gridSteps = 5;
+  for (let i = 0; i <= gridSteps; i++) {
+    const y = pad.top + ch - (i / gridSteps) * ch;
+    const val = (minW + (i / gridSteps) * range).toFixed(1);
+    ctx.beginPath();
+    ctx.moveTo(pad.left, y);
+    ctx.lineTo(pad.left + cw, y);
+    ctx.stroke();
+    ctx.fillText(val, pad.left - 8, y + 4);
+  }
+
+  // X labels
+  ctx.textAlign = 'center';
+  const labelInterval = Math.max(1, Math.floor(entries.length / 8));
+  entries.forEach((e, i) => {
+    if (i % labelInterval === 0 || i === entries.length - 1) {
+      const x = pad.left + (i / (entries.length - 1)) * cw;
+      ctx.fillText(e.date.substring(5), x, h - pad.bottom + 20);
+    }
+  });
+
+  // Line
+  ctx.beginPath();
+  ctx.strokeStyle = '#4caf50';
+  ctx.lineWidth = 2.5;
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  entries.forEach((e, i) => {
+    const x = pad.left + (i / (entries.length - 1)) * cw;
+    const y = pad.top + ch - ((e.weight - minW) / range) * ch;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  // Area fill
+  const lastX = pad.left + cw;
+  ctx.lineTo(lastX, pad.top + ch);
+  ctx.lineTo(pad.left, pad.top + ch);
+  ctx.closePath();
+  const gradient = ctx.createLinearGradient(0, pad.top, 0, pad.top + ch);
+  gradient.addColorStop(0, 'rgba(76,175,80,0.25)');
+  gradient.addColorStop(1, 'rgba(76,175,80,0)');
+  ctx.fillStyle = gradient;
+  ctx.fill();
+
+  // Points
+  entries.forEach((e, i) => {
+    const x = pad.left + (i / (entries.length - 1)) * cw;
+    const y = pad.top + ch - ((e.weight - minW) / range) * ch;
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#4caf50';
+    ctx.fill();
+    ctx.strokeStyle = '#0f1114';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+}
+
+window.addEventListener('resize', () => drawChart());
+
+
+/* ========== FOODS TABLE ========== */
+function renderFoods(data) {
+  const foods = data || [...foodsData].sort((a, b) => b[foodSortKey] - a[foodSortKey] || a.name.localeCompare(b.name));
+  const tbody = document.getElementById('foodsBody');
+  tbody.innerHTML = foods.map(f => `
+    <tr>
+      <td style="font-weight:500">${f.name}</td>
+      <td style="color:var(--text-secondary)">${f.serving}</td>
+      <td>${f.calories}</td>
+      <td><span class="protein-badge">${f.protein}g</span></td>
+      <td>${f.carbs}g</td>
+      <td>${f.fat}g</td>
+    </tr>
+  `).join('');
+}
+
+function filterFoods() {
+  const q = document.getElementById('foodSearch').value.toLowerCase();
+  const filtered = foodsData.filter(f => f.name.toLowerCase().includes(q));
+  filtered.sort((a, b) => {
+    if (foodSortKey === 'name') return foodSortAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+    return foodSortAsc ? a[foodSortKey] - b[foodSortKey] : b[foodSortKey] - a[foodSortKey];
+  });
+  renderFoods(filtered);
+}
+
+function sortFoods(key) {
+  if (foodSortKey === key) foodSortAsc = !foodSortAsc;
+  else { foodSortKey = key; foodSortAsc = key === 'name'; }
+  filterFoods();
+}
+
+
+/* ========== SUPPLEMENTS ========== */
+function renderSupplements() {
+  const grid = document.getElementById('suppGrid');
+  grid.innerHTML = supplementsData.map(s => `
+    <div class="supp-card">
+      <div class="supp-header">
+        <div class="supp-icon" style="background:${s.iconBg}">${s.icon}</div>
+        <div>
+          <div class="supp-name">${s.name}</div>
+          <div style="font-size:0.8rem;color:var(--text-muted)">${s.dosage}</div>
+        </div>
+      </div>
+      <div class="supp-meta">
+        ${s.tags.map(t => `<span class="badge ${t.cls}">${t.text}</span>`).join('')}
+      </div>
+      <div class="supp-desc">${s.desc}</div>
+      <div style="margin-top:10px;font-size:0.8rem;color:var(--accent)">
+        <strong>Timing:</strong> <span style="color:var(--text-secondary)">${s.timing}</span>
+      </div>
+    </div>
+  `).join('');
+}
+</script>
