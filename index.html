@@ -596,6 +596,7 @@ label {
 .demo-range::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: none; cursor: pointer; }
 .demo-range::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: none; cursor: pointer; }
 .demo-range:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.demo-note { font-size: 0.72rem; color: var(--text-muted); line-height: 1.5; margin-top: 8px; font-style: italic; }
 .demo-legend { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 5px; }
 
 .ex-info { min-width: 0; }
@@ -659,6 +660,60 @@ label {
 @media (max-width: 480px) {
   .ex-toggle { grid-template-columns: 1fr; gap: 4px; padding: 12px 4px; }
 }
+
+/* ===== Equipment mode + Technogym ===== */
+.mode-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+.mode-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.9px; color: var(--text-muted); font-weight: 700; }
+.mode-switch { display: flex; gap: 4px; background: var(--bg-input); padding: 4px; border-radius: var(--radius-sm); }
+.mode-btn {
+  padding: 7px 16px;
+  background: none;
+  border: none;
+  border-radius: var(--radius-xs);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.mode-btn:hover { color: var(--text-primary); }
+.mode-btn.active { background: var(--accent); color: #fff; }
+.mode-btn:focus-visible { outline: 2px solid var(--accent-light); outline-offset: 2px; }
+.mode-hint { font-size: 0.78rem; color: var(--text-muted); flex: 1; min-width: 200px; }
+
+.ex-name-wrap { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ex-name-main { font-weight: 500; }
+.ex-name-sub { font-size: 0.72rem; color: var(--text-muted); }
+
+.tg-block {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+.tg-head { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; margin-bottom: 4px; }
+.tg-machine { font-weight: 700; font-size: 0.92rem; color: var(--blue); }
+.tg-line { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 10px; }
+.tg-row { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 7px; }
+.tg-row:last-child { margin-bottom: 0; }
+.tg-row strong { color: var(--text-primary); font-weight: 600; }
+.badge-same { background: rgba(76,175,80,0.15); color: var(--accent-light); }
+.badge-variation { background: rgba(66,165,245,0.15); color: var(--blue); }
+.badge-substitute { background: rgba(255,167,38,0.15); color: var(--orange); }
 
 /* Responsive */
 @media (max-width: 900px) {
@@ -773,6 +828,15 @@ label {
 
   <div class="workout-note">
     <strong>Progressive Overload:</strong> Increase weight by 2.5% when you can complete all sets at the top of the rep range with good form. Track your lifts and aim to progress every 1-2 weeks.
+  </div>
+
+  <div class="mode-bar">
+    <span class="mode-label">Equipment</span>
+    <div class="mode-switch">
+      <button class="mode-btn active" onclick="setEquipMode('free', this)">Free weights</button>
+      <button class="mode-btn" onclick="setEquipMode('tg', this)">Technogym machines</button>
+    </div>
+    <span class="mode-hint">Switch the program to lead with your Technogym machines. The machine setup notes show in both modes.</span>
   </div>
 
   <div class="tab-bar" id="workoutTabs">
@@ -1271,20 +1335,35 @@ function showMealPlan(plan, btn) {
 /* ========== WORKOUT ========== */
 function showWorkoutDay(idx, btn) {
   document.querySelectorAll('#workoutTabs .tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
+  currentWorkoutDay = idx;
+  demoState.clear();
 
   const day = workoutDays[idx];
-  const exercisesHTML = day.exercises.map(e => `
+  const exercisesHTML = day.exercises.map(e => {
+    const t = technogym[e.name];
+    const useTG = equipMode === 'tg' && t;
+    const title = useTG ? t.machine : e.name;
+    let sub = '';
+    if (useTG) sub = 'Free weight: ' + e.name;
+    else if (t) sub = 'Technogym: ' + t.machine;
+    return `
     <div class="ex-item">
       <button class="ex-toggle" aria-expanded="false" onclick="toggleEx(this)">
-        <span class="exercise-name"><span class="ex-chev">&#9654;</span>${e.name}</span>
+        <span class="exercise-name">
+          <span class="ex-chev">&#9654;</span>
+          <span class="ex-name-wrap">
+            <span class="ex-name-main">${title}</span>
+            ${sub ? `<span class="ex-name-sub">${sub}</span>` : ''}
+          </span>
+        </span>
         <span class="exercise-detail">${e.sets} sets</span>
         <span class="exercise-detail">${e.reps} reps</span>
         <span class="exercise-detail">${e.rest}</span>
       </button>
       <div class="ex-detail" data-ex="${e.name}">${exerciseDetailHTML(e.name)}</div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 
   document.getElementById('workoutContent').innerHTML = `
     <div class="card">
@@ -2921,6 +3000,11 @@ let demoRAF = null;
 const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function exVideoURL(name) {
+  const t = technogym[name];
+  if (equipMode === 'tg' && t) {
+    const base = t.machine.replace(/\s*\([^)]*\)/g, '').trim();
+    return 'https://www.youtube.com/results?search_query=' + encodeURIComponent('Technogym ' + base + ' how to use proper form');
+  }
   return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(name + ' proper form technique');
 }
 
@@ -2989,6 +3073,8 @@ function exerciseDetailHTML(name) {
            <input class="demo-range" type="range" min="0" max="100" value="0" oninput="demoScrub(this)" aria-label="Scrub through the ${name} movement">
          </div>
          <div class="demo-legend"><span>Start</span><span>Finish</span></div>
+         ${equipMode === 'tg' && technogym[name] && technogym[name].swap !== 'same'
+           ? '<div class="demo-note">Animation shows the free-weight movement pattern.</div>' : ''}
        </div>`
     : '';
   if (!g) return `<div class="ex-panel">${demo}</div>`;
@@ -2996,8 +3082,9 @@ function exerciseDetailHTML(name) {
     ${demo}
     <div class="ex-info">
       <div class="ex-cue">${g.cue}</div>
+      ${technogymBlockHTML(name)}
       <div class="ex-chips">
-        <span class="badge badge-green">${g.equipment}</span>
+        <span class="badge badge-green">${equipMode === 'tg' && technogym[name] ? technogym[name].machine : g.equipment}</span>
         ${g.primary.map(m => `<span class="badge badge-blue">${m}</span>`).join('')}
       </div>
       <div class="ex-block"><h4>Setup</h4><p>${g.setup}</p></div>
@@ -3008,6 +3095,363 @@ function exerciseDetailHTML(name) {
         <a class="ex-video" href="${exVideoURL(name)}" target="_blank" rel="noopener">&#9654; Watch video demo</a>
       </div>
     </div>
+  </div>`;
+}
+
+
+const technogym = {
+  "Barbell Bench Press": {
+    machine: "Chest Press",
+    line: "Selection Pro / Biostrength",
+    swap: "variation",
+    setup: "Set the seat so the handles sit level with the lower third of the sternum, roughly mid-chest, not at the collarbone. Adjust the range-of-motion limiter so the handles start just short of full shoulder extension, about a fist off the chest line. Keep the back flat against the pad, feet planted, and drive out without letting the shoulders roll forward at lockout. On Biostrength units select the strength curve and rep tempo before your first working set rather than mid-set.",
+    advantage: "Fixed path and a guided strength curve let you take the last two or three reps to genuine failure without a spotter, which is where most chest hypertrophy stimulus lives.",
+    keepFree: "Keep the barbell bench as your primary heavy press for the strength and stabiliser work, and use the Chest Press as the higher-rep second movement."
+  },
+  "Incline Dumbbell Press": {
+    machine: "Chest Incline",
+    line: "Selection Pro / Element+",
+    swap: "variation",
+    setup: "Set the seat height so the handles line up with the upper chest just below the front delt, not above the shoulder. Backrest stays at the fixed incline angle, lower back in contact with the pad throughout. Use the starting-position lever so the handles begin at a stretched but comfortable shoulder angle, not jammed behind the torso. Press to a soft lockout and keep the elbows tracking around 45 degrees from the ribs.",
+    advantage: "It loads the clavicular chest in a stable groove so you can push closer to failure than dumbbells allow when the shoulders start to fatigue.",
+    keepFree: "Worth keeping incline dumbbells occasionally for the independent-arm stretch, but this machine can carry the bulk of the upper-chest volume."
+  },
+  "Dumbbell Fly": {
+    machine: "Pectoral Machine",
+    line: "Selection Pro / Element+",
+    swap: "variation",
+    setup: "Set the seat so the arm pads or handles sit at armpit height with the elbows level with the shoulder joint. Use the starting-position lever to open the arms into a stretch you can control, not the deepest notch by default. Keep the elbow angle fixed and drive with the upper arm, letting the hands come together in front of the sternum. Sit tall, shoulder blades pinned back and down against the pad.",
+    advantage: "Cam-based resistance keeps tension on the pec at the shortened position where dumbbells give you almost nothing.",
+    keepFree: "No real need to keep the dumbbell version; the machine profile is strictly better for this movement."
+  },
+  "Overhead Press (Barbell)": {
+    machine: "Multipower",
+    line: "Pure Strength / free-weight range",
+    swap: "same",
+    setup: "Set the bench or seat so the bar path runs just in front of the forehead, and set the safety catches at chin height so you can bail out of a failed rep. Feet flat, ribs down, and grip just outside shoulder width. Set the lower bar stop so the bar meets the top of the chest or upper sternum rather than the throat. If pressing standing, stand slightly behind the bar line so the bar clears the head without a hip shove.",
+    advantage: "The guided bar lets you fail safely on a vertical press, which is the main thing that limits how hard people push standing overhead work.",
+    keepFree: "Keep the free barbell press as the main lift; the Multipower version is a heavy accessory or a way to train it on days without a spotter."
+  },
+  "Lateral Raises": {
+    machine: "Lateral Raise",
+    line: "Selection Pro / Element+",
+    swap: "same",
+    setup: "Set the seat so the shoulder joint sits level with the machine cam pivot, this is the single most important adjustment on the unit. Elbows against the pads with the upper arm, not the hands, doing the pushing. Raise until the upper arm is roughly parallel with the floor and stop there rather than shrugging past it. Keep the torso still against the back pad so you are not using a body swing to start the rep.",
+    advantage: "The cam keeps resistance high in the bottom third where dumbbells are nearly weightless, so the medial delt works through a fuller range.",
+    keepFree: "Keep some dumbbell or cable lateral work for the long-length loading, but the machine is the better volume driver."
+  },
+  "Tricep Dips (Weighted)": {
+    machine: "Triceps Press",
+    line: "Selection Pro / Element+",
+    swap: "variation",
+    setup: "Set the seat so the handles sit at roughly lower-chest height and the elbows can start bent past 90 degrees without the shoulder rolling forward. Backrest firm against the upper back, torso upright. Press down and out to a soft lockout, holding the end position briefly before returning under control. If the unit has a range limiter, set it so the stretch position stops short of shoulder discomfort.",
+    advantage: "Loads the triceps directly without needing to stabilise bodyweight, so you can add small increments and reach failure without the shoulder taking the brunt.",
+    keepFree: "Weighted dips are still worth keeping as a heavy compound if your shoulders tolerate them; use the machine for higher-rep work."
+  },
+  "Overhead Tricep Extension": {
+    machine: "Dual Adjustable Pulley, rope overhead extension",
+    line: "Selection Pro cable station / Kinesis",
+    swap: "same",
+    setup: "Set both pulley heads low, at roughly hip height, and face away from the column with a split stance. Take the rope overhead, elbows pointing forward and tucked in near the ears, and let the hands drop behind the head into a deep stretch. Extend without letting the elbows flare wide or drift down toward the chest. Set the cable weight so the last few reps slow down but the elbow position holds.",
+    advantage: "Constant cable tension keeps the long head loaded in the fully stretched overhead position, which a dumbbell loses as it rotates over the top.",
+    keepFree: "The cable version is the better default here; keep the dumbbell version only if the cable stations are always occupied."
+  },
+  "Cable Pushdown": {
+    machine: "Dual Adjustable Pulley, high pulley pushdown",
+    line: "Selection Pro cable station",
+    swap: "same",
+    setup: "Set the pulley head at or just above head height and stand a half step back so the cable line pulls the elbows slightly forward at the top. Elbows pinned to the ribs, torso leaned forward maybe 10 degrees, and no rocking. Push to full extension and squeeze briefly, then let the forearm return until the elbow is fully flexed. Swap between rope and straight bar across blocks to vary the wrist position.",
+    advantage: "Smooth constant resistance and easy micro-loading make this the cleanest way to accumulate high-rep triceps volume.",
+    keepFree: "This is already the cable version, so no free-weight equivalent is needed."
+  },
+  "Deadlift (Conventional)": {
+    machine: "Lower Back plus Leg Press, or Multipower rack pulls",
+    line: "Selection Pro plus Pure Strength / free-weight range",
+    swap: "substitute",
+    setup: "No machine reproduces a conventional deadlift, so split it. On the Lower Back machine set the pivot in line with the hip joint and the pad across the upper back, extending from a rounded start to a straight torso without hyperextending. On the Leg Press set the footplate mid-height with feet shoulder width for the quad and glute load. If you want a loaded pull, use the Multipower for rack pulls with the bar set just below the knee and safeties one notch lower.",
+    advantage: "The machine combination lets you load the posterior chain hard without the systemic fatigue and technical breakdown a heavy deadlift brings.",
+    keepFree: "Keep the conventional deadlift as your primary pull; these are accessories, not a replacement."
+  },
+  "Weighted Pull-Ups": {
+    machine: "Vertical Traction (Selection Pro)",
+    line: "Selection Pro / Biostrength",
+    swap: "variation",
+    setup: "Set the thigh pad down firmly enough that your hips cannot lift on heavy reps, but not so tight that it pinches. Grip wide with the hands outside shoulder width and start with the arms fully extended and the shoulder blades allowed to rise. Pull the handles toward the upper chest by driving the elbows down and back, chest up, slight backward torso lean of about 10 degrees. Do not lean back past that or it turns into a row.",
+    advantage: "The thigh pad and adjustable stack let you train to failure and load progressively in small steps, which is hard to do with a belt and plates.",
+    keepFree: "Keep weighted pull-ups as the heavy strength expression; Vertical Traction is where you add the extra back volume."
+  },
+  "Barbell Bent-Over Row": {
+    machine: "Low Row",
+    line: "Selection Pro / Element+",
+    swap: "variation",
+    setup: "Set the chest pad so the top edge sits just below the collarbone and your torso is supported without your ribs being crushed. Seat height should put the handles level with the lower ribs or upper abdomen. Start with the arms extended and the shoulder blades protracted, then row by pulling the elbows past the torso and retracting the scapulae. Keep the chest in contact with the pad the whole set so you cannot cheat with hip extension.",
+    advantage: "The chest support removes the lower back as the limiting factor, so the lats and mid-back get the full stimulus and you can push closer to failure.",
+    keepFree: "Keep the barbell row if you want the trunk and hip involvement, but the supported row is the better pure back builder."
+  },
+  "Seated Cable Row": {
+    machine: "Low Row",
+    line: "Selection Pro / Element+",
+    swap: "same",
+    setup: "Chest pad set so you can reach full arm extension without your shoulders being yanked forward off the pad. Seat height puts the handles at lower-rib level for a mid-back bias, slightly lower for more lat. Pull with a neutral grip, elbows brushing past the ribs, and pause a beat at full contraction. Let the eccentric take about twice as long as the pull.",
+    advantage: "Fixed torso position means every rep has the same line of pull, so progression is measurable rather than a matter of how much you leaned.",
+    keepFree: "The cable version and this machine are near-identical; use whichever is free."
+  },
+  "Face Pulls": {
+    machine: "Kinesis or Dual Adjustable Pulley with rope",
+    line: "Kinesis",
+    swap: "same",
+    setup: "Set the pulley or Kinesis cable at roughly upper-chest to eye height and step back until the cable is under tension at full arm extension. Pull the rope toward the forehead with the hands finishing wide and high, elbows above shoulder height. Think about pulling the rope apart at the end rather than just backward. Use a light load and stop when the traps start taking over from the rear delts.",
+    advantage: "Kinesis gives a smooth three-dimensional cable path so you can find the exact angle where the rear delt and mid-trap work rather than the lats.",
+    keepFree: "No free-weight version worth keeping; cable is the correct tool for this one."
+  },
+  "Barbell Curl": {
+    machine: "Arm Curl",
+    line: "Selection Pro / Biostrength",
+    swap: "variation",
+    setup: "Set the seat so the elbows rest on the pad in line with the machine pivot and the armpits sit near the top edge of the pad without you sliding forward. Grip the handles with the wrists neutral and the shoulders down. Curl to full flexion and control the return until the elbow is straight but not locked hard. If the pad angle is adjustable, a steeper angle biases the stretched position.",
+    advantage: "The pad locks the shoulder out of the movement so the biceps cannot offload the last reps into a body swing.",
+    keepFree: "Keep barbell curls for the heavier loading, but the machine handles the failure sets more safely."
+  },
+  "Hammer Curls": {
+    machine: "Dual Adjustable Pulley, rope hammer curl",
+    line: "Selection Pro cable station / Kinesis",
+    swap: "variation",
+    setup: "Set both pulleys to the lowest position and stand upright with a rope in each hand or a single rope held at both ends. Elbows tucked to the ribs, neutral grip, thumbs up throughout. Curl to the shoulder without letting the elbows drift forward, then lower slowly to a full stretch. Step back far enough that the cable stays under load at the bottom.",
+    advantage: "Constant cable tension keeps the brachialis and brachioradialis loaded at the bottom, where dumbbells go slack.",
+    keepFree: "Dumbbell hammers are perfectly fine and easier to load heavy, so keep them in rotation."
+  },
+  "Incline Dumbbell Curl": {
+    machine: "Adjustable incline bench with dumbbells, or Dual Adjustable Pulley behind the body",
+    line: "Pure Strength / free-weight range",
+    swap: "same",
+    setup: "Set the adjustable bench to roughly 55 to 65 degrees so the upper arm hangs behind the torso line. Sit back with the head and shoulders in contact with the pad, arms hanging straight down. Curl without letting the shoulder swing forward, and lower until the elbow is fully straight. If using cables, set the pulleys low and stand a step in front of the column to reproduce the same stretched arm position.",
+    advantage: "There is no dedicated Technogym machine that puts the biceps in this lengthened position, so the bench or a behind-the-body cable line remains the correct choice.",
+    keepFree: "Keep this as a free-weight or cable movement; a seated Arm Curl machine does not cover the same stretch."
+  },
+  "Barbell Back Squat": {
+    machine: "Multipower",
+    line: "Pure Strength / free-weight range",
+    swap: "same",
+    setup: "Set the bar height so you can unrack with a small knee bend, not a calf raise. Set the safety catches a couple of inches below your deepest squat position. Feet slightly ahead of the bar line so the fixed vertical path matches your hip and knee angles, then adjust forward or back until the descent feels vertical rather than fighting the rails. Brace, descend to your usable depth, and drive up without letting the hips shoot back.",
+    advantage: "The fixed path and catches mean you can take a squat set to actual failure and let go, which is not realistic under a free barbell alone.",
+    keepFree: "Keep the free barbell squat as the primary lift; the Multipower is for failure sets and higher-rep work where a bailout matters."
+  },
+  "Romanian Deadlift": {
+    machine: "Prone Leg Curl plus Lower Back, or Multipower RDL",
+    line: "Selection Pro plus free-weight range",
+    swap: "variation",
+    setup: "For the Multipower version set the bar to mid-thigh, feet flat under the hips, and set the safeties just below your usual bottom position. Push the hips back, keep the bar close to the legs, and stop when the hamstrings reach tension rather than chasing the floor. On the Prone Leg Curl set the knee joint in line with the cam pivot and the ankle pad just above the heel. Use the Lower Back machine with the hip pivot aligned if you want the erector work separately.",
+    advantage: "The fixed bar path removes balance as a variable so you can focus load on the hamstring stretch rather than on staying over mid-foot.",
+    keepFree: "Keep the free-barbell RDL as the main hinge; the fixed bar path can feel restrictive at heavy loads for taller lifters."
+  },
+  "Leg Press": {
+    machine: "Leg Press",
+    line: "Selection Pro / Pure Strength",
+    swap: "same",
+    setup: "Set the backrest so your hips stay in the seat at the deepest point with no lower-back rounding. Feet shoulder width, mid-height on the plate for a balanced quad and glute split, higher for more posterior chain. Set the range limiter so you stop just before the pelvis tucks. Press without locking the knees hard at the top and keep the heels flat throughout.",
+    advantage: "Loads the quads heavily with no spinal compression and a safe failure point, so it carries volume a squat cannot.",
+    keepFree: "This is already the machine version; no free-weight equivalent needed."
+  },
+  "Walking Lunges": {
+    machine: "Multipower split squat, or dumbbell walking lunges in the free-weight area",
+    line: "Pure Strength / free-weight range",
+    swap: "variation",
+    setup: "For the Multipower version set the bar at upper-back height and place the rear foot on a low bench or the floor a stride behind. Set safeties just below the bottom of your range. Keep the front shin roughly vertical for a glute bias or let the knee travel forward for more quad. Complete all reps on one leg before switching rather than alternating.",
+    advantage: "The fixed bar path removes the balance demand so the working leg reaches failure before your stability does.",
+    keepFree: "Keep dumbbell walking lunges if you want the coordination and conditioning element; the machine version is purely a strength stimulus."
+  },
+  "Leg Curl (Lying)": {
+    machine: "Prone Leg Curl",
+    line: "Selection Pro / Element+",
+    swap: "same",
+    setup: "Lie face down and set the machine so the knee joint sits exactly at the cam pivot, with the kneecap just past the edge of the pad. Ankle pad sits on the Achilles just above the heel, not on the calf. Hold the handles and keep the hips pressed into the pad so they do not lift as you curl. Curl fully, pause briefly, and lower slowly to a straight but unlocked knee.",
+    advantage: "The cam matches the hamstring strength curve through knee flexion, which no free-weight movement does.",
+    keepFree: "No free-weight substitute needed; this is the correct tool."
+  },
+  "Leg Extension": {
+    machine: "Leg Extension",
+    line: "Selection Pro / Biostrength",
+    swap: "same",
+    setup: "Set the seat depth so the back of the knee is against the seat edge and the knee joint is aligned with the machine pivot. Shin pad sits just above the ankle, not on the foot. Set the starting range so the knees begin at a comfortable deep flexion rather than the default notch. Extend to full lockout, pause a beat, and lower under control.",
+    advantage: "Isolates the quads including the rectus femoris with a matched strength curve and lets you train to failure safely.",
+    keepFree: "No free-weight equivalent; keep as is."
+  },
+  "Standing Calf Raise": {
+    machine: "Standing Calf Raise machine, or Multipower calf raise from a step",
+    line: "Selection Pro / free-weight range",
+    swap: "same",
+    setup: "Set the shoulder pads so you stand tall with a slight knee bend and the balls of the feet on the edge of the platform. Let the heels drop as far below the platform as the ankle allows for a full stretch. Rise onto the toes fully and pause for a count at the top. If using the Multipower, set the bar on the traps with a step under the feet and safeties set low enough to clear the full range.",
+    advantage: "Supports the load through the shoulders so the calf, not your grip or balance, is the limiting factor across long high-rep sets.",
+    keepFree: "No need for a separate free-weight version once the range of motion is full."
+  },
+  "Hip Thrust": {
+    machine: "Glute machine, or Multipower hip thrust with a bench",
+    line: "Selection Pro / free-weight range",
+    swap: "variation",
+    setup: "On the Glute machine set the support pad at hip height and the foot plate so the working leg drives through a flat foot with the knee near 90 degrees at lockout. Keep the ribs down and finish with the hip fully extended rather than arching the lower back. For the Multipower version set a bench across the rails, bar at hip crease with a pad, and safeties set below the bottom position. Feet placed so the shins are vertical at the top.",
+    advantage: "The Glute machine gives you unilateral hip extension with a clean setup, and the Multipower version removes the awkward barbell rollout from the free-weight version.",
+    keepFree: "Keep the barbell hip thrust if it is loading well for you; the machines are convenience and unilateral options rather than upgrades."
+  },
+  "Incline Barbell Press": {
+    machine: "Chest Incline, or Multipower incline press",
+    line: "Selection Pro / free-weight range",
+    swap: "variation",
+    setup: "On Chest Incline set the seat so the handles are level with the upper chest just below the front delt. On the Multipower set an adjustable bench to about 30 degrees and position it so the fixed bar path meets the upper chest, not the throat, with safeties one notch below chest level. Shoulder blades retracted against the pad and feet planted. Press to a soft lockout, control the descent.",
+    advantage: "Both options let you go to failure on an incline press without a spotter, and the Chest Incline machine holds tension more evenly through the range.",
+    keepFree: "Keep the free barbell incline as your heavy press if it is a main lift; otherwise the machine covers it well."
+  },
+  "T-Bar Row": {
+    machine: "Low Row, or plate-loaded row",
+    line: "Selection Pro / Pure Strength",
+    swap: "variation",
+    setup: "On Low Row set the chest pad so the upper chest is supported and the seat so the handles arrive at lower-rib height with a neutral grip, which is the closest match to a T-bar line of pull. Start with the arms fully extended and the scapulae protracted. Drive the elbows back past the torso and hold the contraction. On a Pure Strength plate-loaded row, load a weight you can control for the full range rather than partials.",
+    advantage: "Chest support removes the lower back and hip fatigue that usually ends a T-bar set before the back is done.",
+    keepFree: "Keep the T-bar if you like the loading, but a chest-supported row is a cleaner back stimulus."
+  },
+  "Dumbbell Shoulder Press": {
+    machine: "Shoulder Press",
+    line: "Selection Pro / Biostrength",
+    swap: "variation",
+    setup: "Set the seat so the handles start at roughly ear or upper-shoulder height with the elbows just below shoulder level. Back flat against the pad with the ribs down and no lower-back arch. Use the range limiter so you do not start from a position that pinches the shoulder. Press to a soft lockout without shrugging, and lower under control.",
+    advantage: "Removes the balance and shoulder-stability demand so the delts fail before your coordination does, and lets you load in small increments.",
+    keepFree: "Keep dumbbell pressing for the independent-arm work and the stability benefit; use the machine for the volume sets."
+  },
+  "Lat Pulldown (Wide Grip)": {
+    machine: "Vertical Traction (Selection Pro)",
+    line: "Selection Pro / Biostrength",
+    swap: "same",
+    setup: "Set the thigh pad snug so the hips stay down under load. Take a grip wider than the shoulders with the elbows tracking in the plane of the torso. Start with the arms fully extended and the shoulder blades allowed to elevate, then pull the elbows down and back until the handles reach the upper chest. Lean back no more than about 10 degrees and hold it constant rather than rocking through the set.",
+    advantage: "The counterbalanced arms and adjustable thigh pad give a consistent line of pull and a smooth eccentric, which makes progression trackable week to week.",
+    keepFree: "Vertical Traction is the pulldown; nothing else needed unless you want to add pull-ups alongside."
+  },
+  "Cable Chest Fly": {
+    machine: "Kinesis or Dual Adjustable Pulley",
+    line: "Kinesis",
+    swap: "same",
+    setup: "Set both cables at roughly shoulder height for a mid-chest fly, higher for a low-to-high line, lower for a high-to-low line. Step forward into a split stance so there is tension at the stretched position and the cables run behind the torso line. Keep a fixed slight elbow bend and bring the hands together in front of the sternum, crossing them slightly on the strongest reps. Return slowly to a full stretch.",
+    advantage: "Kinesis lets you change the cable angle continuously so you can hit the upper, mid, and lower pec fibres with the same station and keep tension at end range.",
+    keepFree: "This is already the cable version; no change needed."
+  },
+  "Dumbbell Shrugs": {
+    machine: "Dumbbell shrugs from the free-weight rack, or Multipower shrugs",
+    line: "Pure Strength / free-weight range",
+    swap: "same",
+    setup: "If using the Multipower, set the bar just below hip height so you can stand up into it without a deadlift, and set safeties at the bottom of the range. Stand tall, arms hanging straight, and shrug straight up toward the ears without rolling the shoulders. Pause at the top for a count and lower to a full stretch. Dumbbells at the sides work identically if the loading is available.",
+    advantage: "Technogym does not make a dedicated shrug machine, so the fixed bar path is the practical upgrade because it removes grip and swing as limiters.",
+    keepFree: "Free dumbbells are fine here; the fixed bar just lets you load heavier before grip gives out."
+  },
+  "EZ-Bar Curl": {
+    machine: "Arm Curl",
+    line: "Selection Pro / Biostrength",
+    swap: "variation",
+    setup: "Set the seat so the elbows sit on the pad in line with the machine pivot, armpits near the top edge of the pad. Keep the shoulders pulled back and down, and do not let the torso rock forward as fatigue sets in. Curl to full flexion, pause, and lower until the arm is straight. If a neutral or angled grip is available it maps closest to the EZ bar wrist position.",
+    advantage: "The elbow pad eliminates the body English that usually creeps into the last reps of an EZ-bar set.",
+    keepFree: "Keep the EZ bar as the heavy loaded curl; use the machine for the failure and drop-set work."
+  },
+  "Close-Grip Bench Press": {
+    machine: "Multipower close-grip bench, or Triceps Press",
+    line: "Pure Strength / Selection Pro",
+    swap: "variation",
+    setup: "On the Multipower set a flat bench so the bar path meets the lower sternum and set the safeties an inch below your chest contact point. Grip about shoulder width, elbows tucked to roughly 30 degrees from the ribs. Press to full lockout. On the Triceps Press machine set the seat so the handles are at lower-chest height and the elbows can start bent past 90 without shoulder discomfort.",
+    advantage: "The Multipower lets you push a close-grip press to failure without a spotter, and the Triceps Press isolates the same muscle when the elbows are irritated.",
+    keepFree: "Keep the free-bar close-grip if it is your main triceps compound; the fixed path can be hard on the wrists for some lifters."
+  },
+  "Front Squat": {
+    machine: "Multipower front squat, or Leg Press with a high-quad setup",
+    line: "Pure Strength / Selection Pro",
+    swap: "variation",
+    setup: "On the Multipower rack the bar in a front-rack or cross-arm position and set the bar height so you can unrack with a small knee bend. Place the feet slightly forward of the bar line so the torso stays upright through the descent, and set the safeties just below your bottom position. On the Leg Press, place the feet low and close on the plate to bias the quads, and set the range limiter to protect the pelvis at the bottom.",
+    advantage: "The fixed path holds the torso upright without demanding the wrist and thoracic mobility that limits most people on a free front squat.",
+    keepFree: "Keep the free front squat if you have the rack position and want the trunk work; otherwise these cover the quad stimulus."
+  },
+  "Sumo Deadlift": {
+    machine: "Leg Press wide stance plus Adductor and Lower Back",
+    line: "Selection Pro",
+    swap: "substitute",
+    setup: "No Technogym machine reproduces a sumo pull, so split the demand. On the Leg Press set the feet wide and high on the plate with the toes turned out about 30 degrees, and set the range limiter so the hips do not tuck at the bottom. On the Adductor machine set the pad width so you start in a stretch you can control, not the widest notch. Use the Lower Back machine with the pivot at the hip joint for the erector component.",
+    advantage: "This combination loads the adductors, glutes, and erectors that the sumo pull trains without the systemic fatigue of a maximal hinge.",
+    keepFree: "Keep the sumo deadlift itself; the machines are accessory work and cannot replace the pull."
+  },
+  "Bulgarian Split Squat": {
+    machine: "Multipower rear-foot-elevated split squat",
+    line: "Pure Strength / free-weight range",
+    swap: "same",
+    setup: "Set a flat bench about 40 to 50 cm behind the bar line and put the rear foot on it laces down. Set the bar at upper-back height and safeties just below your bottom position. Adjust the front foot forward or back until the front shin is close to vertical at the bottom for a glute bias, or slightly forward for more quad. Complete all reps on one side, then switch.",
+    advantage: "The fixed bar path removes the balance component so the front leg reaches genuine failure rather than stopping when you wobble.",
+    keepFree: "Keep dumbbell Bulgarians for the ankle and hip stability work; alternate blocks between the two versions."
+  },
+  "Glute-Ham Raise": {
+    machine: "Prone Leg Curl plus Lower Back, or a glute-ham bench if available",
+    line: "Selection Pro",
+    swap: "substitute",
+    setup: "On the Prone Leg Curl align the knee joint with the cam pivot and set the ankle pad just above the heel, then use slow eccentrics of four to five seconds to mimic the lowering phase of a glute-ham raise. Keep the hips pinned to the pad. On the Lower Back machine set the pivot at the hip joint and the pad across the upper back for the hip-extension half. Do the two back to back as a pair.",
+    advantage: "The leg curl loads knee flexion under a matched strength curve, which is the part of the glute-ham raise most people cannot control anyway.",
+    keepFree: "If a glute-ham bench exists in the gym, keep it, since the machine pair does not reproduce the combined hip and knee action."
+  },
+  "Hack Squat": {
+    machine: "Leg Press, or a plate-loaded hack squat if the gym has one",
+    line: "Selection Pro / Pure Strength",
+    swap: "variation",
+    setup: "On the Leg Press, place the feet low and narrow on the plate to shift load toward the quads, and set the backrest more upright if adjustable. Set the range limiter so you stop just before the pelvis tucks off the seat. Descend under control to the deepest position that keeps the lower back on the pad, then press without hard-locking the knees. Heels stay flat throughout.",
+    advantage: "Gives you a heavy quad-dominant press with a fixed path and a safe failure point, and lets you push past the point where a free hack squat would end.",
+    keepFree: "If the gym has a dedicated hack squat, use it; the Leg Press is the fallback rather than an upgrade."
+  },
+  "Seated Leg Curl": {
+    machine: "Leg Curl",
+    line: "Selection Pro / Biostrength",
+    swap: "same",
+    setup: "Set the backrest depth so the knee joint lines up with the machine pivot with the back flat against the pad. Lap pad clamped down firmly over the thighs so the hips cannot lift. Shin pad on the Achilles just above the heel. Curl through the full range and pause briefly at peak flexion, then return slowly to a straight but not locked knee.",
+    advantage: "The hip-flexed position lengthens the hamstrings under load, which produces more stimulus per set than the prone version.",
+    keepFree: "No free-weight equivalent; this is the tool."
+  },
+  "Seated Calf Raise": {
+    machine: "Seated Calf Raise machine",
+    line: "Selection Pro / Pure Strength",
+    swap: "same",
+    setup: "Set the thigh pad so it sits low on the thigh just above the knee, and adjust the height so it clamps firmly at the top of your range. Balls of the feet on the platform edge with the heels free to drop below. Let the heel sink into a full stretch and pause there for a count before pressing up. Slow tempo, no bouncing at the bottom.",
+    advantage: "The bent knee takes the gastrocnemius out and puts the soleus under direct load, which nothing else in the gym does.",
+    keepFree: "No free-weight substitute needed."
+  },
+  "Cable Pull-Through": {
+    machine: "Kinesis or Dual Adjustable Pulley with rope",
+    line: "Kinesis",
+    swap: "same",
+    setup: "Set the pulley to the lowest position and face away from the column with the rope passed between the legs. Walk out until the cable is under tension at the bottom of the hinge. Push the hips back with soft knees, let the rope travel between the legs, then drive the hips forward to lockout without arching the lower back. Finish with a glute squeeze rather than a lean back.",
+    advantage: "Resistance is horizontal at lockout, so the glutes stay loaded at full hip extension where a barbell hinge goes light.",
+    keepFree: "Already the cable version; keep a barbell hinge separately for heavy loading."
+  }
+};
+
+
+/* ========== EQUIPMENT MODE ========== */
+let equipMode = 'free';
+let currentWorkoutDay = 0;
+
+function setEquipMode(mode, btn) {
+  equipMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  showWorkoutDay(currentWorkoutDay, document.querySelector('#workoutTabs .tab-btn.active'));
+}
+
+const SWAP_LABEL = {
+  same: 'Same movement',
+  variation: 'Machine variation',
+  substitute: 'Substitute'
+};
+
+function technogymBlockHTML(name) {
+  const t = technogym[name];
+  if (!t) return '';
+  return `<div class="tg-block">
+    <div class="tg-head">
+      <span class="tg-machine">${t.machine}</span>
+      <span class="badge badge-${t.swap}">${SWAP_LABEL[t.swap] || t.swap}</span>
+    </div>
+    <div class="tg-line">${t.line}</div>
+    <div class="tg-row"><strong>Machine setup &middot;</strong> ${t.setup}</div>
+    <div class="tg-row"><strong>Why use it &middot;</strong> ${t.advantage}</div>
+    <div class="tg-row"><strong>Free weights too? &middot;</strong> ${t.keepFree}</div>
   </div>`;
 }
 
