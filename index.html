@@ -835,6 +835,27 @@ label {
 }
 .metric-btn.active { background: var(--accent); color: #fff; }
 
+.meal-alt {
+  margin-top: 11px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+.meal-alt-tag {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
@@ -977,6 +998,50 @@ label {
   </div>
 
   <div id="mealPlanContent"></div>
+
+  <div class="card">
+    <div class="card-title">&#x1F343; Diet quality, not just macros</div>
+    <div class="grid-2">
+      <div>
+        <p style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.8px;color:var(--accent);font-weight:700;margin-bottom:8px">Your breakfast is genuinely good</p>
+        <p style="font-size:0.87rem;color:var(--text-secondary);line-height:1.65">
+          The granola bowl is doing more for you than most bodybuilding breakfasts. Chia and flaxseed give you ALA omega-3
+          and a large amount of fibre, goji and cocoa bring polyphenols, and nutritional yeast is a useful B12 source, which
+          matters on a vegetarian diet. Keep it.
+        </p>
+        <p style="font-size:0.87rem;color:var(--text-secondary);line-height:1.65;margin-top:10px">
+          Two things to watch. It was only about <strong style="color:var(--text-primary)">23g protein</strong> before the
+          whey and skyr went in, which is under half of what a first meal should deliver for you &mdash; that is why the plans
+          add them to the same bowl. And granola is calorie-dense and very easy to over-pour, so
+          <strong style="color:var(--text-primary)">weigh it</strong> rather than eyeballing. A generous pour can quietly be
+          double what the plan assumes.
+        </p>
+        <p style="font-size:0.87rem;color:var(--text-secondary);line-height:1.65;margin-top:10px">
+          Worth checking: not every nutritional yeast is fortified with B12. Look at your tub, and if it is unfortified you are
+          relying on the supplement alone.
+        </p>
+      </div>
+      <div>
+        <p style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.8px;color:var(--orange);font-weight:700;margin-bottom:8px">Go easy on the ultra-processed side</p>
+        <p style="font-size:0.87rem;color:var(--text-secondary);line-height:1.65">
+          Since you care about health and not only macros, the honest note is that Beyond Meat products are ultra-processed
+          and relatively high in saturated fat and salt. They are a convenient way to hit calories on a bulk, but they are not
+          the food to build every day around. Quorn is the better daily option &mdash; leaner, higher in fibre and less
+          calorie-dense.
+        </p>
+        <p style="font-size:0.87rem;color:var(--text-secondary);line-height:1.65;margin-top:10px">
+          That is what the <strong style="color:var(--accent-light)">whole-food swap</strong> under every meal is for. Each one
+          is matched on calories and protein, so you can cook from lentils, tofu, tempeh, paneer or chickpeas on any given day
+          without redoing the numbers. A reasonable pattern is products on busy days, whole foods when you have time to cook.
+        </p>
+        <p style="font-size:0.87rem;color:var(--text-secondary);line-height:1.65;margin-top:10px">
+          The rest takes care of itself if you follow the plans: they clear <strong style="color:var(--text-primary)">30g+ of
+          fibre</strong> a day, lead with wholegrains, and put vegetables in most meals. Aim for two litres of water and some
+          fruit and veg colour variety on top.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- =================== WORKOUT =================== -->
@@ -1230,37 +1295,48 @@ function macros(g) {
 
 /* Meal Plans */
 const mealPlans = {
+  recomp: {
+    label: 'Recomposition Plan', cal: 2406,
+    meals: [
+      { time: 'Breakfast', name: 'Loaded Granola Protein Bowl', desc: 'Lizi\'s granola (35g), semi-skimmed milk (200ml), chia (10g), flaxseed (10g), goji (15g), nutritional yeast (5g), cocoa (5g), whey (19g), 0% skyr (100g).', alt: 'Use 115g cottage cheese and 115g 0% skyr in the bowl in place of the whey and milk - 580 kcal, 47g protein', cal: 578, p: 47, c: 57, f: 19 },
+      { time: 'Morning Snack', name: 'Seeded Skyr and Blueberry Pot', desc: '0% skyr (200g) with blueberries (80g), pumpkin seeds (10g) and chia (5g) stirred through.', alt: 'Swap the skyr and seeds for 200g cottage cheese with the same blueberries - 242 kcal, 23g protein', cal: 240, p: 24, c: 22, f: 7 },
+      { time: 'Lunch', name: 'Quorn Mince Chilli with Brown Rice', desc: 'Quorn mince (180g) simmered with black beans (80g), passata (120g), onion (50g), peppers (60g) and olive oil (6g) over brown rice (100g cooked).', alt: 'Swap the Quorn mince and oil for 50g seitan and 145g cooked brown lentils - 539 kcal, 38g protein', cal: 542, p: 39, c: 68, f: 11 },
+      { time: 'Afternoon Snack', name: 'Quorn Chicken Bite Salad Box', desc: 'Quorn chicken bites (120g) with cucumber (80g), tomato (80g), olive oil (5g) dressing and rice cakes (20g).', alt: 'Swap the Quorn bites for 80g tempeh, marinated and baked - 302 kcal, 18g protein', cal: 304, p: 21, c: 32, f: 11 },
+      { time: 'Dinner', name: 'Quorn and Broccoli Quinoa Stir-Fry', desc: 'Quorn pieces (220g) stir-fried with broccoli (150g), peppers (80g) and olive oil (9g), on quinoa (40g dry) with soy and ginger.', alt: 'Swap the Quorn pieces for 95g extra-firm tofu and 70g seitan - 534 kcal, 44g protein', cal: 530, p: 44, c: 51, f: 17 },
+      { time: 'Evening Snack', name: 'Cocoa Casein Pudding', desc: 'Casein (25g) whisked with skimmed milk (150ml), cocoa powder (5g) and peanut butter (8g).', alt: 'Blend 160g 0% skyr into the cocoa and milk instead of the casein powder - 201 kcal, 24g protein', cal: 202, p: 28, c: 13, f: 5 }
+    ]
+  },
   bulking: {
     label: 'Bulking Plan', cal: 3156,
     meals: [
-      { time: 'Breakfast', name: 'Blueberry Banana Protein Oats', desc: 'Oats (80g) cooked in skimmed milk (200ml), whey protein (30g), sliced banana (90g), blueberries (70g), flaked almonds (15g).', cal: 701, p: 46, c: 94, f: 16 },
-      { time: 'Morning Snack', name: 'Peanut Butter Banana Toast with Yogurt', desc: 'Wholegrain bread (60g), peanut butter (16g), sliced banana (60g), 0% Greek yogurt (150g) on the side.', cal: 386, p: 26, c: 47, f: 11 },
-      { time: 'Lunch', name: 'Quorn Mince Bolognese', desc: 'Quorn mince (230g) simmered in passata (150g) with onion (60g) and olive oil (7g), over pasta (100g dry), grated parmesan (10g).', cal: 780, p: 53, c: 97, f: 16 },
-      { time: 'Afternoon Snack', name: 'Beyond Steak Fajita Wrap', desc: 'Beyond Steak (100g) seared with paprika, folded into a flour tortilla (60g) with salsa (30g), shredded lettuce and peppers (40g).', cal: 356, p: 31, c: 39, f: 8 },
-      { time: 'Dinner', name: 'Beyond Burger with Sweet Potato Wedges', desc: 'Beyond Burger patty (113g) in a wholemeal bun (70g) with cheddar (20g), baked sweet potato wedges (100g), salad and tomato (100g).', cal: 621, p: 36, c: 68, f: 24 },
-      { time: 'Evening Snack', name: 'Walnut Casein Yogurt Bowl', desc: '0% Greek yogurt (200g) whipped with casein protein (30g) and cinnamon, topped with chopped walnuts (12g).', cal: 307, p: 45, c: 11, f: 10 }
+      { time: 'Breakfast', name: 'Loaded Granola Protein Bowl', desc: 'Lizi\'s granola (55g), semi-skimmed milk (250ml), chia (12g), flaxseed (12g), goji (20g), nutritional yeast (6g), cocoa (6g), whey (20g), 0% skyr (150g).', alt: 'Use 155g cottage cheese and 95g 0% skyr in the bowl in place of the whey and milk - 772 kcal, 58g protein', cal: 771, p: 58, c: 80, f: 26 },
+      { time: 'Morning Snack', name: 'Peanut Butter Banana Toast with Skyr', desc: 'Wholegrain toast (50g) with peanut butter (14g) and sliced banana (80g), plus 0% skyr (150g) on the side.', alt: 'Spread 50g chickpea hummus on the toast instead of the peanut butter - 365 kcal, 25g protein', cal: 364, p: 25, c: 48, f: 9 },
+      { time: 'Lunch', name: 'Quorn Mince Bolognese', desc: 'Quorn mince (200g) in passata (150g) with onion (60g), mushrooms (60g) and olive oil (6g), over wholewheat pasta (80g dry) with parmesan (10g).', alt: 'Swap the Quorn mince and oil for 85g seitan and 90g cooked chickpeas - 673 kcal, 48g protein', cal: 668, p: 48, c: 78, f: 15 },
+      { time: 'Afternoon Snack', name: 'Beyond Steak Fajita Wrap', desc: 'Beyond Steak (100g) seared with paprika in a tortilla (60g) with salsa (30g), peppers (60g) and spinach (30g).', alt: 'Swap the Beyond Steak for 90g seitan and 20g cooked brown lentils - 363 kcal, 31g protein', cal: 368, p: 32, c: 42, f: 8 },
+      { time: 'Dinner', name: 'Beyond Burger with Sweet Potato Wedges', desc: 'Beyond Burger patty (113g) in a wholemeal bun (70g) with cheddar (15g), baked sweet potato wedges (190g), tomato (60g) and lettuce (40g).', alt: 'Swap the Beyond patty for a 120g tempeh steak, grilled - 653 kcal, 38g protein', cal: 652, p: 36, c: 80, f: 22 },
+      { time: 'Evening Snack', name: 'Walnut Banana Casein Bowl', desc: '0% skyr (200g) whipped with casein (21g) and cocoa (4g), topped with walnuts (12g) and sliced banana (50g).', alt: 'Use 160g cottage cheese in place of the casein powder and walnuts - 324 kcal, 39g protein', cal: 324, p: 40, c: 25, f: 9 }
     ]
   },
   maintenance: {
     label: 'Maintenance Plan', cal: 2756,
     meals: [
-      { time: 'Breakfast', name: 'Quorn Sausage and Egg Breakfast Plate', desc: 'Quorn sausages (90g), one whole egg (50g) scrambled with egg whites (100g), wholegrain toast (80g), grilled mushrooms and tomato (120g), banana (100g).', cal: 603, p: 41, c: 70, f: 17 },
-      { time: 'Morning Snack', name: 'Cottage Cheese and Apple Crunch', desc: 'Cottage cheese (200g) with chopped apple (150g) and toasted almonds (8g).', cal: 320, p: 24, c: 30, f: 13 },
-      { time: 'Lunch', name: 'Quorn Chicken Bite Burrito Bowl', desc: 'Quorn chicken bites (220g) with cooked rice (120g), black beans (50g), salsa (40g), avocado (30g) and grated cheddar (20g).', cal: 648, p: 47, c: 69, f: 21 },
-      { time: 'Afternoon Snack', name: 'Blueberry Overnight Oats', desc: '5% Greek yogurt (130g) stirred with oats (20g), whey protein (10g) and blueberries (80g), chilled overnight.', cal: 288, p: 23, c: 29, f: 9 },
-      { time: 'Dinner', name: 'Beyond Steak and Cashew Stir-Fry', desc: 'Beyond Steak (150g) stir-fried in olive oil (10g) with broccoli and peppers (200g), cashews (15g) and soy sauce, served on rice (150g cooked).', cal: 667, p: 49, c: 67, f: 23 },
-      { time: 'Evening Snack', name: 'Peanut Butter Casein Shake', desc: 'Casein protein (25g) blended with whole milk (150ml) and peanut butter (5g).', cal: 218, p: 26, c: 10, f: 9 }
+      { time: 'Breakfast', name: 'Loaded Granola Protein Bowl', desc: 'Lizi\'s granola (70g), semi-skimmed milk (200ml), chia (10g), flaxseed (10g), goji (15g), nutritional yeast (5g), cocoa (5g), whey (19g), 0% skyr (120g).', alt: 'Use 115g cottage cheese and 115g 0% skyr in the bowl in place of the whey and milk - 752 kcal, 53g protein', cal: 750, p: 52, c: 78, f: 26 },
+      { time: 'Morning Snack', name: 'Cottage Cheese and Apple Crunch', desc: 'Cottage cheese (120g) with chopped apple (150g) and toasted almonds (17g).', alt: 'Swap the cottage cheese for 115g 0% skyr and a further 10g almonds - 300 kcal, 18g protein', cal: 294, p: 17, c: 29, f: 14 },
+      { time: 'Lunch', name: 'Quorn Mince Shepherds Pie with Kale', desc: 'Quorn mince (180g) with passata (100g), onion (60g), carrot (60g) and peas (60g) under mashed potato (150g) with olive oil (6g), plus kale (80g).', alt: 'Swap the Quorn mince and oil for 125g extra-firm tofu and 55g cooked brown lentils - 514 kcal, 37g protein', cal: 513, p: 37, c: 62, f: 12 },
+      { time: 'Afternoon Snack', name: 'Quorn Chicken Bite Wrap', desc: 'Quorn chicken bites (130g) in a tortilla (60g) with salsa (30g), spinach (30g) and 0% skyr (40g) as dressing.', alt: 'Swap the Quorn bites for 90g tempeh, sliced and pan-fried - 393 kcal, 27g protein', cal: 390, p: 30, c: 45, f: 10 },
+      { time: 'Dinner', name: 'Beyond Steak and Cashew Stir-Fry', desc: 'Beyond Steak (150g) stir-fried with broccoli (120g), peppers (80g), cashews (14g) and olive oil (6g), on brown rice (115g cooked).', alt: 'Swap the Beyond Steak for 165g seitan strips - 566 kcal, 51g protein', cal: 566, p: 47, c: 55, f: 19 },
+      { time: 'Evening Snack', name: 'Peanut Butter Casein Shake', desc: 'Casein (25g) blended with whole milk (150ml) and peanut butter (8g).', alt: 'Blend 245g 0% skyr into the milk instead of the casein and peanut butter - 231 kcal, 29g protein', cal: 231, p: 27, c: 10, f: 9 }
     ]
   },
   cutting: {
     label: 'Cutting Plan', cal: 2256,
     meals: [
-      { time: 'Breakfast', name: 'Quorn Mince and Spinach Scramble', desc: 'Quorn mince (100g) scrambled with one egg (50g), egg whites (120g), spinach (80g) and tomato (80g) on rye toast (50g), avocado (25g), orange (100g).', cal: 483, p: 44, c: 46, f: 13 },
-      { time: 'Morning Snack', name: 'Raspberry Skyr Pot', desc: '0% Greek yogurt (200g) layered with raspberries (100g) and pumpkin seeds (12g).', cal: 237, p: 24, c: 21, f: 7 },
-      { time: 'Lunch', name: 'Quorn and Quinoa Mediterranean Salad', desc: 'Quorn chicken bites (230g) over quinoa (30g dry) with cucumber, rocket and peppers (150g), feta (15g), olive oil (4g) and lemon.', cal: 524, p: 43, c: 46, f: 19 },
-      { time: 'Afternoon Snack', name: 'Beyond Steak Salad Box', desc: 'Beyond Steak (80g) pan-seared, with tomato and cucumber (100g), olive oil (4g) dressing and rice cakes (20g).', cal: 254, p: 23, c: 24, f: 8 },
-      { time: 'Dinner', name: 'Quorn Tikka Masala', desc: 'Quorn pieces (200g) in passata (100g), 0% Greek yogurt (60g), onion and pepper (100g), cooked in olive oil (12g), with basmati rice (90g cooked).', cal: 536, p: 41, c: 48, f: 17 },
-      { time: 'Evening Snack', name: 'Chocolate Peanut Casein Pudding', desc: 'Casein protein (18g) whisked with skimmed milk (150ml), cocoa powder (5g) and peanut butter (16g).', cal: 224, p: 24, c: 14, f: 9 }
+      { time: 'Breakfast', name: 'Loaded Granola Protein Bowl', desc: 'Lizi\'s granola (35g), semi-skimmed milk (150ml), chia (8g), flaxseed (8g), goji (10g), nutritional yeast (5g), cocoa (5g), whey (16g), 0% skyr (120g).', alt: 'Use 80g cottage cheese and 110g 0% skyr in the bowl in place of the whey and milk - 516 kcal, 43g protein', cal: 514, p: 43, c: 50, f: 17 },
+      { time: 'Morning Snack', name: 'Raspberry Skyr Pot', desc: '0% skyr (200g) layered with raspberries (100g) and pumpkin seeds (14g).', alt: 'Swap the skyr and seeds for 170g cottage cheese whipped with 50g egg whites - 245 kcal, 25g protein', cal: 244, p: 25, c: 22, f: 8 },
+      { time: 'Lunch', name: 'Quorn and Quinoa Mediterranean Salad', desc: 'Quorn chicken bites (200g) over quinoa (25g dry) with cucumber (80g), rocket (40g), peppers (60g), feta (15g) and olive oil (12g).', alt: 'Swap the Quorn bites and oil for 80g paneer and 95g extra-firm tofu - 543 kcal, 38g protein', cal: 535, p: 38, c: 41, f: 25 },
+      { time: 'Afternoon Snack', name: 'Quorn Mince Lettuce Wraps', desc: 'Quorn mince (130g) spiced and spooned into lettuce cups (60g) with carrot (40g), edamame (50g) and salsa (30g).', alt: 'Swap the Quorn mince for 95g extra-firm tofu, crumbled and spiced - 234 kcal, 24g protein', cal: 233, p: 26, c: 18, f: 5 },
+      { time: 'Dinner', name: 'Quorn Tikka Masala', desc: 'Quorn pieces (200g) in passata (100g) and 0% skyr (60g) with onion (60g), peppers (80g) and olive oil (8g), plus basmati rice (95g cooked).', alt: 'Swap the Quorn pieces and oil for 160g extra-firm tofu and 30g cooked chickpeas - 512 kcal, 41g protein', cal: 513, p: 41, c: 54, f: 13 },
+      { time: 'Evening Snack', name: 'Chocolate Peanut Casein Pudding', desc: 'Casein (20g) whisked with skimmed milk (150ml), cocoa powder (5g) and peanut butter (12g).', alt: 'Use 175g 0% skyr and 10g almonds in place of the casein and peanut butter - 220 kcal, 26g protein', cal: 207, p: 25, c: 14, f: 7 }
     ]
   }
 };
@@ -1542,6 +1618,7 @@ function showMealPlan(plan, btn) {
         <span class="carb">${m.c}g carbs</span>
         <span class="fat">${m.f}g fat</span>
       </div>
+      ${m.alt ? `<div class="meal-alt"><span class="meal-alt-tag">Whole-food swap</span>${m.alt}</div>` : ''}
     </div>`;
   }).join('');
 
@@ -1553,7 +1630,9 @@ function showMealPlan(plan, btn) {
       <div class="workout-note" style="margin-top:0">
         <strong>Target ${target} kcal</strong> &middot; this plan totals ${totalCal} kcal
         (${drift === 0 ? 'exactly on target' : (drift > 0 ? '+' : '') + drift + ' kcal'}).
-        Built around Quorn and Beyond Meat &mdash; swap like for like by protein, not by weight.
+        Breakfast is your granola bowl in every plan. Quorn and Beyond Meat carry the protein, and every meal
+        carries a <strong style="color:var(--accent-light)">whole-food swap</strong> underneath if you would rather
+        cook from scratch or want a break from processed products &mdash; each one is matched on calories and protein.
       </div>
       ${mealsHTML}
       <div class="summary-row">
