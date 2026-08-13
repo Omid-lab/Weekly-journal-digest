@@ -707,6 +707,37 @@ label {
 .badge-variation { background: rgba(66,165,245,0.15); color: var(--blue); }
 .badge-substitute { background: rgba(255,167,38,0.15); color: var(--orange); }
 
+/* ===== Food filters ===== */
+.filter-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
+.chip {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.chip:hover { color: var(--text-primary); border-color: var(--text-muted); }
+.chip.active { background: var(--accent-bg-strong); border-color: var(--accent); color: var(--accent-light); }
+.chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.food-brand {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--blue);
+  background: rgba(66,165,245,0.13);
+  padding: 2px 7px;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
@@ -952,8 +983,45 @@ label {
   </div>
 
   <div class="card">
+    <div class="card-title">&#x1F969; Quorn vs Beyond Meat &mdash; which to reach for</div>
+    <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;margin-bottom:14px">
+      These two are not interchangeable for your goals. The number that matters is <strong style="color:var(--accent)">protein per 100 kcal</strong> &mdash; sort the table by that column to see it.
+    </p>
+    <div class="grid-2">
+      <div class="meal-card">
+        <div class="meal-time" style="color:var(--accent)">Quorn &mdash; your protein staple</div>
+        <div class="meal-desc" style="margin-bottom:8px">
+          Mycoprotein is lean: pieces and mince run about <strong style="color:var(--text-primary)">14-15g protein per 100 kcal</strong>, which is in the same territory as chicken breast. That makes it the workhorse for hitting your protein target without spending much of your calorie budget, and the obvious choice on a cut.
+        </div>
+        <div class="meal-macros"><span class="cal">Lean</span><span class="pro">High protein density</span></div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-time" style="color:var(--orange)">Beyond Meat &mdash; mostly a bulking food</div>
+        <div class="meal-desc" style="margin-bottom:8px">
+          Beyond products are engineered to eat like beef, which means added coconut and canola oil. Beyond Mince is <strong style="color:var(--text-primary)">18g fat per 100g and only about 7g protein per 100 kcal</strong>. It is a good way to add calories on a bulk, but a poor way to add protein.
+          <br><br><strong style="color:var(--accent-light)">The exception is Beyond Steak</strong> &mdash; roughly 25g protein per 100g at 155 kcal. That one competes with Quorn and is worth keeping in rotation year-round.
+        </div>
+        <div class="meal-macros"><span class="fat">Calorie dense</span><span class="carb">Watch the fat</span></div>
+      </div>
+    </div>
+    <div class="workout-note" style="margin-top:16px">
+      <strong>Portion them properly.</strong> Both are far less protein-dense per 100g than whey or paneer, so a 100g serving is a side, not a protein source. Build meals around <strong>150-200g</strong> to make them count. Both are also considerably saltier than whole foods, so if you eat them most days, keep an eye on total sodium.
+    </div>
+    <div class="workout-note" style="border-left-color:var(--orange)">
+      <strong style="color:var(--orange)">Check your packs.</strong> The figures below are typical label values. Both brands reformulate and differ between countries, so treat these as a starting point and correct them against the packaging you actually buy. Note too that standard Quorn contains egg white &mdash; vegetarian, but not vegan. Quorn's vegan range and all Beyond Meat products are vegan.
+    </div>
+  </div>
+
+  <div class="card">
     <div class="search-bar">
       <input type="text" id="foodSearch" placeholder="Search foods..." oninput="filterFoods()">
+    </div>
+    <div class="filter-chips">
+      <button class="chip active" onclick="setFoodFilter('all', this)">All foods</button>
+      <button class="chip" onclick="setFoodFilter('Quorn', this)">Quorn</button>
+      <button class="chip" onclick="setFoodFilter('Beyond Meat', this)">Beyond Meat</button>
+      <button class="chip" onclick="setFoodFilter('alt', this)">All meat alternatives</button>
+      <button class="chip" onclick="setFoodFilter('whole', this)">Whole foods</button>
     </div>
     <div class="table-wrap" style="max-height:600px;overflow-y:auto">
       <table>
@@ -965,6 +1033,7 @@ label {
             <th style="cursor:pointer" onclick="sortFoods('protein')">Protein (g)</th>
             <th style="cursor:pointer" onclick="sortFoods('carbs')">Carbs (g)</th>
             <th style="cursor:pointer" onclick="sortFoods('fat')">Fat (g)</th>
+            <th style="cursor:pointer" onclick="sortFoods('density')" title="Grams of protein per 100 kcal - higher is leaner">P / 100 kcal</th>
           </tr>
         </thead>
         <tbody id="foodsBody"></tbody>
@@ -1157,10 +1226,26 @@ const foodsData = [
   { name: 'Brown Rice (cooked)', serving: '100g', calories: 112, protein: 2.6, carbs: 23.5, fat: 0.9 },
   { name: 'Mozzarella Cheese', serving: '30g', calories: 85, protein: 6.3, carbs: 0.7, fat: 6.3 },
   { name: 'Walnuts', serving: '30g', calories: 196, protein: 4.6, carbs: 4.0, fat: 19.5 },
-  { name: 'Sunflower Seeds', serving: '30g', calories: 175, protein: 6.2, carbs: 5.6, fat: 15.0 }
+  { name: 'Sunflower Seeds', serving: '30g', calories: 175, protein: 6.2, carbs: 5.6, fat: 15.0 },
+
+  /* --- Meat-alternative products. Typical label values; formulations vary by
+         country and get reformulated, so check the pack you actually buy. --- */
+  { name: 'Quorn Pieces', brand: 'Quorn', serving: '100g', calories: 105, protein: 15.0, carbs: 4.5, fat: 2.0 },
+  { name: 'Quorn Mince', brand: 'Quorn', serving: '100g', calories: 105, protein: 14.5, carbs: 4.5, fat: 2.0 },
+  { name: 'Quorn Fillets', brand: 'Quorn', serving: '100g', calories: 105, protein: 14.0, carbs: 4.5, fat: 2.0 },
+  { name: 'Quorn Chicken Bites', brand: 'Quorn', serving: '100g', calories: 130, protein: 15.0, carbs: 8.0, fat: 4.0 },
+  { name: 'Quorn Sausages', brand: 'Quorn', serving: '100g', calories: 180, protein: 12.0, carbs: 10.0, fat: 10.0 },
+  { name: 'Quorn Crispy Nuggets', brand: 'Quorn', serving: '100g', calories: 200, protein: 11.0, carbs: 17.0, fat: 10.0 },
+  { name: 'Beyond Steak', brand: 'Beyond Meat', serving: '100g', calories: 155, protein: 25.0, carbs: 5.0, fat: 3.5 },
+  { name: 'Beyond Chicken Pieces', brand: 'Beyond Meat', serving: '100g', calories: 170, protein: 19.0, carbs: 6.0, fat: 8.0 },
+  { name: 'Beyond Burger (patty)', brand: 'Beyond Meat', serving: '113g patty', calories: 230, protein: 21.0, carbs: 7.0, fat: 14.0 },
+  { name: 'Beyond Mince', brand: 'Beyond Meat', serving: '100g', calories: 250, protein: 17.5, carbs: 5.0, fat: 18.0 },
+  { name: 'Beyond Sausage', brand: 'Beyond Meat', serving: '1 link', calories: 230, protein: 16.0, carbs: 4.0, fat: 17.0 }
 ];
+foodsData.forEach(f => { f.density = Math.round(f.protein / f.calories * 1000) / 10; });
 
 let foodSortKey = 'protein';
+let foodFilter = 'all';
 let foodSortAsc = false;
 
 /* Supplements Data */
@@ -1560,21 +1645,39 @@ window.addEventListener('resize', () => drawChart());
 function renderFoods(data) {
   const foods = data || [...foodsData].sort((a, b) => b[foodSortKey] - a[foodSortKey] || a.name.localeCompare(b.name));
   const tbody = document.getElementById('foodsBody');
+  if (!foods.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:32px">No foods match that search.</td></tr>';
+    return;
+  }
   tbody.innerHTML = foods.map(f => `
     <tr>
-      <td style="font-weight:500">${f.name}</td>
+      <td style="font-weight:500">${f.name}${f.brand ? `<span class="food-brand">${f.brand}</span>` : ''}</td>
       <td style="color:var(--text-secondary)">${f.serving}</td>
       <td>${f.calories}</td>
       <td><span class="protein-badge">${f.protein}g</span></td>
       <td>${f.carbs}g</td>
       <td>${f.fat}g</td>
+      <td style="color:${f.density >= 14 ? 'var(--accent)' : f.density >= 8 ? 'var(--text-secondary)' : 'var(--text-muted)'};font-weight:600">${f.density}g</td>
     </tr>
   `).join('');
 }
 
+function setFoodFilter(f, btn) {
+  foodFilter = f;
+  document.querySelectorAll('.filter-chips .chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  filterFoods();
+}
+
 function filterFoods() {
   const q = document.getElementById('foodSearch').value.toLowerCase();
-  const filtered = foodsData.filter(f => f.name.toLowerCase().includes(q));
+  const filtered = foodsData.filter(f => {
+    if (!f.name.toLowerCase().includes(q) && !(f.brand || '').toLowerCase().includes(q)) return false;
+    if (foodFilter === 'all') return true;
+    if (foodFilter === 'alt') return !!f.brand;
+    if (foodFilter === 'whole') return !f.brand;
+    return f.brand === foodFilter;
+  });
   filtered.sort((a, b) => {
     if (foodSortKey === 'name') return foodSortAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
     return foodSortAsc ? a[foodSortKey] - b[foodSortKey] : b[foodSortKey] - a[foodSortKey];
