@@ -999,6 +999,58 @@ label {
 
   <div id="mealPlanContent"></div>
 
+  <div class="card advice-card">
+    <div class="card-title">&#x1F944; Should you change your breakfast?</div>
+
+    <div class="advice-verdict">
+      <div class="advice-verdict-head">Yes &mdash; one change. Keep every ingredient, but make the skyr the base and the granola a topping.</div>
+      <p>
+        Nothing in your bowl is wrong. The seeds, goji, cocoa and nutritional yeast all earn their place and I would not touch
+        them. The problem is which ingredient you are eating <em>most</em> of. Granola is the most calorie-dense thing in the
+        bowl at around 458 kcal per 100g, the least filling per calorie, and the easiest to over-pour &mdash; a generous heap
+        is easily 70g, which is 320 kcal you did not plan for. On a deficit that alone can erase a day's work.
+      </p>
+      <p>
+        The numbers backed this up: before the change, breakfast was the <strong>least protein-dense meal in every one of the
+        four plans</strong>. So I flipped the ratio. Same calories, same protein, same carbs and fat &mdash; but a far bigger,
+        more filling bowl, and no protein powder needed at all.
+      </p>
+    </div>
+
+    <div class="table-wrap" style="margin-bottom:16px">
+      <table>
+        <thead><tr><th>&nbsp;</th><th>Before</th><th>After</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">Granola</td><td style="color:var(--orange)">35-70g base</td><td style="color:var(--accent)">20g topping</td><td style="color:var(--text-secondary)">Most calories, least fullness, easiest to over-pour</td></tr>
+          <tr><td style="font-weight:600">Skyr</td><td style="color:var(--orange)">100-150g</td><td style="color:var(--accent)">300-375g</td><td style="color:var(--text-secondary)">Protein and volume for almost no calories</td></tr>
+          <tr><td style="font-weight:600">Whey powder</td><td style="color:var(--orange)">16-20g</td><td style="color:var(--accent)">none</td><td style="color:var(--text-secondary)">Protein now comes from food instead</td></tr>
+          <tr><td style="font-weight:600">Almonds</td><td style="color:var(--text-muted)">&mdash;</td><td style="color:var(--accent)">5-25g</td><td style="color:var(--text-secondary)">Replaces the fat lost with the granola</td></tr>
+          <tr><td style="font-weight:600">Seeds, goji, yeast, cocoa</td><td colspan="2" style="text-align:center;color:var(--accent)">unchanged</td><td style="color:var(--text-secondary)">Fibre, omega-3, B12, polyphenols &mdash; all worth keeping</td></tr>
+          <tr><td style="font-weight:600">Calories and macros</td><td colspan="2" style="text-align:center;color:var(--accent)">identical</td><td style="color:var(--text-secondary)">This costs you nothing on paper</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="workout-note">
+      <strong>What you actually gain.</strong> Two to three times the bowl for the same numbers, which matters a lot when you
+      are eating at a deficit and hunger is what breaks plans. Yogurt with seeds is also slower to eat and more satiating than
+      dry granola. And weighing 20g of topping is far more accurate than judging a poured base by eye, so the plan you follow
+      is closer to the plan on the screen.
+    </div>
+
+    <div class="workout-note" style="border-left-color:var(--blue)">
+      <strong style="color:var(--blue)">If you want to go further on hard cutting days,</strong> a savoury breakfast beats any
+      sweet bowl for fullness per calorie &mdash; Quorn mince or tofu scrambled with eggs, spinach and tomatoes, around 480 kcal
+      for 44g of protein. You already eat Quorn, so it is no extra shopping. Alternate it with the bowl rather than replacing it.
+    </div>
+
+    <div class="workout-note" style="border-left-color:var(--orange)">
+      <strong style="color:var(--orange)">To be clear, this is optimisation, not a rescue.</strong> Your breakfast was not bad
+      &mdash; it was better than most. If you would rather keep it exactly as it is, the swap line under Breakfast in each plan
+      gives you your original version at the same calories and protein. You would still get where you are going.
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-title">&#x1F343; Diet quality, not just macros</div>
     <div class="grid-2">
@@ -1010,11 +1062,11 @@ label {
           matters on a vegetarian diet. Keep it.
         </p>
         <p style="font-size:0.87rem;color:var(--text-secondary);line-height:1.65;margin-top:10px">
-          Two things to watch. It was only about <strong style="color:var(--text-primary)">23g protein</strong> before the
-          whey and skyr went in, which is under half of what a first meal should deliver for you &mdash; that is why the plans
-          add them to the same bowl. And granola is calorie-dense and very easy to over-pour, so
-          <strong style="color:var(--text-primary)">weigh it</strong> rather than eyeballing. A generous pour can quietly be
-          double what the plan assumes.
+          The one weakness was protein. As you were eating it, the bowl came to about
+          <strong style="color:var(--text-primary)">23g</strong>, which is under half of what your first meal should deliver.
+          The plans fix that by making skyr the base rather than the granola &mdash; see the breakfast card above for the
+          before and after. Whichever version you go with, <strong style="color:var(--text-primary)">weigh the granola</strong>
+          rather than eyeballing it.
         </p>
         <p style="font-size:0.87rem;color:var(--text-secondary);line-height:1.65;margin-top:10px">
           Worth checking: not every nutritional yeast is fortified with B12. Look at your tub, and if it is unfortified you are
@@ -1298,7 +1350,7 @@ const mealPlans = {
   recomp: {
     label: 'Recomposition Plan', cal: 2406,
     meals: [
-      { time: 'Breakfast', name: 'Loaded Granola Protein Bowl', desc: 'Lizi\'s granola (35g), semi-skimmed milk (200ml), chia (10g), flaxseed (10g), goji (15g), nutritional yeast (5g), cocoa (5g), whey (19g), 0% skyr (100g).', alt: 'Use 115g cottage cheese and 115g 0% skyr in the bowl in place of the whey and milk - 580 kcal, 47g protein', cal: 578, p: 47, c: 57, f: 19 },
+      { time: 'Breakfast', name: 'Skyr and Granola Power Bowl', desc: "0% skyr (300g) topped with Lizi's granola (20g), almonds (15g), chia (10g), flaxseed (10g), goji (15g), nutritional yeast (5g), cocoa (5g), milk (100ml).", alt: 'Your current version: granola as the base with milk and a smaller pot of skyr. Same calories and protein, but a much smaller bowl and it needs whey powder', cal: 584, p: 48, c: 55, f: 22 },
       { time: 'Morning Snack', name: 'Seeded Skyr and Blueberry Pot', desc: '0% skyr (200g) with blueberries (80g), pumpkin seeds (10g) and chia (5g) stirred through.', alt: 'Swap the skyr and seeds for 200g cottage cheese with the same blueberries - 242 kcal, 23g protein', cal: 240, p: 24, c: 22, f: 7 },
       { time: 'Lunch', name: 'Quorn Mince Chilli with Brown Rice', desc: 'Quorn mince (180g) simmered with black beans (80g), passata (120g), onion (50g), peppers (60g) and olive oil (6g) over brown rice (100g cooked).', alt: 'Swap the Quorn mince and oil for 50g seitan and 145g cooked brown lentils - 539 kcal, 38g protein', cal: 542, p: 39, c: 68, f: 11 },
       { time: 'Afternoon Snack', name: 'Quorn Chicken Bite Salad Box', desc: 'Quorn chicken bites (120g) with cucumber (80g), tomato (80g), olive oil (5g) dressing and rice cakes (20g).', alt: 'Swap the Quorn bites for 80g tempeh, marinated and baked - 302 kcal, 18g protein', cal: 304, p: 21, c: 32, f: 11 },
@@ -1309,7 +1361,7 @@ const mealPlans = {
   bulking: {
     label: 'Bulking Plan', cal: 3156,
     meals: [
-      { time: 'Breakfast', name: 'Loaded Granola Protein Bowl', desc: 'Lizi\'s granola (55g), semi-skimmed milk (250ml), chia (12g), flaxseed (12g), goji (20g), nutritional yeast (6g), cocoa (6g), whey (20g), 0% skyr (150g).', alt: 'Use 155g cottage cheese and 95g 0% skyr in the bowl in place of the whey and milk - 772 kcal, 58g protein', cal: 771, p: 58, c: 80, f: 26 },
+      { time: 'Breakfast', name: 'Skyr and Granola Power Bowl', desc: "0% skyr (375g) topped with Lizi's granola (20g), banana (75g), almonds (20g), chia (12g), flaxseed (12g), goji (20g), nutritional yeast (6g), cocoa (6g), milk (100ml).", alt: 'Your current version: granola as the base with milk and a smaller pot of skyr. Same calories and protein, but a much smaller bowl and it needs whey powder', cal: 766, p: 59, c: 82, f: 27 },
       { time: 'Morning Snack', name: 'Peanut Butter Banana Toast with Skyr', desc: 'Wholegrain toast (50g) with peanut butter (14g) and sliced banana (80g), plus 0% skyr (150g) on the side.', alt: 'Spread 50g chickpea hummus on the toast instead of the peanut butter - 365 kcal, 25g protein', cal: 364, p: 25, c: 48, f: 9 },
       { time: 'Lunch', name: 'Quorn Mince Bolognese', desc: 'Quorn mince (200g) in passata (150g) with onion (60g), mushrooms (60g) and olive oil (6g), over wholewheat pasta (80g dry) with parmesan (10g).', alt: 'Swap the Quorn mince and oil for 85g seitan and 90g cooked chickpeas - 673 kcal, 48g protein', cal: 668, p: 48, c: 78, f: 15 },
       { time: 'Afternoon Snack', name: 'Beyond Steak Fajita Wrap', desc: 'Beyond Steak (100g) seared with paprika in a tortilla (60g) with salsa (30g), peppers (60g) and spinach (30g).', alt: 'Swap the Beyond Steak for 90g seitan and 20g cooked brown lentils - 363 kcal, 31g protein', cal: 368, p: 32, c: 42, f: 8 },
@@ -1320,7 +1372,7 @@ const mealPlans = {
   maintenance: {
     label: 'Maintenance Plan', cal: 2756,
     meals: [
-      { time: 'Breakfast', name: 'Loaded Granola Protein Bowl', desc: 'Lizi\'s granola (70g), semi-skimmed milk (200ml), chia (10g), flaxseed (10g), goji (15g), nutritional yeast (5g), cocoa (5g), whey (19g), 0% skyr (120g).', alt: 'Use 115g cottage cheese and 115g 0% skyr in the bowl in place of the whey and milk - 752 kcal, 53g protein', cal: 750, p: 52, c: 78, f: 26 },
+      { time: 'Breakfast', name: 'Skyr and Granola Power Bowl', desc: "0% skyr (325g) topped with Lizi's granola (20g), banana (100g), almonds (25g), chia (10g), flaxseed (10g), goji (15g), nutritional yeast (5g), cocoa (5g), milk (100ml).", alt: 'Your current version: granola as the base with milk and a smaller pot of skyr. Same calories and protein, but a much smaller bowl and it needs whey powder', cal: 745, p: 54, c: 81, f: 27 },
       { time: 'Morning Snack', name: 'Cottage Cheese and Apple Crunch', desc: 'Cottage cheese (120g) with chopped apple (150g) and toasted almonds (17g).', alt: 'Swap the cottage cheese for 115g 0% skyr and a further 10g almonds - 300 kcal, 18g protein', cal: 294, p: 17, c: 29, f: 14 },
       { time: 'Lunch', name: 'Quorn Mince Shepherds Pie with Kale', desc: 'Quorn mince (180g) with passata (100g), onion (60g), carrot (60g) and peas (60g) under mashed potato (150g) with olive oil (6g), plus kale (80g).', alt: 'Swap the Quorn mince and oil for 125g extra-firm tofu and 55g cooked brown lentils - 514 kcal, 37g protein', cal: 513, p: 37, c: 62, f: 12 },
       { time: 'Afternoon Snack', name: 'Quorn Chicken Bite Wrap', desc: 'Quorn chicken bites (130g) in a tortilla (60g) with salsa (30g), spinach (30g) and 0% skyr (40g) as dressing.', alt: 'Swap the Quorn bites for 90g tempeh, sliced and pan-fried - 393 kcal, 27g protein', cal: 390, p: 30, c: 45, f: 10 },
@@ -1331,7 +1383,7 @@ const mealPlans = {
   cutting: {
     label: 'Cutting Plan', cal: 2256,
     meals: [
-      { time: 'Breakfast', name: 'Loaded Granola Protein Bowl', desc: 'Lizi\'s granola (35g), semi-skimmed milk (150ml), chia (8g), flaxseed (8g), goji (10g), nutritional yeast (5g), cocoa (5g), whey (16g), 0% skyr (120g).', alt: 'Use 80g cottage cheese and 110g 0% skyr in the bowl in place of the whey and milk - 516 kcal, 43g protein', cal: 514, p: 43, c: 50, f: 17 },
+      { time: 'Breakfast', name: 'Skyr and Granola Power Bowl', desc: "0% skyr (300g) topped with Lizi's granola (20g), banana (25g), almonds (5g), chia (8g), flaxseed (8g), goji (10g), nutritional yeast (5g), cocoa (5g), milk (100ml).", alt: 'Your current version: granola as the base with milk and a smaller pot of skyr. Same calories and protein, but a much smaller bowl and it needs whey powder', cal: 510, p: 45, c: 53, f: 16 },
       { time: 'Morning Snack', name: 'Raspberry Skyr Pot', desc: '0% skyr (200g) layered with raspberries (100g) and pumpkin seeds (14g).', alt: 'Swap the skyr and seeds for 170g cottage cheese whipped with 50g egg whites - 245 kcal, 25g protein', cal: 244, p: 25, c: 22, f: 8 },
       { time: 'Lunch', name: 'Quorn and Quinoa Mediterranean Salad', desc: 'Quorn chicken bites (200g) over quinoa (25g dry) with cucumber (80g), rocket (40g), peppers (60g), feta (15g) and olive oil (12g).', alt: 'Swap the Quorn bites and oil for 80g paneer and 95g extra-firm tofu - 543 kcal, 38g protein', cal: 535, p: 38, c: 41, f: 25 },
       { time: 'Afternoon Snack', name: 'Quorn Mince Lettuce Wraps', desc: 'Quorn mince (130g) spiced and spooned into lettuce cups (60g) with carrot (40g), edamame (50g) and salsa (30g).', alt: 'Swap the Quorn mince for 95g extra-firm tofu, crumbled and spiced - 234 kcal, 24g protein', cal: 233, p: 26, c: 18, f: 5 },
