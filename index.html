@@ -515,6 +515,151 @@ label {
 .badge-red { background: rgba(239,83,80,0.15); color: var(--red); }
 .badge-purple { background: rgba(171,71,188,0.15); color: var(--purple); }
 
+
+/* ===== Exercise demonstrations ===== */
+.ex-item { border-bottom: 1px solid var(--border); }
+.ex-item:last-child { border-bottom: none; }
+.ex-toggle {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  padding: 13px 8px 13px 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-xs);
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.ex-toggle:hover { background: var(--bg-card-hover); }
+.ex-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.ex-toggle .exercise-name { display: flex; align-items: center; gap: 8px; }
+.ex-chev {
+  color: var(--accent);
+  font-size: 0.7rem;
+  transition: transform var(--transition);
+  flex-shrink: 0;
+}
+.ex-toggle[aria-expanded="true"] .ex-chev { transform: rotate(90deg); }
+.ex-toggle[aria-expanded="true"] { background: var(--accent-bg); }
+
+.ex-detail { display: none; }
+.ex-detail.open { display: block; animation: fadeIn 0.25s ease; }
+.ex-panel {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 22px;
+  padding: 6px 0 22px;
+}
+.ex-demo { position: sticky; top: 84px; align-self: start; }
+.ex-svg {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  display: block;
+}
+.fig-near, .fig-torso { stroke: var(--text-primary); fill: none; stroke-linecap: round; }
+.fig-far { stroke: var(--text-muted); fill: none; stroke-linecap: round; }
+.fig-head { fill: var(--text-primary); stroke: none; }
+.eq-floor { stroke: var(--border); stroke-width: 2; }
+.eq-frame { fill: var(--border); stroke: none; }
+.eq-plate { fill: var(--accent); stroke: none; }
+.eq-hub { fill: var(--bg-input); stroke: none; }
+.eq-bar { stroke: var(--accent); fill: none; stroke-linecap: round; }
+.eq-cable { stroke: var(--text-muted); stroke-width: 1.6; fill: none; }
+.eq-pulley { fill: var(--accent); stroke: none; }
+.eq-pad { fill: var(--accent); stroke: none; opacity: 0.85; }
+
+.demo-ctl { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.demo-play {
+  background: var(--accent-bg-strong);
+  color: var(--accent-light);
+  border: 1px solid rgba(76,175,80,0.3);
+  border-radius: var(--radius-xs);
+  padding: 5px 12px;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.demo-play:hover { background: rgba(76,175,80,0.28); }
+.demo-range { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; padding: 0; background: var(--border); border: none; border-radius: 2px; cursor: pointer; }
+.demo-range::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: none; cursor: pointer; }
+.demo-range::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: none; cursor: pointer; }
+.demo-range:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.demo-legend { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 5px; }
+
+.ex-info { min-width: 0; }
+.ex-cue {
+  background: var(--accent-bg);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+  padding: 11px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-light);
+  margin-bottom: 14px;
+}
+.ex-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.ex-block { margin-bottom: 16px; }
+.ex-block h4 {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+.ex-block p, .ex-block li { font-size: 0.86rem; color: var(--text-secondary); line-height: 1.65; }
+.ex-block ol, .ex-block ul { padding-left: 20px; display: flex; flex-direction: column; gap: 5px; }
+.ex-block ol li::marker { color: var(--accent); font-weight: 700; }
+.ex-mistakes li::marker { color: var(--red); }
+.ex-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.ex-tempo { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.ex-video {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: var(--radius-xs);
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: var(--transition);
+}
+.ex-video:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(76,175,80,0.3); }
+.ex-video:focus-visible { outline: 2px solid var(--accent-light); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+@media (max-width: 760px) {
+  .ex-panel { grid-template-columns: 1fr; gap: 16px; }
+  .ex-demo { position: static; max-width: 300px; margin: 0 auto; width: 100%; }
+}
+@media (max-width: 480px) {
+  .ex-toggle { grid-template-columns: 1fr; gap: 4px; padding: 12px 4px; }
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
@@ -620,6 +765,10 @@ label {
   <div class="section-header">
     <h2>&#x1F4AA; 5-Day Workout Program</h2>
     <p>Push / Pull / Legs / Upper / Lower split for maximum hypertrophy</p>
+  </div>
+
+  <div class="workout-note">
+    <strong>Tap any exercise</strong> to see an animated demonstration, setup and execution steps, the mistakes to avoid, and a link to a full video demo.
   </div>
 
   <div class="workout-note">
@@ -1125,11 +1274,14 @@ function showWorkoutDay(idx, btn) {
 
   const day = workoutDays[idx];
   const exercisesHTML = day.exercises.map(e => `
-    <div class="exercise-row">
-      <div class="exercise-name">${e.name}</div>
-      <div class="exercise-detail">${e.sets} sets</div>
-      <div class="exercise-detail">${e.reps} reps</div>
-      <div class="exercise-detail">${e.rest}</div>
+    <div class="ex-item">
+      <button class="ex-toggle" aria-expanded="false" onclick="toggleEx(this)">
+        <span class="exercise-name"><span class="ex-chev">&#9654;</span>${e.name}</span>
+        <span class="exercise-detail">${e.sets} sets</span>
+        <span class="exercise-detail">${e.reps} reps</span>
+        <span class="exercise-detail">${e.rest}</span>
+      </button>
+      <div class="ex-detail" data-ex="${e.name}">${exerciseDetailHTML(e.name)}</div>
     </div>
   `).join('');
 
@@ -1388,4 +1540,1474 @@ function renderSupplements() {
     </div>
   `).join('');
 }
+
+/* ============ EXERCISE DEMO ENGINE ============ */
+/* ============================================================
+   Parametric exercise-figure renderer.
+   Side-view stick rig. Angles in degrees measured from "down":
+     0 = down, 90 = forward/right, 180 = up, 270 = back/left
+   ============================================================ */
+
+const RIG = { head: 10.5, neck: 6, torso: 46, ua: 27, fa: 25, th: 34, sh: 34, foot: 15 };
+const DEG = Math.PI / 180;
+
+function proj(x, y, a, L) {
+  return [x + L * Math.sin(a * DEG), y + L * Math.cos(a * DEG)];
+}
+
+const POSE_DEFAULTS = {
+  hx: 100, hy: 112, torso: 180,
+  uaN: 0, faN: 0, uaF: null, faF: null,
+  thN: 0, shN: 0, thF: null, shF: null,
+  footN: 90, footF: null,
+  headA: null,          // head direction; defaults to torso
+  torsoLen: RIG.torso
+};
+
+function solve(raw) {
+  const p = Object.assign({}, POSE_DEFAULTS, raw);
+  if (p.uaF === null) p.uaF = p.uaN;
+  if (p.faF === null) p.faF = p.faN;
+  if (p.thF === null) p.thF = p.thN;
+  if (p.shF === null) p.shF = p.shN;
+  if (p.footF === null) p.footF = p.footN;
+  if (p.headA === null) p.headA = p.torso;
+
+  const hip = [p.hx, p.hy];
+  const sh = proj(hip[0], hip[1], p.torso, p.torsoLen);
+  const head = proj(sh[0], sh[1], p.headA, RIG.neck + RIG.head);
+  const neck = proj(sh[0], sh[1], p.headA, RIG.neck * 0.5);
+
+  const elbowN = proj(sh[0], sh[1], p.uaN, RIG.ua);
+  const handN = proj(elbowN[0], elbowN[1], p.faN, RIG.fa);
+  const elbowF = proj(sh[0], sh[1], p.uaF, RIG.ua);
+  const handF = proj(elbowF[0], elbowF[1], p.faF, RIG.fa);
+
+  const kneeN = proj(hip[0], hip[1], p.thN, RIG.th);
+  const ankleN = proj(kneeN[0], kneeN[1], p.shN, RIG.sh);
+  const toeN = proj(ankleN[0], ankleN[1], p.footN, RIG.foot);
+  const kneeF = proj(hip[0], hip[1], p.thF, RIG.th);
+  const ankleF = proj(kneeF[0], kneeF[1], p.shF, RIG.sh);
+  const toeF = proj(ankleF[0], ankleF[1], p.footF, RIG.foot);
+
+  return { p, hip, sh, neck, head, elbowN, handN, elbowF, handF, kneeN, ankleN, toeN, kneeF, ankleF, toeF };
+}
+
+/* ---------- interpolation ---------- */
+const ANGLE_KEYS = ['torso', 'uaN', 'faN', 'uaF', 'faF', 'thN', 'shN', 'thF', 'shF', 'footN', 'footF', 'headA'];
+
+function lerpPose(a, b, t) {
+  const A = Object.assign({}, POSE_DEFAULTS, a);
+  const B = Object.assign({}, POSE_DEFAULTS, b);
+  const out = {};
+  for (const k of Object.keys(POSE_DEFAULTS)) {
+    let va = A[k], vb = B[k];
+    if (va === null && vb === null) { out[k] = null; continue; }
+    if (va === null) va = ANGLE_KEYS.includes(k) ? fallback(A, k) : vb;
+    if (vb === null) vb = ANGLE_KEYS.includes(k) ? fallback(B, k) : va;
+    out[k] = va + (vb - va) * t;
+  }
+  return out;
+}
+
+function fallback(p, k) {
+  const map = { uaF: 'uaN', faF: 'faN', thF: 'thN', shF: 'shN', footF: 'footN', headA: 'torso' };
+  const src = map[k];
+  return src ? (p[src] !== null && p[src] !== undefined ? p[src] : 0) : 0;
+}
+
+/* ---------- svg helpers ---------- */
+const esc = n => Math.round(n * 100) / 100;
+const L = (a, b, w, cls) => `<line x1="${esc(a[0])}" y1="${esc(a[1])}" x2="${esc(b[0])}" y2="${esc(b[1])}" stroke-width="${w}" class="${cls}"/>`;
+const C = (c, r, cls, extra = '') => `<circle cx="${esc(c[0])}" cy="${esc(c[1])}" r="${esc(r)}" class="${cls}" ${extra}/>`;
+const R = (x, y, w, h, cls, rx = 2, rot = null) => {
+  const tr = rot ? ` transform="rotate(${esc(rot[0])} ${esc(rot[1])} ${esc(rot[2])})"` : '';
+  return `<rect x="${esc(x)}" y="${esc(y)}" width="${esc(w)}" height="${esc(h)}" rx="${rx}" class="${cls}"${tr}/>`;
+};
+
+/* ---------- equipment ---------- */
+function drawEquip(items, j, layer) {
+  if (!items) return '';
+  return items.filter(it => (it.layer || 'back') === layer).map(it => equipItem(it, j)).join('');
+}
+
+function resolve(ref, j) {
+  if (Array.isArray(ref)) return ref;
+  return j[ref];
+}
+
+function equipItem(it, j) {
+  switch (it.k) {
+    case 'floor':
+      return `<line x1="6" y1="${esc(it.y)}" x2="214" y2="${esc(it.y)}" class="eq-floor"/>`;
+
+    case 'box': // generic machine frame / platform / block
+      return R(it.x, it.y, it.w, it.h, it.cls || 'eq-frame', it.rx === undefined ? 2 : it.rx, it.rot);
+
+    case 'bench': {
+      // angled bench pad: cx,cy centre of pad top, a = pad angle (0 = flat)
+      const a = it.a || 0;
+      return R(it.cx - it.w / 2, it.cy, it.w, it.h || 8, 'eq-frame', 3, [a, it.cx, it.cy]);
+    }
+
+    case 'plate': { // barbell seen end-on
+      const c = resolve(it.at, j);
+      const r = it.r || 15;
+      return C(c, r, 'eq-plate') + C(c, r * 0.30, 'eq-hub');
+    }
+
+    case 'dumbbell': {
+      const c = resolve(it.at, j);
+      const a = it.a === undefined ? 90 : it.a;
+      const h = proj(c[0], c[1], a, 9), t = proj(c[0], c[1], a + 180, 9);
+      return L(t, h, 4, 'eq-bar') +
+        R(h[0] - 4.5, h[1] - 7, 9, 14, 'eq-plate', 2, [a, h[0], h[1]]) +
+        R(t[0] - 4.5, t[1] - 7, 9, 14, 'eq-plate', 2, [a, t[0], t[1]]);
+    }
+
+    case 'bar': { // straight barbell / handle seen side-on (in-plane)
+      const c = resolve(it.at, j);
+      const a = it.a === undefined ? 90 : it.a;
+      const len = it.len || 34;
+      const h = proj(c[0], c[1], a, len / 2), t = proj(c[0], c[1], a + 180, len / 2);
+      return L(t, h, 4, 'eq-bar');
+    }
+
+    case 'cable': {
+      const to = resolve(it.to, j);
+      return `<line x1="${esc(it.from[0])}" y1="${esc(it.from[1])}" x2="${esc(to[0])}" y2="${esc(to[1])}" class="eq-cable"/>` +
+        C(it.from, 4, 'eq-pulley');
+    }
+
+    case 'pad': { // roller pad (leg curl / extension / calf)
+      const c = resolve(it.at, j);
+      return C(c, it.r || 8, 'eq-pad');
+    }
+
+    case 'slab': { // flat plate/platform anchored to a joint (leg-press footplate)
+      const c = resolve(it.at, j);
+      const w = it.w || 40, h = it.h || 9;
+      return R(c[0] - w / 2, c[1] - h / 2, w, h, it.cls || 'eq-frame', 2, [it.a || 0, c[0], c[1]]);
+    }
+
+    default:
+      return '';
+  }
+}
+
+/* ---------- figure ---------- */
+function figureSVG(pose, equip) {
+  const j = solve(pose);
+  const far = [
+    L(j.sh, j.elbowF, 6.5, 'fig-far'),
+    L(j.elbowF, j.handF, 6, 'fig-far'),
+    L(j.hip, j.kneeF, 7.5, 'fig-far'),
+    L(j.kneeF, j.ankleF, 7, 'fig-far'),
+    L(j.ankleF, j.toeF, 5.5, 'fig-far')
+  ].join('');
+  const near = [
+    L(j.hip, j.kneeN, 9, 'fig-near'),
+    L(j.kneeN, j.ankleN, 8, 'fig-near'),
+    L(j.ankleN, j.toeN, 6, 'fig-near'),
+    L(j.sh, j.elbowN, 8, 'fig-near'),
+    L(j.elbowN, j.handN, 7, 'fig-near')
+  ].join('');
+  const core = L(j.hip, j.sh, 13, 'fig-torso') + L(j.sh, j.neck, 7, 'fig-torso');
+  const head = C(j.head, RIG.head, 'fig-head');
+
+  return drawEquip(equip, j, 'back') + far + core + head + near + drawEquip(equip, j, 'front');
+}
+
+
+/* Pose keyframes for all 40 exercises.
+   a = start / stretched position, b = finish / contracted position. */
+
+const FLOOR = 178;
+
+const exercisePoses = {
+
+  /* ---------------- PUSH ---------------- */
+  "Barbell Bench Press": {
+    a: { hx: 126, hy: 118, torso: 270, thN: 45, shN: 0, thF: 52, shF: 6, uaN: 210, faN: 95, uaF: 210, faF: 95 },
+    b: { hx: 126, hy: 118, torso: 270, thN: 45, shN: 0, thF: 52, shF: 6, uaN: 185, faN: 180, uaF: 185, faF: 180 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 58, y: 124, w: 82, h: 9 },
+      { k: 'box', x: 92, y: 133, w: 9, h: 45 },
+      { k: 'plate', at: 'handN', r: 15, layer: 'front' }
+    ]
+  },
+
+  "Incline Dumbbell Press": {
+    a: { hx: 118, hy: 120, torso: 250, thN: 40, shN: 0, thF: 47, shF: 6, uaN: 215, faN: 125, uaF: 215, faF: 125 },
+    b: { hx: 118, hy: 120, torso: 250, thN: 40, shN: 0, thF: 47, shF: 6, uaN: 182, faN: 180, uaF: 182, faF: 180 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'bench', cx: 96, cy: 116, w: 68, h: 9, a: 20 },
+      { k: 'box', x: 112, y: 126, w: 26, h: 8 },
+      { k: 'box', x: 106, y: 134, w: 9, h: 44 },
+      { k: 'dumbbell', at: 'handN', a: 90, layer: 'front' }
+    ]
+  },
+
+  "Dumbbell Fly": {
+    a: { hx: 126, hy: 118, torso: 270, thN: 45, shN: 0, thF: 52, shF: 6, uaN: 150, faN: 120, uaF: 195, faF: 215 },
+    b: { hx: 126, hy: 118, torso: 270, thN: 45, shN: 0, thF: 52, shF: 6, uaN: 170, faN: 175, uaF: 172, faF: 177 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 58, y: 124, w: 82, h: 9 },
+      { k: 'box', x: 92, y: 133, w: 9, h: 45 },
+      { k: 'dumbbell', at: 'handF', a: 90, layer: 'back' },
+      { k: 'dumbbell', at: 'handN', a: 90, layer: 'front' }
+    ]
+  },
+
+  "Overhead Press (Barbell)": {
+    a: { hx: 100, hy: 112, torso: 180, uaN: 205, faN: 130, uaF: 205, faF: 130 },
+    b: { hx: 100, hy: 108, torso: 180, uaN: 182, faN: 180, uaF: 182, faF: 180 },
+    eq: [{ k: 'floor', y: FLOOR }, { k: 'plate', at: 'handN', r: 15, layer: 'front' }]
+  },
+
+  "Lateral Raises": {
+    a: { hx: 100, hy: 112, torso: 180, uaN: 8, faN: 6, uaF: 352, faF: 354 },
+    b: { hx: 100, hy: 112, torso: 180, uaN: 88, faN: 82, uaF: 272, faF: 278 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'dumbbell', at: 'handN', a: 0, layer: 'front' },
+      { k: 'dumbbell', at: 'handF', a: 0, layer: 'front' }
+    ]
+  },
+
+  "Tricep Dips (Weighted)": {
+    a: { hx: 100, hy: 120, torso: 172, uaN: 340, faN: 20, uaF: 340, faF: 20, thN: 35, shN: 330, thF: 42, shF: 336 },
+    b: { hx: 100, hy: 92, torso: 176, uaN: 356, faN: 2, uaF: 356, faF: 2, thN: 35, shN: 330, thF: 42, shF: 336 },
+    eq: [
+      { k: 'box', x: 16, y: 40, w: 8, h: 138 },
+      { k: 'box', x: 176, y: 40, w: 8, h: 138 },
+      { k: 'floor', y: FLOOR },
+      { k: 'bar', at: 'handN', a: 90, len: 40, layer: 'front' }
+    ]
+  },
+
+  "Overhead Tricep Extension": {
+    a: { hx: 100, hy: 112, torso: 180, uaN: 186, faN: 285, uaF: 186, faF: 285 },
+    b: { hx: 100, hy: 112, torso: 180, uaN: 184, faN: 182, uaF: 184, faF: 182 },
+    eq: [{ k: 'floor', y: FLOOR }, { k: 'dumbbell', at: 'handN', a: 90, layer: 'front' }]
+  },
+
+  "Cable Pushdown": {
+    a: { hx: 100, hy: 112, torso: 174, uaN: 12, faN: 74, uaF: 12, faF: 74 },
+    b: { hx: 100, hy: 112, torso: 174, uaN: 10, faN: 8, uaF: 10, faF: 8 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 150, y: 22, w: 26, h: 156 },
+      { k: 'cable', from: [163, 30], to: 'handN' },
+      { k: 'bar', at: 'handN', a: 90, len: 28, layer: 'front' }
+    ]
+  },
+
+  /* ---------------- PULL ---------------- */
+  "Deadlift (Conventional)": {
+    a: { hx: 106, hy: 126, torso: 128, thN: 22, shN: 336, thF: 28, shF: 342, uaN: 4, faN: 2, uaF: 4, faF: 2 },
+    b: { hx: 100, hy: 112, torso: 180, thN: 0, shN: 0, thF: 5, shF: 356, uaN: 2, faN: 0, uaF: 2, faF: 0 },
+    eq: [{ k: 'floor', y: FLOOR }, { k: 'plate', at: 'handN', r: 17, layer: 'front' }]
+  },
+
+  "Weighted Pull-Ups": {
+    a: { hx: 100, hy: 120, torso: 180, uaN: 186, faN: 184, uaF: 186, faF: 184, thN: 6, shN: 330, thF: 12, shF: 336 },
+    b: { hx: 100, hy: 105, torso: 178, uaN: 225, faN: 135, uaF: 225, faF: 135, thN: 6, shN: 330, thF: 12, shF: 336 },
+    eq: [
+      { k: 'box', x: 20, y: 16, w: 160, h: 7, rx: 3 },
+      { k: 'box', x: 24, y: 23, w: 7, h: 22 },
+      { k: 'box', x: 169, y: 23, w: 7, h: 22 },
+      { k: 'plate', at: 'hip', r: 11, layer: 'front' }
+    ]
+  },
+
+  "Barbell Bent-Over Row": {
+    a: { hx: 104, hy: 120, torso: 118, thN: 8, shN: 350, thF: 14, shF: 356, uaN: 2, faN: 0, uaF: 2, faF: 0 },
+    b: { hx: 104, hy: 120, torso: 118, thN: 8, shN: 350, thF: 14, shF: 356, uaN: 318, faN: 44, uaF: 318, faF: 44 },
+    eq: [{ k: 'floor', y: FLOOR }, { k: 'plate', at: 'handN', r: 15, layer: 'front' }]
+  },
+
+  "Seated Cable Row": {
+    a: { hx: 92, hy: 138, torso: 168, thN: 84, shN: 6, thF: 90, shF: 12, uaN: 100, faN: 95, uaF: 100, faF: 95 },
+    b: { hx: 92, hy: 138, torso: 186, thN: 84, shN: 6, thF: 90, shF: 12, uaN: 345, faN: 55, uaF: 345, faF: 55 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 60, y: 146, w: 62, h: 8 },
+      { k: 'box', x: 168, y: 100, w: 22, h: 78 },
+      { k: 'cable', from: [172, 118], to: 'handN' },
+      { k: 'bar', at: 'handN', a: 0, len: 22, layer: 'front' }
+    ]
+  },
+
+  "Face Pulls": {
+    a: { hx: 100, hy: 112, torso: 180, uaN: 148, faN: 150, uaF: 148, faF: 150 },
+    b: { hx: 100, hy: 112, torso: 180, uaN: 96, faN: 214, uaF: 96, faF: 214 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 172, y: 20, w: 22, h: 158 },
+      { k: 'cable', from: [180, 44], to: 'handN' },
+      { k: 'bar', at: 'handN', a: 0, len: 20, layer: 'front' }
+    ]
+  },
+
+  "Barbell Curl": {
+    a: { hx: 100, hy: 112, torso: 180, uaN: 6, faN: 4, uaF: 6, faF: 4 },
+    b: { hx: 100, hy: 112, torso: 180, uaN: 12, faN: 112, uaF: 12, faF: 112 },
+    eq: [{ k: 'floor', y: FLOOR }, { k: 'plate', at: 'handN', r: 13, layer: 'front' }]
+  },
+
+  "Hammer Curls": {
+    a: { hx: 100, hy: 112, torso: 180, uaN: 6, faN: 4, uaF: 6, faF: 4 },
+    b: { hx: 100, hy: 112, torso: 180, uaN: 12, faN: 108, uaF: 12, faF: 108 },
+    eq: [{ k: 'floor', y: FLOOR }, { k: 'dumbbell', at: 'handN', a: 90, layer: 'front' }]
+  },
+
+  "Incline Dumbbell Curl": {
+    a: { hx: 118, hy: 120, torso: 245, thN: 40, shN: 0, thF: 47, shF: 6, uaN: 342, faN: 340, uaF: 342, faF: 340 },
+    b: { hx: 118, hy: 120, torso: 245, thN: 40, shN: 0, thF: 47, shF: 6, uaN: 350, faN: 96, uaF: 350, faF: 96 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'bench', cx: 97, cy: 118, w: 68, h: 9, a: 25 },
+      { k: 'box', x: 112, y: 128, w: 26, h: 8 },
+      { k: 'box', x: 106, y: 136, w: 9, h: 42 },
+      { k: 'dumbbell', at: 'handN', a: 90, layer: 'front' }
+    ]
+  },
+
+  /* ---------------- LEGS ---------------- */
+  "Barbell Back Squat": {
+    a: { hx: 106, hy: 146, torso: 148, thN: 68, shN: 344, thF: 74, shF: 350, uaN: 300, faN: 150, uaF: 300, faF: 150 },
+    b: { hx: 100, hy: 112, torso: 178, thN: 0, shN: 0, thF: 6, shF: 355, uaN: 300, faN: 150, uaF: 300, faF: 150 },
+    eq: [{ k: 'floor', y: FLOOR }, { k: 'plate', at: 'sh', r: 17, layer: 'back' }]
+  },
+
+  "Romanian Deadlift": {
+    a: { hx: 106, hy: 116, torso: 112, thN: 6, shN: 352, thF: 12, shF: 358, uaN: 2, faN: 0, uaF: 2, faF: 0 },
+    b: { hx: 100, hy: 112, torso: 180, thN: 0, shN: 0, thF: 5, shF: 356, uaN: 2, faN: 0, uaF: 2, faF: 0 },
+    eq: [{ k: 'floor', y: FLOOR }, { k: 'plate', at: 'handN', r: 16, layer: 'front' }]
+  },
+
+  "Leg Press": {
+    a: { hx: 96, hy: 140, torso: 250, thN: 150, shN: 95, thF: 156, shF: 101, uaN: 300, faN: 320, uaF: 300, faF: 320 },
+    b: { hx: 96, hy: 140, torso: 250, thN: 125, shN: 125, thF: 131, shF: 131, uaN: 300, faN: 320, uaF: 300, faF: 320 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'bench', cx: 74, cy: 138, w: 64, h: 9, a: 20 },
+      { k: 'box', x: 44, y: 142, w: 9, h: 36 },
+      { k: 'box', x: 118, y: 148, w: 9, h: 30 },
+      { k: 'slab', at: 'ankleN', w: 46, h: 9, a: 45, layer: 'front' }
+    ]
+  },
+
+  "Walking Lunges": {
+    a: { hx: 104, hy: 124, torso: 178, thN: 54, shN: 354, thF: 310, shF: 350, footF: 95, uaN: 4, faN: 2, uaF: 356, faF: 358 },
+    b: { hx: 104, hy: 112, torso: 180, thN: 20, shN: 356, thF: 340, shF: 14, footF: 92, uaN: 4, faN: 2, uaF: 356, faF: 358 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'dumbbell', at: 'handF', a: 90, layer: 'back' },
+      { k: 'dumbbell', at: 'handN', a: 90, layer: 'front' }
+    ]
+  },
+
+  "Leg Curl (Lying)": {
+    a: { hx: 96, hy: 130, torso: 88, thN: 92, shN: 92, thF: 92, shF: 98, uaN: 96, faN: 100, uaF: 96, faF: 100 },
+    b: { hx: 96, hy: 130, torso: 88, thN: 92, shN: 178, thF: 92, shF: 184, uaN: 96, faN: 100, uaF: 96, faF: 100 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 30, y: 136, w: 88, h: 9 },
+      { k: 'box', x: 60, y: 145, w: 9, h: 33 },
+      { k: 'pad', at: 'ankleN', r: 9, layer: 'front' }
+    ]
+  },
+
+  "Leg Extension": {
+    a: { hx: 86, hy: 126, torso: 184, thN: 88, shN: 4, thF: 94, shF: 10, uaN: 130, faN: 128, uaF: 130, faF: 128 },
+    b: { hx: 86, hy: 126, torso: 184, thN: 88, shN: 78, thF: 94, shF: 84, uaN: 130, faN: 128, uaF: 130, faF: 128 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 56, y: 134, w: 58, h: 9 },
+      { k: 'box', x: 62, y: 82, w: 9, h: 52 },
+      { k: 'box', x: 72, y: 143, w: 9, h: 35 },
+      { k: 'pad', at: 'ankleN', r: 9, layer: 'front' }
+    ]
+  },
+
+  "Standing Calf Raise": {
+    a: { hx: 100, hy: 98, torso: 180, thN: 0, shN: 0, thF: 5, shF: 356, footN: 96, uaN: 8, faN: 6, uaF: 8, faF: 6 },
+    b: { hx: 100, hy: 88, torso: 180, thN: 0, shN: 0, thF: 5, shF: 356, footN: 62, uaN: 8, faN: 6, uaF: 8, faF: 6 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 84, y: 166, w: 46, h: 12 },
+      { k: 'box', x: 150, y: 30, w: 22, h: 148 }
+    ]
+  },
+
+  "Hip Thrust": {
+    a: { hx: 95, hy: 142, torso: 230, thN: 89, shN: 30, thF: 95, shF: 36, uaN: 200, faN: 198, uaF: 200, faF: 198 },
+    b: { hx: 105, hy: 120, torso: 260, thN: 51, shN: 25, thF: 57, shF: 31, uaN: 230, faN: 228, uaF: 230, faF: 228 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 24, y: 118, w: 54, h: 10 },
+      { k: 'box', x: 38, y: 128, w: 9, h: 50 },
+      { k: 'plate', at: 'hip', r: 16, layer: 'front' }
+    ]
+  },
+
+  /* ---------------- UPPER ---------------- */
+  "Incline Barbell Press": {
+    a: { hx: 118, hy: 120, torso: 250, thN: 40, shN: 0, thF: 47, shF: 6, uaN: 222, faN: 118, uaF: 222, faF: 118 },
+    b: { hx: 118, hy: 120, torso: 250, thN: 40, shN: 0, thF: 47, shF: 6, uaN: 182, faN: 180, uaF: 182, faF: 180 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'bench', cx: 96, cy: 116, w: 68, h: 9, a: 20 },
+      { k: 'box', x: 112, y: 126, w: 26, h: 8 },
+      { k: 'box', x: 106, y: 134, w: 9, h: 44 },
+      { k: 'plate', at: 'handN', r: 15, layer: 'front' }
+    ]
+  },
+
+  "T-Bar Row": {
+    a: { hx: 104, hy: 120, torso: 122, thN: 10, shN: 352, thF: 16, shF: 358, uaN: 6, faN: 4, uaF: 6, faF: 4 },
+    b: { hx: 104, hy: 120, torso: 122, thN: 10, shN: 352, thF: 16, shF: 358, uaN: 322, faN: 40, uaF: 322, faF: 40 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 14, y: 170, w: 22, h: 9 },
+      { k: 'bar', at: 'handN', a: 108, len: 120, layer: 'back' },
+      { k: 'plate', at: 'handN', r: 13, layer: 'front' }
+    ]
+  },
+
+  "Dumbbell Shoulder Press": {
+    a: { hx: 100, hy: 128, torso: 188, thN: 86, shN: 4, thF: 92, shF: 10, uaN: 206, faN: 128, uaF: 206, faF: 128 },
+    b: { hx: 100, hy: 128, torso: 188, thN: 86, shN: 4, thF: 92, shF: 10, uaN: 184, faN: 180, uaF: 184, faF: 180 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 70, y: 136, w: 52, h: 9 },
+      { k: 'box', x: 62, y: 74, w: 10, h: 62, rot: [8, 67, 136] },
+      { k: 'box', x: 86, y: 145, w: 9, h: 33 },
+      { k: 'dumbbell', at: 'handN', a: 90, layer: 'front' }
+    ]
+  },
+
+  "Lat Pulldown (Wide Grip)": {
+    a: { hx: 100, hy: 128, torso: 184, thN: 86, shN: 4, thF: 92, shF: 10, uaN: 190, faN: 188, uaF: 190, faF: 188 },
+    b: { hx: 100, hy: 128, torso: 190, thN: 86, shN: 4, thF: 92, shF: 10, uaN: 214, faN: 146, uaF: 214, faF: 146 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 70, y: 136, w: 52, h: 9 },
+      { k: 'box', x: 84, y: 145, w: 9, h: 33 },
+      { k: 'box', x: 160, y: 14, w: 22, h: 164 },
+      { k: 'cable', from: [171, 20], to: 'handN' },
+      { k: 'bar', at: 'handN', a: 90, len: 44, layer: 'front' }
+    ]
+  },
+
+  "Cable Chest Fly": {
+    a: { hx: 100, hy: 112, torso: 176, uaN: 95, faN: 90, uaF: 265, faF: 270 },
+    b: { hx: 100, hy: 112, torso: 176, uaN: 15, faN: 350, uaF: 345, faF: 10 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 8, y: 26, w: 18, h: 152 },
+      { k: 'box', x: 174, y: 26, w: 18, h: 152 },
+      { k: 'cable', from: [22, 44], to: 'handN' },
+      { k: 'cable', from: [178, 44], to: 'handF' }
+    ]
+  },
+
+  "Dumbbell Shrugs": {
+    a: { hx: 100, hy: 112, torso: 180, torsoLen: 43, uaN: 8, faN: 6, uaF: 352, faF: 354 },
+    b: { hx: 100, hy: 112, torso: 180, torsoLen: 50, uaN: 8, faN: 6, uaF: 352, faF: 354 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'dumbbell', at: 'handN', a: 90, layer: 'front' },
+      { k: 'dumbbell', at: 'handF', a: 90, layer: 'front' }
+    ]
+  },
+
+  "EZ-Bar Curl": {
+    a: { hx: 100, hy: 112, torso: 180, uaN: 6, faN: 4, uaF: 6, faF: 4 },
+    b: { hx: 100, hy: 112, torso: 180, uaN: 12, faN: 110, uaF: 12, faF: 110 },
+    eq: [{ k: 'floor', y: FLOOR }, { k: 'plate', at: 'handN', r: 12, layer: 'front' }]
+  },
+
+  "Close-Grip Bench Press": {
+    a: { hx: 126, hy: 118, torso: 270, thN: 45, shN: 0, thF: 52, shF: 6, uaN: 200, faN: 100, uaF: 200, faF: 100 },
+    b: { hx: 126, hy: 118, torso: 270, thN: 45, shN: 0, thF: 52, shF: 6, uaN: 186, faN: 180, uaF: 186, faF: 180 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 58, y: 124, w: 82, h: 9 },
+      { k: 'box', x: 92, y: 133, w: 9, h: 45 },
+      { k: 'plate', at: 'handN', r: 15, layer: 'front' }
+    ]
+  },
+
+  /* ---------------- LOWER ---------------- */
+  "Front Squat": {
+    a: { hx: 102, hy: 146, torso: 166, thN: 70, shN: 342, thF: 76, shF: 348, uaN: 60, faN: 140, uaF: 60, faF: 140 },
+    b: { hx: 100, hy: 112, torso: 180, thN: 0, shN: 0, thF: 6, shF: 355, uaN: 60, faN: 140, uaF: 60, faF: 140 },
+    eq: [{ k: 'floor', y: FLOOR }, { k: 'plate', at: 'handN', r: 16, layer: 'front' }]
+  },
+
+  "Sumo Deadlift": {
+    a: { hx: 100, hy: 138, torso: 156, thN: 58, shN: 306, thF: 302, shF: 54, uaN: 4, faN: 2, uaF: 356, faF: 358 },
+    b: { hx: 100, hy: 112, torso: 178, thN: 22, shN: 338, thF: 338, shF: 22, uaN: 4, faN: 2, uaF: 356, faF: 358 },
+    eq: [{ k: 'floor', y: FLOOR }, { k: 'plate', at: 'handN', r: 17, layer: 'front' }]
+  },
+
+  "Bulgarian Split Squat": {
+    a: { hx: 104, hy: 136, torso: 172, thN: 40, shN: 348, thF: 316, shF: 46, uaN: 6, faN: 4, uaF: 354, faF: 356 },
+    b: { hx: 104, hy: 112, torso: 178, thN: 18, shN: 356, thF: 330, shF: 24, uaN: 6, faN: 4, uaF: 354, faF: 356 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 132, y: 140, w: 52, h: 9 },
+      { k: 'box', x: 154, y: 149, w: 9, h: 29 },
+      { k: 'dumbbell', at: 'handN', a: 90, layer: 'front' }
+    ]
+  },
+
+  "Glute-Ham Raise": {
+    a: { hx: 77, hy: 141, torso: 255, thN: 75, shN: 77, thF: 75, shF: 83, uaN: 215, faN: 175, uaF: 215, faF: 175 },
+    b: { hx: 110, hy: 116, torso: 180, thN: 0, shN: 77, thF: 6, shF: 83, uaN: 140, faN: 100, uaF: 140, faF: 100 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 94, y: 148, w: 38, h: 11 },
+      { k: 'box', x: 108, y: 159, w: 9, h: 19 },
+      { k: 'pad', at: 'ankleN', r: 9, layer: 'front' }
+    ]
+  },
+
+  "Hack Squat": {
+    a: { hx: 104, hy: 146, torso: 205, thN: 103, shN: 344, thF: 109, shF: 350, uaN: 258, faN: 256, uaF: 258, faF: 256 },
+    b: { hx: 92, hy: 112, torso: 205, thN: 44, shN: 21, thF: 50, shF: 27, uaN: 250, faN: 248, uaF: 250, faF: 248 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 86, y: 44, w: 14, h: 116, rot: [-25, 93, 102] },
+      { k: 'box', x: 104, y: 168, w: 64, h: 10 }
+    ]
+  },
+
+  "Seated Leg Curl": {
+    a: { hx: 84, hy: 126, torso: 186, thN: 88, shN: 80, thF: 94, shF: 86, uaN: 128, faN: 126, uaF: 128, faF: 126 },
+    b: { hx: 84, hy: 126, torso: 186, thN: 88, shN: 345, thF: 94, shF: 351, uaN: 128, faN: 126, uaF: 128, faF: 126 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 54, y: 134, w: 58, h: 9 },
+      { k: 'box', x: 58, y: 82, w: 9, h: 52 },
+      { k: 'box', x: 70, y: 143, w: 9, h: 35 },
+      { k: 'pad', at: 'kneeN', r: 8, layer: 'front' },
+      { k: 'pad', at: 'ankleN', r: 9, layer: 'front' }
+    ]
+  },
+
+  "Seated Calf Raise": {
+    a: { hx: 82, hy: 124, torso: 182, thN: 88, shN: 4, thF: 94, shF: 10, footN: 98, uaN: 40, faN: 38, uaF: 40, faF: 38 },
+    b: { hx: 82, hy: 124, torso: 182, thN: 88, shN: 4, thF: 94, shF: 10, footN: 58, uaN: 40, faN: 38, uaF: 40, faF: 38 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 52, y: 132, w: 54, h: 9 },
+      { k: 'box', x: 62, y: 141, w: 9, h: 37 },
+      { k: 'box', x: 100, y: 158, w: 46, h: 12 },
+      { k: 'pad', at: 'kneeN', r: 9, layer: 'front' }
+    ]
+  },
+
+  "Cable Pull-Through": {
+    a: { hx: 106, hy: 118, torso: 118, thN: 12, shN: 350, thF: 18, shF: 356, uaN: 320, faN: 315, uaF: 320, faF: 315 },
+    b: { hx: 100, hy: 112, torso: 180, thN: 0, shN: 0, thF: 5, shF: 356, uaN: 4, faN: 2, uaF: 4, faF: 2 },
+    eq: [
+      { k: 'floor', y: FLOOR },
+      { k: 'box', x: 6, y: 118, w: 20, h: 60 },
+      { k: 'cable', from: [16, 166], to: 'handN' },
+      { k: 'bar', at: 'handN', a: 0, len: 18, layer: 'front' }
+    ]
+  }
+};
+
+
+const exerciseGuide = {
+  "Barbell Bench Press": {
+    equipment: "Barbell, flat bench, power rack or bench uprights, safety pins",
+    primary: ["Chest (pecs)", "Front delts", "Triceps"],
+    cue: "Pull the shoulder blades down and back, then press the bar away from you.",
+    setup: "Lie back so your eyes sit just behind the bar. Grip roughly 1.4x shoulder width, retract and depress the scapulae into the bench, and plant both feet flat with a slight arch through the upper back. Squeeze the bar hard and pull it out of the rack rather than pressing it out.",
+    execution: [
+      "Take a big breath into the belly, brace the trunk, and unrack to lockout over the shoulder joint.",
+      "Lower the bar under control in a shallow diagonal to the lower chest or nipple line, elbows tucked to roughly 45-70 degrees from the torso.",
+      "Touch the chest lightly and hold tension without letting the ribcage collapse.",
+      "Drive the bar back up and slightly toward the face, finishing over the shoulders as you exhale through the sticking point.",
+      "Keep the shoulder blades pinned for every rep; reset the breath at lockout."
+    ],
+    mistakes: [
+      "Flaring the elbows to 90 degrees - it grinds the front of the shoulder and shortens the pressing lever; keep them at 45-70 degrees.",
+      "Bouncing the bar off the ribcage - it steals tension and risks a costal cartilage injury; touch and pause for a beat instead.",
+      "Letting the shoulder blades slide forward at the top - it kills stability and stresses the AC joint; keep them retracted and let the bar travel, not the scapulae."
+    ],
+    tempo: "2s down / 1s pause / explosive up"
+  },
+
+  "Incline Dumbbell Press": {
+    equipment: "Adjustable bench, dumbbells",
+    primary: ["Upper chest (clavicular pecs)", "Front delts", "Triceps"],
+    cue: "Keep the incline shallow and press the dumbbells toward each other, not straight up.",
+    setup: "Set the bench to 30-40 degrees; steeper than that turns it into a shoulder press. Kick the dumbbells to the start with your knees, sit back, and pin the shoulder blades into the pad with feet flat and hips down.",
+    execution: [
+      "Start with the dumbbells stacked over the upper chest, wrists neutral and stacked over the elbows.",
+      "Inhale and lower under control until the handles are level with the upper chest and you feel a stretch without the shoulders rolling forward.",
+      "Keep the elbows at about 45-60 degrees from the torso through the descent.",
+      "Press up and slightly inward, exhaling as you pass the midpoint, stopping just short of the dumbbells clashing.",
+      "Hold a brief squeeze at the top with the ribcage still down."
+    ],
+    mistakes: [
+      "Setting the bench above 45 degrees - the front delts take over and the upper chest gets little work; stay at 30-40 degrees.",
+      "Dropping the elbows far below the bench line - it overloads the shoulder capsule; stop when the upper arm is roughly parallel to the floor or just past.",
+      "Arching the lower back to push heavier bells - it removes the incline you just set; keep the ribcage stacked over the pelvis."
+    ],
+    tempo: "3s down / 1s stretch / 1s up"
+  },
+
+  "Dumbbell Fly": {
+    equipment: "Flat or slightly inclined bench, light dumbbells",
+    primary: ["Chest (pecs)", "Front delts"],
+    cue: "Think hugging a barrel - elbows fixed, arc wide, never press.",
+    setup: "Lie on a flat or 15-30 degree bench with shoulder blades retracted and feet planted. Start with the dumbbells over the chest, palms facing each other, and set a soft 15-20 degree elbow bend that will not change.",
+    execution: [
+      "Inhale and let the arms travel out and down in a wide arc, leading with the elbows.",
+      "Stop when the upper arms reach roughly chest level and you feel a strong pec stretch, not a pull in the front of the shoulder.",
+      "Reverse the arc by squeezing the chest and bringing the elbows toward each other, exhaling on the way up.",
+      "Finish just short of vertical so the pecs stay loaded, then repeat without resetting tension."
+    ],
+    mistakes: [
+      "Bending and straightening the elbows - it turns the fly into a sloppy press and removes the stretch; lock the elbow angle for the whole set.",
+      "Going too heavy and dropping the arms below bench level - the shoulder capsule takes the load and the long head of biceps gets strained; stay in a range you can control.",
+      "Bringing the dumbbells all the way together at the top - tension drops to zero; stop with a few inches of space."
+    ],
+    tempo: "3s out / 1s stretch / 2s in"
+  },
+
+  "Overhead Press (Barbell)": {
+    equipment: "Barbell, power rack set at upper chest height",
+    primary: ["Front delts", "Side delts", "Triceps", "Upper chest"],
+    cue: "Squeeze glutes and abs, push your head through the window at lockout.",
+    setup: "Set the pins just below shoulder height. Grip just outside shoulder width with the bar resting on the front delts, elbows slightly in front of the bar and wrists stacked over the forearms. Stand with feet hip width, glutes and abs braced hard, ribs down.",
+    execution: [
+      "Take a breath, brace the trunk, and pull the chin and ribcage back an inch to clear a bar path.",
+      "Press the bar in a straight vertical line past the face, exhaling as it passes the forehead.",
+      "As the bar clears the head, move the head forward under the bar and finish with the biceps beside the ears.",
+      "Lock out with the shoulders shrugged slightly up and the bar stacked over the mid-foot.",
+      "Lower under control back to the front delts, re-bracing before each rep."
+    ],
+    mistakes: [
+      "Leaning back with a hyperextended lower back to clear the chin - it shears the lumbar spine and turns the lift into a bad incline press; brace the abs and glutes and move the head instead.",
+      "Finishing with the bar in front of the face - the shoulders stay in an unstable position and the load pulls you forward; the bar must end over the mid-foot.",
+      "Pressing behind the neck - it forces the shoulder into extreme external rotation at end range and risks impingement or a capsule strain; press in front."
+    ],
+    tempo: "2s down / 0s pause / controlled fast up"
+  },
+
+  "Lateral Raises": {
+    equipment: "Light dumbbells or cable stack with a D-handle",
+    primary: ["Side delts (medial deltoid)", "Traps (upper)"],
+    cue: "Lead with the elbows and stop at shoulder height.",
+    setup: "Stand tall with feet hip width, a very slight forward torso lean, and dumbbells at your sides or slightly in front of the thighs. Keep a fixed soft bend in the elbows and let the shoulder blades sit relaxed rather than forcibly pinched.",
+    execution: [
+      "Exhale and raise the arms out to the sides, leading with the elbows so the hands trail slightly below them.",
+      "Keep the thumbs level with or a touch lower than the little fingers to avoid pinching the joint.",
+      "Stop at shoulder height, where the upper arm is parallel to the floor.",
+      "Lower slowly and resist all the way to the bottom, inhaling on the descent, and stop just short of the thighs to keep the delts loaded."
+    ],
+    mistakes: [
+      "Swinging with the hips and traps to start each rep - momentum takes the load off the side delt; use lighter weight and a dead-stop start.",
+      "Raising well above shoulder height - the traps take over and the movement stops being a lateral raise; stop at parallel.",
+      "Aggressively internally rotating so the thumbs point hard down - it narrows the subacromial space and irritates the rotator cuff; keep the hand close to neutral."
+    ],
+    tempo: "1s up / 1s hold / 3s down"
+  },
+
+  "Tricep Dips (Weighted)": {
+    equipment: "Parallel dip bars, dip belt with plates",
+    primary: ["Triceps", "Lower chest (pecs)", "Front delts"],
+    cue: "Stay upright, elbows back, and stop when the upper arm hits parallel.",
+    setup: "Choose bars roughly shoulder width; much wider forces the shoulders into a bad angle. Load a dip belt, mount to a locked-out support with the shoulders pushed down away from the ears, and cross the ankles behind you with the torso near vertical for triceps emphasis.",
+    execution: [
+      "Inhale, brace the abs, and lower by bending the elbows and letting them travel straight back.",
+      "Keep the shoulders depressed and the torso close to upright throughout.",
+      "Descend until the upper arms are roughly parallel to the floor, then stop - no deeper.",
+      "Drive through the palms and extend the elbows, exhaling near lockout without shrugging up into the ears."
+    ],
+    mistakes: [
+      "Dropping below parallel to chase a stretch - it wedges the humeral head forward and is a common cause of anterior shoulder and pec tendon injuries; stop at parallel.",
+      "Letting the shoulders shrug up at the bottom - the joint loses its stable base; actively push the shoulders down through the whole rep.",
+      "Bouncing out of the bottom on heavy sets - the elbow tendons take the shock; control the turnaround and add weight slowly."
+    ],
+    tempo: "3s down / 0s pause / 1s up"
+  },
+
+  "Overhead Tricep Extension": {
+    equipment: "Dumbbell, EZ-bar, or rope on a high cable set to low pulley; bench optional",
+    primary: ["Triceps (long head)", "Shoulders (stabilizing)"],
+    cue: "Keep the elbows narrow and pointed forward - only the forearms move.",
+    setup: "Sit or stand tall with the ribcage down and abs braced. Bring the implement overhead with the elbows pointing forward and roughly shoulder width, upper arms held close to the ears. If using a bench, an upright back pad helps you avoid arching.",
+    execution: [
+      "Inhale and lower the weight behind the head by bending only at the elbows.",
+      "Go until you feel a deep stretch in the long head, roughly when the forearms are past parallel to the floor.",
+      "Keep the upper arms static - they should not drift forward or flare wide.",
+      "Extend the elbows back to nearly straight, exhaling at the top, and squeeze without snapping into hard lockout."
+    ],
+    mistakes: [
+      "Letting the elbows flare out and the upper arms drop - the lats and delts take over and the long head gets under-loaded; keep the elbows in and pointed forward.",
+      "Arching the lower back to support the overhead load - it stresses the lumbar spine; brace the abs and keep the ribs down.",
+      "Slamming into full lockout with heavy weight - it aggravates the elbow tendon; stop just short and control the turnaround."
+    ],
+    tempo: "3s down / 1s stretch / 1s up"
+  },
+
+  "Cable Pushdown": {
+    equipment: "Cable stack with high pulley, rope or straight/V-bar attachment",
+    primary: ["Triceps (lateral and medial heads)", "Anconeus", "Forearms (stabilizing)"],
+    cue: "Pin the elbows to your sides and only open the forearm.",
+    setup: "Set the pulley at roughly head height. Stand a half step back from the stack with feet staggered or hip width, hinge the torso forward about 10-15 degrees, and tuck the elbows against the ribs with the forearms at about 90 degrees.",
+    execution: [
+      "Brace the abs and keep the shoulders down and back.",
+      "Push the attachment down by extending the elbows, exhaling as the arms straighten.",
+      "At full extension, spread the rope or turn the palms slightly out and hold a hard squeeze for a beat.",
+      "Let the weight pull the forearms back up under control until the elbows are just past 90 degrees, without letting the elbows drift forward."
+    ],
+    mistakes: [
+      "Leaning the bodyweight over the bar to force reps - it becomes a chest press and the triceps stop working; reduce the load and keep the torso still.",
+      "Letting the elbows travel forward and up at the top of each rep - it removes tension and turns it into a shoulder movement; keep them pinned to the ribs.",
+      "Using a load so heavy the wrists collapse into flexion - it strains the wrist and forearm; keep the knuckles stacked over the forearm."
+    ],
+    tempo: "1s down / 1s squeeze / 2s up"
+  },
+
+  "Deadlift (Conventional)": {
+    equipment: "Barbell, bumper or iron plates, platform, optional belt and chalk",
+    primary: ["Glutes", "Hamstrings", "Spinal erectors", "Lats and traps"],
+    cue: "Set the back flat, take the slack out, then push the floor away.",
+    setup: "Stand with feet hip width, the bar over mid-foot and roughly an inch from the shins. Hinge and grip just outside the knees, either double overhand or mixed. Drop the hips until the shoulders sit slightly ahead of the bar, chest tall, lats squeezed as if crushing oranges in the armpits.",
+    execution: [
+      "Take a big diaphragmatic breath, brace the trunk 360 degrees, and pull the slack out of the bar until you hear or feel it click.",
+      "Drive the floor away with the legs, keeping the hips and shoulders rising at the same rate until the bar passes the knees.",
+      "Once past the knees, drive the hips forward and finish standing tall with the glutes squeezed and ribs down.",
+      "Exhale at the top, then reverse by pushing the hips back first and letting the bar track down the thighs before rebending the knees.",
+      "Reset the breath and the back position on the floor before every rep."
+    ],
+    mistakes: [
+      "Letting the lower back round under load - it puts shear force on the lumbar discs and is the classic deadlift injury; keep a neutral spine and drop the weight if you lose it.",
+      "Jerking the bar off the floor with slack still in the system - the back rounds instantly and the bar drifts; pull the slack out first.",
+      "Hyperextending and leaning back at lockout - it compresses the lumbar facets for no extra benefit; finish with the glutes tight and the body upright, not arched."
+    ],
+    tempo: "Explosive up / 2s controlled down / reset each rep"
+  },
+
+  "Weighted Pull-Ups": {
+    equipment: "Pull-up bar, dip belt with plates or weighted vest",
+    primary: ["Lats", "Biceps", "Mid traps and rhomboids"],
+    cue: "Start each rep by pulling the shoulder blades down, then drive the elbows to the ribs.",
+    setup: "Load a dip belt and hang from a bar with a pronated grip slightly wider than shoulder width. Begin from a full dead hang with the shoulders relaxed, then set the position by depressing the scapulae. Cross the ankles and keep a light hollow-body brace so the weight does not swing.",
+    execution: [
+      "From the dead hang, pull the shoulder blades down and back before the elbows bend.",
+      "Drive the elbows down and toward the ribs, keeping the chest up and a slight backward lean of about 10-20 degrees.",
+      "Exhale as you pull the collarbone toward the bar, finishing with the chin clearly over it.",
+      "Lower under control for a full 2-3 seconds to a complete dead hang with the elbows straight.",
+      "Pause briefly at the bottom to kill any swing before the next rep."
+    ],
+    mistakes: [
+      "Kipping or swinging the plates to get reps - the lats stop working and the lower back absorbs the swing; keep the torso rigid.",
+      "Stopping short of a full hang at the bottom - you lose the strongest stretch and build a partial range of motion; straighten the elbows every rep.",
+      "Shrugging the shoulders to the ears at the start of the pull - the traps take over and the shoulder loses stability; depress the scapulae first."
+    ],
+    tempo: "1s up / 1s squeeze / 3s down"
+  },
+
+  "Barbell Bent-Over Row": {
+    equipment: "Barbell, plates, optional lifting straps",
+    primary: ["Lats", "Mid traps and rhomboids", "Rear delts", "Spinal erectors"],
+    cue: "Hold a flat back at 45 degrees and row the bar to the lower ribs.",
+    setup: "Stand with feet hip to shoulder width, grip just outside the knees with a pronated grip. Hinge at the hips with soft knees until the torso is 30-45 degrees above horizontal, back flat, bar hanging under the shoulders. Brace the trunk hard before the first rep.",
+    execution: [
+      "Inhale, brace, and initiate by retracting the shoulder blades.",
+      "Pull the bar in a slight arc back toward the lower ribs or upper abdomen, elbows tracking at roughly 45 degrees from the torso.",
+      "Touch or come close to the torso, squeeze the mid-back for a beat, and keep the torso angle unchanged.",
+      "Lower under control until the elbows are straight and the lats are stretched, exhaling as the bar descends.",
+      "Reset the brace between reps if the back position drifts."
+    ],
+    mistakes: [
+      "Bobbing the torso up on every rep to heave the bar - it turns into a partial deadlift and loads the lower back unsafely; keep the hip angle fixed.",
+      "Rounding the lower back under a heavy bar - the lumbar spine takes shear force in a bent position; reduce the load and keep a neutral spine.",
+      "Rowing to the sternum with flared elbows - it becomes a rear delt row and short-changes the lats; pull to the lower ribs with elbows in."
+    ],
+    tempo: "1s up / 1s squeeze / 2s down"
+  },
+
+  "Seated Cable Row": {
+    equipment: "Seated row machine, cable stack, V-handle or wide bar",
+    primary: ["Lats", "Mid traps and rhomboids", "Biceps"],
+    cue: "Keep the torso upright and drive the elbows past the ribs.",
+    setup: "Sit with feet braced on the platform, knees slightly bent, and the chest tall. Set the torso vertical or leaning back no more than 10 degrees and hold that angle. Start with the arms straight and the shoulder blades allowed to protract slightly for a stretch.",
+    execution: [
+      "Inhale and initiate by pulling the shoulder blades back and down.",
+      "Row the handle to the lower ribs or navel, driving the elbows straight back and close to the sides.",
+      "Squeeze the mid-back for a beat at the finish without leaning the torso backward.",
+      "Extend the arms slowly, letting the shoulder blades travel forward at the end for a full stretch, exhaling as you return.",
+      "Keep the lower back neutral and the knees soft the whole set."
+    ],
+    mistakes: [
+      "Rocking back and forth from the hips - the lower back does the work and the back muscles get shortchanged; keep the torso still.",
+      "Locking the knees straight - the hamstrings pull the pelvis into a rounded position and the lumbar spine takes the load; keep a soft bend.",
+      "Yanking the handle and letting it snap back - the eccentric is where most of the growth stimulus lives; control the return for at least 2 seconds."
+    ],
+    tempo: "1s pull / 1s squeeze / 2-3s return"
+  },
+
+  "Face Pulls": {
+    equipment: "Cable stack with rope attachment set at upper chest to face height",
+    primary: ["Rear delts", "Mid traps and rhomboids", "External rotators"],
+    cue: "Pull the rope apart toward your forehead and finish in a double biceps pose.",
+    setup: "Set the pulley just above head height and take a rope with a neutral grip, thumbs toward you. Step back so there is tension at full arm extension, feet staggered or hip width, and brace the trunk with the ribs down.",
+    execution: [
+      "Start with arms extended and shoulder blades slightly protracted.",
+      "Pull the rope toward the forehead while separating the hands, letting the elbows travel high and wide.",
+      "Finish with the hands beside or slightly behind the ears and the upper arms roughly level with the shoulders, externally rotated.",
+      "Hold the end position for a beat, exhaling, then return slowly with control until the arms are straight again."
+    ],
+    mistakes: [
+      "Turning it into a heavy upright row with the elbows low - it hits the traps rather than the rear delts and cuff; keep the elbows high.",
+      "Using so much weight the torso rocks backward - momentum replaces the small muscles you are trying to train; lighten it and stay upright.",
+      "Stopping before external rotation happens - the rotator cuff benefit disappears; rotate so the knuckles finish pointing behind you."
+    ],
+    tempo: "1s pull / 2s hold / 2s return"
+  },
+
+  "Barbell Curl": {
+    equipment: "Straight barbell, plates",
+    primary: ["Biceps brachii", "Brachialis", "Forearm flexors"],
+    cue: "Pin the elbows at your sides and let only the forearms move.",
+    setup: "Stand with feet hip width and grip the bar at roughly shoulder width with a supinated grip. Keep the elbows tucked slightly in front of the ribs, the shoulders back and down, and the abs braced with the ribcage stacked over the pelvis.",
+    execution: [
+      "Exhale and curl the bar upward by flexing the elbows, keeping the upper arms fixed.",
+      "Stop when the forearms are just past vertical, where the biceps are fully contracted but still loaded.",
+      "Squeeze for a beat without letting the elbows swing forward.",
+      "Lower slowly and fully until the elbows are almost straight, inhaling on the way down.",
+      "Resist the urge to reset with a hip swing between reps."
+    ],
+    mistakes: [
+      "Swinging the hips and leaning back to heave the bar - the lower back takes the strain and the biceps get less work; use a weight you can start from a dead stop.",
+      "Letting the elbows drift forward at the top - it converts the curl into a front raise and drops tension off the biceps; keep the upper arms vertical.",
+      "Cutting the bottom range short - the long head never gets stretched; extend to near lockout every rep."
+    ],
+    tempo: "1s up / 1s squeeze / 3s down"
+  },
+
+  "Hammer Curls": {
+    equipment: "Dumbbells, or a rope on a low cable pulley",
+    primary: ["Brachialis", "Brachioradialis", "Biceps brachii"],
+    cue: "Keep the palms facing each other from start to finish.",
+    setup: "Stand tall with feet hip width and a dumbbell in each hand, palms facing the thighs in a neutral grip. Keep the elbows tucked to the ribs, the shoulders back, and the trunk braced with no lean.",
+    execution: [
+      "Exhale and curl one or both dumbbells straight up, keeping the wrist neutral and the thumb on top.",
+      "Stop when the forearm is just past vertical and the dumbbell nears the front delt.",
+      "Squeeze the brachialis for a beat with the upper arm still.",
+      "Lower slowly to full elbow extension, inhaling on the descent, and pause briefly before the next rep."
+    ],
+    mistakes: [
+      "Letting the dumbbells swing across the body - it shifts work to the front delt; keep the path vertical alongside the torso.",
+      "Rotating the wrist into a supinated grip at the top - it turns the set into a regular curl and skips the brachialis; hold neutral the whole way.",
+      "Shrugging the shoulders to finish the rep - the traps steal the load; keep the shoulders down and the elbows anchored."
+    ],
+    tempo: "1s up / 1s squeeze / 3s down"
+  },
+
+  "Incline Dumbbell Curl": {
+    equipment: "Adjustable bench set to 45-60 degrees, dumbbells",
+    primary: ["Biceps brachii (long head)", "Brachialis"],
+    cue: "Let the arms hang straight behind the torso and keep them there.",
+    setup: "Set the bench to about 45-60 degrees and sit back with the head, upper back, and hips in contact. Let the arms hang straight down at your sides with a supinated grip; this pre-stretches the long head. Keep the shoulders pulled back into the pad.",
+    execution: [
+      "From the full hang, exhale and curl the dumbbells up by flexing the elbows only.",
+      "Keep the upper arms hanging behind the torso line - they should not swing forward.",
+      "Stop when the forearms are just past vertical and squeeze for a beat.",
+      "Lower slowly all the way back to the dead hang, inhaling, and feel the stretch at the bottom before the next rep."
+    ],
+    mistakes: [
+      "Letting the elbows drift forward as fatigue builds - it removes the long head stretch that makes this exercise worth doing; keep the arms hanging back.",
+      "Bouncing out of the bottom stretch - it strains the biceps tendon at its most vulnerable length; pause and start smoothly.",
+      "Rounding the shoulders off the pad to help - the front delts take over; keep both shoulders in contact with the bench."
+    ],
+    tempo: "1s up / 1s squeeze / 3s down"
+  },
+
+  "Barbell Back Squat": {
+    equipment: "Barbell, power rack with safety pins, weight plates, optional belt",
+    primary: ["Quads", "Glutes", "Adductors", "Spinal erectors"],
+    cue: "Brace hard, sit between your hips, and drive the whole foot through the floor.",
+    setup: "Set the rack hooks around mid-chest and the safeties just below your bottom position. Take a grip that lets you pin the bar on the upper traps (high bar) or the rear delt shelf (low bar), squeeze the shoulder blades together, and step back into a stance around shoulder width with toes turned out 15-30 degrees.",
+    execution: [
+      "Take a big breath into the belly, brace the trunk 360 degrees, and screw the feet into the floor to create hip tension.",
+      "Break at the hips and knees together, sitting down and slightly back with the knees tracking over the toes.",
+      "Descend until the hip crease passes the top of the knee, or as deep as you can hold a neutral spine.",
+      "Drive up by pushing the floor away with the mid-foot and heel, keeping the chest and hips rising together, and exhale after passing the sticking point.",
+      "Stand tall, reset the breath, and repeat."
+    ],
+    mistakes: [
+      "Letting the hips shoot up faster than the shoulders - the squat turns into a good morning and dumps the load onto the lower back; drive the chest up with the hips.",
+      "Butt wink from forcing depth past your hip mobility - the lumbar spine rounds under load; squat only as deep as you can stay neutral.",
+      "Squatting heavy outside a rack or without safety pins set - a missed rep has nowhere to go; always set the safeties at your bottom depth."
+    ],
+    tempo: "2-3s down / 0-1s pause / drive up"
+  },
+
+  "Romanian Deadlift": {
+    equipment: "Barbell or dumbbells, optional rack to unrack from",
+    primary: ["Hamstrings", "Glutes", "Spinal erectors"],
+    cue: "Push the hips backward until you feel the hamstrings pull - the bar just follows.",
+    setup: "Unrack or deadlift the bar to a standing position with feet hip width and a double overhand grip just outside the thighs. Set a soft knee bend of about 15 degrees that stays fixed, pull the shoulders back, and engage the lats so the bar stays glued to the legs.",
+    execution: [
+      "Inhale, brace the trunk, and push the hips straight back while keeping the shins near vertical.",
+      "Let the bar slide down the thighs, staying in contact with the legs the entire way.",
+      "Stop when the hamstrings reach a strong stretch and the back is about to round - usually mid-shin to just below the knee.",
+      "Drive the hips forward to stand, squeezing the glutes at the top and exhaling, without leaning back.",
+      "Keep the knee angle unchanged through the entire rep."
+    ],
+    mistakes: [
+      "Turning it into a stiff-leg deadlift by locking the knees - it strains the hamstring origin and the lower back; keep the soft 15 degree bend.",
+      "Letting the bar drift away from the legs - the lever arm on the lumbar spine grows fast and the back rounds; keep the lats tight and the bar on the thighs.",
+      "Chasing depth to the floor regardless of hamstring length - range of motion should be limited by the stretch, not by touching the ground."
+    ],
+    tempo: "3s down / 1s stretch / 1s up"
+  },
+
+  "Leg Press": {
+    equipment: "45-degree or horizontal leg press machine",
+    primary: ["Quads", "Glutes", "Adductors"],
+    cue: "Stop the descent the instant your pelvis starts to lift off the pad.",
+    setup: "Sit with the back and hips flat against the pad and place the feet shoulder width in the middle of the platform, toes slightly out. A higher foot position shifts load to glutes and hamstrings; lower emphasizes the quads. Set the safety catches and grip the handles to lock the torso down.",
+    execution: [
+      "Release the safeties and start from a near-lockout with the knees soft.",
+      "Inhale and lower the platform under control, letting the knees track in line with the toes.",
+      "Descend until the knees reach roughly 90 degrees or just past, stopping before the lower back rounds off the pad.",
+      "Press through the mid-foot and heel to extend the legs, exhaling through the hardest part.",
+      "Finish just short of locking the knees to keep tension on the quads."
+    ],
+    mistakes: [
+      "Letting the pelvis roll off the pad at the bottom - it flexes the lumbar spine under heavy compression and is a common disc injury; shorten the range of motion.",
+      "Snapping the knees into hard lockout at the top - it hyperextends the joint under load; stop a few degrees short.",
+      "Letting the knees cave inward on the press - it stresses the medial knee; push the knees out in line with the toes."
+    ],
+    tempo: "3s down / 0s pause / 1s up"
+  },
+
+  "Walking Lunges": {
+    equipment: "Dumbbells or a barbell, clear walking lane",
+    primary: ["Quads", "Glutes", "Hamstrings", "Adductors"],
+    cue: "Step out far enough that the front shin stays near vertical at the bottom.",
+    setup: "Hold dumbbells at your sides or a barbell on the upper traps. Stand tall with feet hip width, chest up, abs braced, and eyes forward on a fixed point. Choose a clear lane long enough for at least 8-10 strides per leg.",
+    execution: [
+      "Step forward a full stride and plant the front foot flat.",
+      "Inhale and lower straight down by bending both knees until the rear knee is an inch above the floor.",
+      "Drive through the front heel and mid-foot to stand, bringing the rear leg through to the next stride, exhaling on the way up.",
+      "Keep the torso upright and the pelvis level throughout - no side-to-side wobble.",
+      "Alternate legs continuously for the prescribed distance or reps."
+    ],
+    mistakes: [
+      "Taking short steps so the front knee drives far past the toes - it loads the patellar tendon heavily and cuts glute involvement; lengthen the stride.",
+      "Slamming the rear knee into the floor - it bruises the joint; control the descent and stop just above the ground.",
+      "Letting the torso pitch forward over the front thigh - the lower back takes over; keep the chest tall and the load stacked over the hips."
+    ],
+    tempo: "2s down / 0s pause / 1s up"
+  },
+
+  "Leg Curl (Lying)": {
+    equipment: "Lying leg curl machine",
+    primary: ["Hamstrings", "Calves (gastrocnemius)"],
+    cue: "Keep the hips pressed into the pad and curl the heels to the glutes.",
+    setup: "Lie face down with the knee joint aligned to the machine pivot and the ankle pad resting just above the heels on the Achilles. Grip the handles, keep the hips flat on the pad, and point the toes slightly toward the shins to keep tension in the hamstrings.",
+    execution: [
+      "Exhale and curl the heels toward the glutes by flexing the knees only.",
+      "Keep the hips glued down - if they rise, the weight is too heavy.",
+      "Squeeze hard at the top where the hamstrings are fully shortened.",
+      "Lower slowly under control, inhaling, until the knees are nearly straight and the hamstrings are stretched, then repeat without letting the stack touch down."
+    ],
+    mistakes: [
+      "Lifting the hips off the pad to finish the rep - it hyperextends the lumbar spine and removes hamstring tension; reduce the load and stay flat.",
+      "Letting the weight stack crash at the bottom - tension is lost and the hamstring gets jerked at length; control the eccentric.",
+      "Setting the ankle pad too high on the calf - the leverage is wrong and the knee gets pulled awkwardly; place it just above the heel."
+    ],
+    tempo: "1s up / 1s squeeze / 3s down"
+  },
+
+  "Leg Extension": {
+    equipment: "Leg extension machine",
+    primary: ["Quads (vastus lateralis, medialis, intermedius)", "Rectus femoris"],
+    cue: "Extend to full lockout and pause - that top squeeze is the whole point.",
+    setup: "Sit with the back flat against the pad and align the knee joint with the machine pivot. Set the ankle pad just above the top of the foot so the shin can move freely. Grip the handles and pin the hips into the seat so the pelvis does not roll.",
+    execution: [
+      "Exhale and extend the knees smoothly until the legs are straight.",
+      "Hold a hard contraction at the top for one to two seconds with the toes pulled toward the shins.",
+      "Lower under control, inhaling, resisting the stack the whole way.",
+      "Stop just before the weight stack touches down so the quads stay loaded, then repeat."
+    ],
+    mistakes: [
+      "Kicking the weight up with hip thrust and momentum - the quads get bypassed and the knee takes a jolt at lockout; use a load you can extend smoothly.",
+      "Misaligning the knee with the machine pivot - it creates shear across the joint; take the ten seconds to adjust the seat.",
+      "Letting the stack slam at the bottom between reps - tension resets to zero and the tendon gets shocked; stop an inch short."
+    ],
+    tempo: "1s up / 2s squeeze / 3s down"
+  },
+
+  "Standing Calf Raise": {
+    equipment: "Standing calf raise machine or Smith machine with a block, shoulder pads",
+    primary: ["Calves (gastrocnemius)", "Soleus"],
+    cue: "Full stretch at the bottom, full rise onto the big toe at the top.",
+    setup: "Set the shoulder pads so you can stand upright with a slight knee bend of a few degrees and the balls of the feet on the edge of the platform. Feet hip width, toes pointed straight ahead, heels hanging free. Brace the abs and keep the torso vertical.",
+    execution: [
+      "Inhale and lower the heels as far below the platform as your ankles allow, reaching a deep stretch.",
+      "Pause for a beat at the bottom without bouncing.",
+      "Exhale and press up through the balls of the feet onto the big toe until the ankles are fully extended.",
+      "Hold the top contraction for a second, then lower slowly back into the stretch."
+    ],
+    mistakes: [
+      "Bouncing out of the bottom on the Achilles tendon - it uses elastic recoil instead of muscle and risks tendon injury; pause at the stretch.",
+      "Cutting the top range short - the gastrocnemius only fully shortens at complete plantarflexion; rise all the way onto the toes.",
+      "Bending the knees to help the lift - it shifts work to the quads and unloads the gastrocnemius; keep the knees nearly straight."
+    ],
+    tempo: "3s down / 1s stretch / 1s up / 1s squeeze"
+  },
+
+  "Hip Thrust": {
+    equipment: "Barbell with a pad, flat bench, plates, optional band",
+    primary: ["Glutes (gluteus maximus)", "Hamstrings", "Quads"],
+    cue: "Tuck the ribs and posteriorly tilt the pelvis at the top - do not arch the back.",
+    setup: "Sit on the floor with the upper back against the edge of a bench so the bench line crosses just below the shoulder blades. Roll a padded barbell over the hips into the crease, set the feet flat about shoulder width so that at the top the shins are vertical, and tuck the chin slightly.",
+    execution: [
+      "Inhale, brace the abs, and pull the ribs down toward the pelvis.",
+      "Drive through the heels and extend the hips upward, keeping the chin tucked and the eyes tracking forward.",
+      "Finish when the torso is parallel to the floor with the glutes fully squeezed and the pelvis tilted slightly under.",
+      "Hold the lockout for one to two seconds, exhaling, then lower with control until the hips are just above the floor.",
+      "Keep the shins vertical at the top throughout the set."
+    ],
+    mistakes: [
+      "Hyperextending the lower back to gain height at the top - the lumbar spine does the work instead of the glutes; keep the ribs down and posteriorly tilt the pelvis.",
+      "Setting the feet too close so the quads take over, or too far so the hamstrings cramp - adjust until the shins are vertical at lockout.",
+      "Letting the head crane back into the bench - it drives lumbar extension and strains the neck; keep the chin tucked and the gaze forward."
+    ],
+    tempo: "2s down / 0s pause / 1s up / 2s squeeze"
+  },
+
+  "Incline Barbell Press": {
+    equipment: "Barbell, incline bench with uprights or a rack, safety pins",
+    primary: ["Upper chest (clavicular pecs)", "Front delts", "Triceps"],
+    cue: "Lower to the collarbone line, not the sternum.",
+    setup: "Set the bench to 30-45 degrees with the uprights so the bar clears easily. Lie back with the eyes just behind the bar, grip about 1.4x shoulder width, retract and depress the shoulder blades, and plant the feet flat with the hips down on the seat.",
+    execution: [
+      "Take a breath, brace, and unrack to a lockout over the upper chest.",
+      "Lower the bar in a straight or slightly diagonal path to just below the collarbone, elbows at roughly 45-60 degrees from the torso.",
+      "Touch lightly on the upper chest and hold tension without letting the shoulders roll forward.",
+      "Press back up and slightly toward the head, exhaling through the sticking point, finishing over the upper chest.",
+      "Keep the scapulae pinned for the entire set."
+    ],
+    mistakes: [
+      "Lowering the bar to the sternum as if it were a flat bench - it forces the shoulders into extension and strains the front of the joint; touch high on the chest.",
+      "Flaring the elbows wide to 90 degrees - it grinds the shoulder and reduces upper chest recruitment; keep them at 45-60 degrees.",
+      "Lifting the hips off the bench to press heavier - it flattens the incline and turns it into a bad flat press; keep the glutes down."
+    ],
+    tempo: "2-3s down / 1s pause / explosive up"
+  },
+
+  "T-Bar Row": {
+    equipment: "T-bar row machine or landmine with a V-handle, plates, chest pad optional",
+    primary: ["Lats", "Mid traps and rhomboids", "Rear delts", "Biceps"],
+    cue: "Hinge to about 45 degrees and pull the handle into your belly button.",
+    setup: "Straddle the bar with feet shoulder width and knees softly bent. Hinge at the hips until the torso is roughly 30-45 degrees above horizontal, grip the handle, and set the back flat with the chest up. If using a chest-supported version, adjust the pad so the arms hang free.",
+    execution: [
+      "Inhale, brace the trunk, and start the pull by retracting the shoulder blades.",
+      "Row the handle toward the navel with the elbows tracking close to the torso.",
+      "Squeeze the mid-back for a beat at the top without lifting the torso.",
+      "Lower under control to full arm extension, exhaling and allowing a slight scapular stretch at the bottom.",
+      "Hold the same hip angle for every rep in the set."
+    ],
+    mistakes: [
+      "Standing up with the torso to complete the rep - it becomes a partial deadlift and stresses the lower back; keep the hip angle locked.",
+      "Rounding the lower back under a loaded bar - the lumbar spine takes shear in flexion; cut the weight or use a chest-supported setup.",
+      "Only pulling with the arms and never retracting the scapulae - the lats do little and the biceps fail first; lead with the shoulder blades."
+    ],
+    tempo: "1s up / 1s squeeze / 2-3s down"
+  },
+
+  "Dumbbell Shoulder Press": {
+    equipment: "Adjustable bench with upright back pad, dumbbells",
+    primary: ["Front delts", "Side delts", "Triceps"],
+    cue: "Keep the ribs down and press the dumbbells slightly inward over the shoulders.",
+    setup: "Set the back pad to 80-90 degrees, sit with the whole back in contact, and kick the dumbbells to shoulder height with the knees. Start with the elbows slightly in front of the torso rather than flared straight out, wrists stacked over the elbows, feet flat and abs braced.",
+    execution: [
+      "Inhale, brace the trunk, and keep the ribcage pulled down over the pelvis.",
+      "Press the dumbbells up and slightly toward each other in a shallow arc.",
+      "Exhale as you pass the sticking point and finish with the arms nearly straight, stopping just short of the bells clashing.",
+      "Lower under control until the handles are at about ear or chin height with the elbows just below shoulder level.",
+      "Do not let the shoulders roll forward at the bottom of the descent."
+    ],
+    mistakes: [
+      "Arching the lower back off the pad to press heavier - the lumbar spine takes the load and it becomes an incline press; keep the ribs down and the back on the pad.",
+      "Flaring the elbows dead straight out to the sides - it pinches the shoulder at the bottom; keep them slightly forward of the torso plane.",
+      "Dropping the dumbbells far below ear height chasing depth - the shoulder capsule takes the stretch under load; stop around ear level."
+    ],
+    tempo: "3s down / 0s pause / 1s up"
+  },
+
+  "Lat Pulldown (Wide Grip)": {
+    equipment: "Lat pulldown machine with a wide bar, thigh pads",
+    primary: ["Lats", "Mid traps and rhomboids", "Biceps"],
+    cue: "Pull the bar to the collarbone and drive the elbows down, not back.",
+    setup: "Set the thigh pads snug so you cannot lift off the seat. Take a pronated grip roughly 1.5x shoulder width. Sit tall, then lean the torso back about 15-20 degrees and hold that angle with the chest lifted and the abs braced.",
+    execution: [
+      "Start from a full stretch with the arms straight and the shoulder blades allowed to rise slightly.",
+      "Initiate by pulling the shoulder blades down and back before the elbows bend.",
+      "Drive the elbows down toward the floor and pull the bar to the upper chest or collarbone, exhaling through the pull.",
+      "Squeeze the lats for a beat, then let the bar rise slowly for 2-3 seconds to full extension.",
+      "Keep the torso angle constant - it should not rock with the weight."
+    ],
+    mistakes: [
+      "Pulling behind the neck - it forces the shoulders into extreme external rotation and strains the neck and cuff; always pull to the front.",
+      "Rocking the torso back and forth to heave the bar down - it becomes a row driven by momentum; hold the lean and let the arms do the travel.",
+      "Stopping short at the top and never letting the lats stretch - you train only a partial range; extend the arms fully every rep."
+    ],
+    tempo: "1s pull / 1s squeeze / 3s return"
+  },
+
+  "Cable Chest Fly": {
+    equipment: "Dual cable stack with D-handles, adjustable pulleys",
+    primary: ["Chest (pecs)", "Front delts"],
+    cue: "Bring the hands together in front of the chest and cross slightly for the squeeze.",
+    setup: "Set the pulleys at shoulder height for the mid chest, high for the lower chest, or low for the upper chest. Take a handle in each hand, step forward into a staggered stance, and lean the torso 10-20 degrees into the movement with the abs braced and shoulder blades set back.",
+    execution: [
+      "Start with the arms out wide and a fixed soft elbow bend of about 15 degrees.",
+      "Exhale and sweep the hands together in a wide arc in front of the chest, thinking about pulling the elbows toward each other.",
+      "Let the hands meet or cross slightly and hold a hard chest squeeze for a beat.",
+      "Return slowly, inhaling, letting the arms travel back until you feel a strong pec stretch without the shoulders rolling forward.",
+      "Keep the elbow angle unchanged the entire set."
+    ],
+    mistakes: [
+      "Bending the elbows to press the handles together - it turns the fly into a press and removes the stretch; keep the elbow angle fixed.",
+      "Letting the arms go so far back that the shoulders roll forward - it strains the front capsule and pec tendon; stop at a controlled stretch.",
+      "Standing too far forward or back so tension disappears at one end - set your position so the cables stay loaded through the whole arc."
+    ],
+    tempo: "1s in / 2s squeeze / 3s out"
+  },
+
+  "Dumbbell Shrugs": {
+    equipment: "Heavy dumbbells, optional lifting straps",
+    primary: ["Traps (upper)", "Levator scapulae", "Forearms"],
+    cue: "Shrug straight up toward the ears and pause - no rolling.",
+    setup: "Stand tall with feet hip width and a dumbbell in each hand hanging at your sides, arms straight. Set the chest up, chin slightly tucked, and abs braced. Use straps if grip fails before the traps do.",
+    execution: [
+      "Inhale, brace, and let the shoulders sit relaxed at the bottom for a full stretch.",
+      "Exhale and elevate the shoulders straight up toward the ears without bending the elbows.",
+      "Hold the top contraction for one to two seconds at full elevation.",
+      "Lower slowly under control back to the stretched starting position and pause before the next rep."
+    ],
+    mistakes: [
+      "Rolling the shoulders in circles - it grinds the AC joint and adds nothing; shrug straight up and down.",
+      "Bending the elbows and turning it into a partial upright row - the biceps take load off the traps; keep the arms straight.",
+      "Using a load so heavy the range of motion shrinks to an inch - the traps barely shorten; lighten it and go through full elevation."
+    ],
+    tempo: "1s up / 2s hold / 2s down"
+  },
+
+  "EZ-Bar Curl": {
+    equipment: "EZ curl bar, plates",
+    primary: ["Biceps brachii", "Brachialis", "Brachioradialis"],
+    cue: "Keep the elbows pinned and the wrists neutral in the angled grip.",
+    setup: "Grip the inner angled slots of the EZ bar with a semi-supinated grip, hands about shoulder width. Stand with feet hip width, elbows tucked to the ribs, shoulders back and down, and abs braced with the ribcage stacked.",
+    execution: [
+      "Start with the arms nearly straight and the bar resting against the thighs.",
+      "Exhale and curl the bar up by flexing the elbows only, keeping the upper arms vertical.",
+      "Stop when the forearms pass just beyond vertical and squeeze for a beat.",
+      "Lower slowly to near full extension, inhaling, and pause briefly before the next rep."
+    ],
+    mistakes: [
+      "Leaning back and using the hips to start the rep - the lower back takes the load and the biceps get less tension; start from a dead stop.",
+      "Letting the wrists bend backward under load - the angled grip is there to protect them, so keep the knuckles stacked over the forearm.",
+      "Resting the bar on the thighs between reps - tension resets to zero; stop just short of the legs at the bottom."
+    ],
+    tempo: "1s up / 1s squeeze / 3s down"
+  },
+
+  "Close-Grip Bench Press": {
+    equipment: "Barbell, flat bench, power rack with safety pins",
+    primary: ["Triceps", "Chest (pecs)", "Front delts"],
+    cue: "Grip shoulder width and keep the elbows tucked close to the ribs.",
+    setup: "Lie on a flat bench with the eyes just behind the bar and take a grip at roughly shoulder width - narrower than that strains the wrists. Retract and depress the shoulder blades, plant the feet, and keep the wrists stacked directly over the forearms.",
+    execution: [
+      "Unrack to a lockout over the shoulders after a big breath and a hard brace.",
+      "Lower the bar to the lower chest or just below the sternum, keeping the elbows tucked to about 20-30 degrees from the torso.",
+      "Touch lightly and hold tension for a beat without collapsing the chest.",
+      "Press straight up with the triceps, exhaling through the sticking point, and lock out over the shoulders.",
+      "Keep the forearms vertical from the side view for the whole rep."
+    ],
+    mistakes: [
+      "Gripping so narrow the hands nearly touch - it puts extreme strain on the wrists and elbows for no extra triceps work; keep hands about shoulder width.",
+      "Flaring the elbows out - the load shifts back to the chest and shoulders and defeats the exercise; keep them close to the ribs.",
+      "Letting the wrists bend back under the bar - the joint takes the compression; keep the bar low in the palm with the knuckles stacked."
+    ],
+    tempo: "2s down / 1s pause / explosive up"
+  },
+
+  "Front Squat": {
+    equipment: "Barbell, power rack with safety pins, plates, optional wrist straps",
+    primary: ["Quads", "Glutes", "Upper back", "Core"],
+    cue: "Keep the elbows high and the torso vertical - the bar rides the front delts.",
+    setup: "Set the hooks at upper chest height. Rack the bar across the front delts and collarbone using either a clean grip with fingertips under the bar or a crossed-arm grip, and drive the elbows up so the upper arms are parallel to the floor. Stand with feet shoulder width, toes turned out 15-30 degrees.",
+    execution: [
+      "Take a big breath, brace the trunk hard, and keep the elbows driving up.",
+      "Descend by breaking at the knees and hips together, keeping the torso as vertical as possible.",
+      "Go to full depth if you can hold a neutral spine, letting the knees travel forward over the toes.",
+      "Drive up out of the bottom by pushing the floor away and leading with the elbows and chest, exhaling past the sticking point.",
+      "Stand tall and reset the brace before the next rep."
+    ],
+    mistakes: [
+      "Letting the elbows drop on the way up - the bar rolls forward off the shelf and can be dumped or round the upper back; keep them high the whole rep.",
+      "Leaning the torso forward like a back squat - the front rack cannot hold the load in that position and the lift is lost; stay vertical.",
+      "Squatting heavy without safety pins set at your depth - a missed front squat has no safe bailout except dumping the bar forward; set the safeties."
+    ],
+    tempo: "2-3s down / 0-1s pause / drive up"
+  },
+
+  "Sumo Deadlift": {
+    equipment: "Barbell, plates, platform, optional belt and chalk",
+    primary: ["Glutes", "Quads", "Adductors", "Spinal erectors"],
+    cue: "Push the knees out over the toes and pull the chest up before the bar moves.",
+    setup: "Take a wide stance with the toes turned out 30-45 degrees and the shins close to the plates. Grip inside the knees with the arms hanging vertically. Drop the hips, spread the floor with the feet, pull the chest tall, and set the lats tight before pulling.",
+    execution: [
+      "Inhale into the belly, brace 360 degrees, and pull the slack out of the bar with the hips still low.",
+      "Push the knees out over the toes and drive the feet apart into the floor.",
+      "Extend the hips and knees together, keeping the bar sliding up the shins and thighs.",
+      "Lock out standing tall with the glutes squeezed and the ribs down, exhaling at the top.",
+      "Lower by pushing the hips back and bending the knees, keeping the bar close to the legs."
+    ],
+    mistakes: [
+      "Letting the knees collapse inward as you break the floor - it stresses the medial knee and kills leverage; push the knees out hard.",
+      "Rounding the upper or lower back to reach the bar - flexed spine under a heavy pull is the main injury risk; reset the hips and chest before pulling.",
+      "Yanking the bar before the slack is out - the hips shoot up, the pull turns into a stiff-leg deadlift, and the back takes it; wedge in first."
+    ],
+    tempo: "Explosive up / 2s controlled down / reset each rep"
+  },
+
+  "Bulgarian Split Squat": {
+    equipment: "Flat bench or plyo box, dumbbells or a barbell",
+    primary: ["Quads", "Glutes", "Adductors", "Hamstrings"],
+    cue: "Set the front foot far enough forward that the front shin stays near vertical.",
+    setup: "Place the top of the rear foot on a bench roughly knee height behind you. Step the front foot out about two to two and a half foot lengths, hip width laterally so you are not balancing on a tightrope. Hold dumbbells at your sides, chest up, abs braced.",
+    execution: [
+      "Inhale and lower straight down by bending the front knee and letting the rear knee travel toward the floor.",
+      "Keep the front foot flat and the torso either upright for quads or leaning slightly forward for more glute.",
+      "Descend until the front thigh is at or just below parallel and the rear knee is near the floor.",
+      "Drive through the front heel and mid-foot to stand, exhaling on the way up, without pushing off the rear foot.",
+      "Complete all reps on one leg before switching."
+    ],
+    mistakes: [
+      "Setting the front foot too close - the knee jams forward over the toes and the front of the joint takes the load; step further out.",
+      "Pushing off the rear leg to help - the working leg gets less stimulus; keep the rear leg passive for balance only.",
+      "Letting the front knee cave inward under fatigue - it stresses the medial knee; track the knee over the second toe."
+    ],
+    tempo: "3s down / 1s pause / 1s up"
+  },
+
+  "Glute-Ham Raise": {
+    equipment: "Glute-ham developer (GHD), optional plate or band for added load",
+    primary: ["Hamstrings", "Glutes", "Spinal erectors", "Calves"],
+    cue: "Squeeze the glutes hard and keep a straight line from knee to shoulder.",
+    setup: "Set the foot plate so the knees sit just behind the pad and the ankles are locked in snugly. Start kneeling upright with the hips extended, glutes squeezed, and abs braced so the body forms a straight line from knees to head.",
+    execution: [
+      "Inhale and lower the torso forward by extending the knees under hamstring control.",
+      "Hold the hips locked in extension - do not let them hinge or pike.",
+      "Descend as slowly as you can until the torso is near parallel to the floor or you reach the limit of control.",
+      "Pull yourself back up by contracting the hamstrings, driving the toes into the plate, and exhaling on the way up.",
+      "Use hands on the pad for assistance if the concentric stalls."
+    ],
+    mistakes: [
+      "Breaking at the hips and turning it into a back extension - the hamstrings get bypassed; keep the glutes tight and the hip angle at zero.",
+      "Free-falling the eccentric because the strength is not there yet - hamstring strains happen on uncontrolled lengthening; regress with a band or partial range.",
+      "Hyperextending the lower back at the top - it loads the lumbar facets; finish in a straight line, not an arch."
+    ],
+    tempo: "4-5s down / 0s pause / 1-2s up"
+  },
+
+  "Hack Squat": {
+    equipment: "Angled hack squat machine",
+    primary: ["Quads", "Glutes", "Adductors"],
+    cue: "Keep the whole back flat on the pad and drive through the mid-foot.",
+    setup: "Set the shoulder pads so you stand tall with the back and hips flush against the pad. Place the feet shoulder width in the middle or slightly low on the platform for quad emphasis, toes turned out about 15 degrees. Brace the abs, release the safeties, and grip the handles.",
+    execution: [
+      "Inhale and descend by bending the knees, letting them travel forward over the toes.",
+      "Keep the back flat against the pad and the heels planted the entire way down.",
+      "Descend until the thighs are at or just below parallel, stopping before the pelvis rolls off the pad.",
+      "Drive through the mid-foot to stand, exhaling past the sticking point, and stop just short of locking the knees."
+    ],
+    mistakes: [
+      "Letting the hips roll off the pad in the bottom - the lumbar spine flexes under heavy compression; shorten the range of motion.",
+      "Letting the heels lift so the load shifts to the toes - the knees take everything; move the feet slightly higher or work on ankle mobility.",
+      "Locking the knees hard at the top between reps - it stresses the joint and lets tension bleed off; stop a few degrees short."
+    ],
+    tempo: "3s down / 1s pause / 1s up"
+  },
+
+  "Seated Leg Curl": {
+    equipment: "Seated leg curl machine",
+    primary: ["Hamstrings", "Calves (gastrocnemius)"],
+    cue: "Sit back into the pad and curl the heels underneath the seat.",
+    setup: "Sit with the back flat against the pad and align the knee joint with the machine pivot. Set the ankle pad just above the heels and lock the thigh pad down snug so the legs cannot rise. Grip the handles and keep the hips fully seated with no lumbar arch.",
+    execution: [
+      "Exhale and curl the heels down and back underneath the seat by flexing the knees.",
+      "Keep the toes pulled toward the shins to bias the hamstrings over the calves.",
+      "Squeeze hard at the deepest point of knee flexion for a beat.",
+      "Return slowly, inhaling, until the knees are nearly straight and the hamstrings are stretched, stopping before the stack touches down."
+    ],
+    mistakes: [
+      "Letting the hips lift and the lower back arch off the pad - it removes hamstring tension and stresses the lumbar spine; tighten the thigh pad.",
+      "Slamming the stack on the return - the hamstring is jerked at its longest length; control the eccentric for at least 3 seconds.",
+      "Skipping the seated version because you already do lying curls - the seated position trains the hamstrings at longer lengths, so include both."
+    ],
+    tempo: "1s down / 1s squeeze / 3s return"
+  },
+
+  "Seated Calf Raise": {
+    equipment: "Seated calf raise machine, plates",
+    primary: ["Soleus", "Calves (gastrocnemius)"],
+    cue: "Bent knees mean this is the soleus lift - go slow and hold the top.",
+    setup: "Sit with the balls of the feet on the platform edge and the knee pad set snug over the lower thigh, knees at roughly 90 degrees. Feet hip width with the toes straight ahead, heels free to drop below the platform. Sit tall and release the safety lever.",
+    execution: [
+      "Inhale and lower the heels as far as the ankles allow into a deep stretch.",
+      "Pause at the bottom for a full second without bouncing.",
+      "Exhale and press up through the balls of the feet until the ankles are fully extended.",
+      "Hold the top contraction for one to two seconds before descending again."
+    ],
+    mistakes: [
+      "Bouncing rapid partial reps - the Achilles absorbs the force instead of the muscle and gains stall; pause at both ends.",
+      "Setting the knee pad on the kneecap instead of the lower thigh - it compresses the patella painfully; move it back a few inches.",
+      "Cutting the top short so the ankle never fully plantarflexes - the soleus never fully shortens; press all the way up onto the toes."
+    ],
+    tempo: "3s down / 1s stretch / 1s up / 2s squeeze"
+  },
+
+  "Cable Pull-Through": {
+    equipment: "Cable stack with rope attachment set at the lowest pulley",
+    primary: ["Glutes", "Hamstrings", "Spinal erectors"],
+    cue: "Hinge at the hips, not the spine - the rope just goes along for the ride.",
+    setup: "Set the rope on the low pulley, face away from the stack, and reach between the legs to grab it with both hands. Walk out until there is tension, set feet slightly wider than shoulder width with toes turned out a little, and soften the knees with the abs braced.",
+    execution: [
+      "Inhale and push the hips straight back, letting the rope travel between the legs and the torso fold forward.",
+      "Keep the shins near vertical and the back flat, going until you feel a strong hamstring stretch.",
+      "Drive the hips forward to stand, squeezing the glutes hard at the top, exhaling as you finish.",
+      "Stop at a tall neutral position with the ribs down - do not lean back or hyperextend.",
+      "Keep the arms straight and passive the whole time."
+    ],
+    mistakes: [
+      "Turning it into a squat by bending the knees a lot - the glutes and hamstrings get bypassed; push the hips back instead of dropping down.",
+      "Pulling with the arms to move the weight - it becomes a bad row; the arms are just hooks, the hips do the work.",
+      "Hyperextending the lower back at lockout - the lumbar spine takes the finish instead of the glutes; stand tall with the ribs pulled down."
+    ],
+    tempo: "3s back / 1s stretch / 1s forward / 1s squeeze"
+  }
+};
+
+
+/* ========== EXERCISE DEMONSTRATIONS ========== */
+const demoState = new Map();
+let demoRAF = null;
+const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function exVideoURL(name) {
+  return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(name + ' proper form technique');
+}
+
+function renderDemo(panel, t) {
+  const ex = exercisePoses[panel.dataset.ex];
+  if (!ex) return;
+  panel.querySelector('.ex-svg').innerHTML = figureSVG(lerpPose(ex.a, ex.b, t), ex.eq);
+}
+
+function demoTick() {
+  const open = document.querySelectorAll('.ex-detail.open');
+  let alive = false;
+  open.forEach(panel => {
+    const st = demoState.get(panel);
+    if (!st || !st.playing) return;
+    alive = true;
+    st.phase = (st.phase + 0.0062) % 1;
+    st.t = (1 - Math.cos(st.phase * Math.PI * 2)) / 2;
+    panel.querySelector('.demo-range').value = Math.round(st.t * 100);
+    renderDemo(panel, st.t);
+  });
+  demoRAF = alive ? requestAnimationFrame(demoTick) : null;
+}
+
+function startDemoLoop() {
+  if (!demoRAF) demoRAF = requestAnimationFrame(demoTick);
+}
+
+function toggleEx(btn) {
+  const panel = btn.parentElement.querySelector('.ex-detail');
+  const open = panel.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (!open) return;
+  if (!demoState.has(panel)) demoState.set(panel, { phase: 0, t: 0, playing: !reduceMotion });
+  const st = demoState.get(panel);
+  panel.querySelector('.demo-play').textContent = st.playing ? '❚❚ Pause' : '▶ Play';
+  renderDemo(panel, st.t);
+  startDemoLoop();
+}
+
+function demoToggle(btn) {
+  const panel = btn.closest('.ex-detail');
+  const st = demoState.get(panel);
+  st.playing = !st.playing;
+  btn.textContent = st.playing ? '❚❚ Pause' : '▶ Play';
+  startDemoLoop();
+}
+
+function demoScrub(input) {
+  const panel = input.closest('.ex-detail');
+  const st = demoState.get(panel);
+  st.playing = false;
+  st.t = input.value / 100;
+  st.phase = Math.acos(Math.max(-1, Math.min(1, 1 - 2 * st.t))) / (Math.PI * 2);
+  panel.querySelector('.demo-play').textContent = '▶ Play';
+  renderDemo(panel, st.t);
+}
+
+function exerciseDetailHTML(name) {
+  const g = exerciseGuide[name];
+  const demo = exercisePoses[name]
+    ? `<div class="ex-demo">
+         <svg class="ex-svg" viewBox="0 0 200 200" role="img" aria-label="Animated demonstration of ${name}"></svg>
+         <div class="demo-ctl">
+           <button class="demo-play" onclick="demoToggle(this)">❚❚ Pause</button>
+           <input class="demo-range" type="range" min="0" max="100" value="0" oninput="demoScrub(this)" aria-label="Scrub through the ${name} movement">
+         </div>
+         <div class="demo-legend"><span>Start</span><span>Finish</span></div>
+       </div>`
+    : '';
+  if (!g) return `<div class="ex-panel">${demo}</div>`;
+  return `<div class="ex-panel">
+    ${demo}
+    <div class="ex-info">
+      <div class="ex-cue">${g.cue}</div>
+      <div class="ex-chips">
+        <span class="badge badge-green">${g.equipment}</span>
+        ${g.primary.map(m => `<span class="badge badge-blue">${m}</span>`).join('')}
+      </div>
+      <div class="ex-block"><h4>Setup</h4><p>${g.setup}</p></div>
+      <div class="ex-block"><h4>How to perform it</h4><ol>${g.execution.map(s => `<li>${s}</li>`).join('')}</ol></div>
+      <div class="ex-block"><h4>Common mistakes</h4><ul class="ex-mistakes">${g.mistakes.map(s => `<li>${s}</li>`).join('')}</ul></div>
+      <div class="ex-foot">
+        <span class="ex-tempo">Tempo &middot; ${g.tempo}</span>
+        <a class="ex-video" href="${exVideoURL(name)}" target="_blank" rel="noopener">&#9654; Watch video demo</a>
+      </div>
+    </div>
+  </div>`;
+}
+
 </script>
