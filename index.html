@@ -1302,6 +1302,92 @@ label {
     <p>Your go-to reference for high-protein vegetarian foods</p>
   </div>
 
+  <div class="card advice-card">
+    <div class="card-title">&#x1F3AF; Which protein should you actually eat?</div>
+
+    <div class="advice-verdict">
+      <div class="advice-verdict-head">Judge every protein by one number: grams of protein per 100 kcal.</div>
+      <p>
+        You need around <strong style="color:var(--text-primary)">205g of protein a day</strong> on a 2,406 kcal budget. Where
+        that protein comes from decides whether that is comfortable or impossible. Hitting 205g costs you
+        <strong style="color:var(--accent)">932 kcal</strong> if it comes from whey, about
+        <strong style="color:var(--accent-light)">1,460 kcal</strong> from Quorn, and
+        <strong style="color:var(--orange)">2,563 kcal</strong> from Beyond Mince &mdash; which is your entire day gone with
+        nothing left for carbs, fat or vegetables. Same protein, wildly different cost.
+      </p>
+    </div>
+
+    <div class="grid-3">
+      <div class="meal-card">
+        <div class="meal-time" style="color:var(--accent)">Tier 1 &mdash; build meals on these</div>
+        <div class="meal-desc" style="margin-bottom:10px">
+          <strong style="color:var(--text-primary)">Egg whites (21)</strong> &middot;
+          <strong style="color:var(--text-primary)">0% skyr and Greek yogurt (17)</strong> &middot;
+          <strong style="color:var(--text-primary)">Beyond Steak (16)</strong> &middot;
+          <strong style="color:var(--text-primary)">Quorn pieces and mince (14)</strong>
+          <br><br>
+          These four should supply most of your daily protein. All of them give you 100g of protein for under 700 kcal.
+          Skyr and egg whites are also the cheapest per gram of protein you will find.
+        </div>
+        <div class="meal-macros"><span class="pro">14-21 g per 100 kcal</span></div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-time" style="color:var(--blue)">Tier 2 &mdash; good, use freely</div>
+        <div class="meal-desc" style="margin-bottom:10px">
+          <strong style="color:var(--text-primary)">Tofu (12)</strong> &middot;
+          <strong style="color:var(--text-primary)">Your mushroom block (11.9)</strong> &middot;
+          <strong style="color:var(--text-primary)">Quorn chicken bites (11.5)</strong> &middot;
+          <strong style="color:var(--text-primary)">Cottage cheese (11)</strong> &middot;
+          <strong style="color:var(--text-primary)">Tempeh (10.6)</strong> &middot;
+          <strong style="color:var(--text-primary)">Whole eggs (8)</strong>
+          <br><br>
+          Solid choices that also bring things the tier above does not &mdash; the mushroom block carries iron and omega-3,
+          tempeh and tofu bring fibre, whole eggs bring the yolk nutrients. Rotate them for variety.
+        </div>
+        <div class="meal-macros"><span class="carb">8-12 g per 100 kcal</span></div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-time" style="color:var(--orange)">Tier 3 &mdash; enjoy, but do not count on them</div>
+        <div class="meal-desc" style="margin-bottom:10px">
+          <strong style="color:var(--text-primary)">Beyond Burger (8.5)</strong> &middot;
+          <strong style="color:var(--text-primary)">THIS mince (8)</strong> &middot;
+          <strong style="color:var(--text-primary)">Beyond Mince (7)</strong> &middot;
+          <strong style="color:var(--text-primary)">Paneer (7)</strong> &middot;
+          <strong style="color:var(--text-primary)">Quorn sausages (6.7)</strong> &middot;
+          <strong style="color:var(--text-primary)">Quorn nuggets (5.5)</strong> &middot;
+          cheese, nuts
+          <br><br>
+          These are foods you eat because you want to, not because they move your protein along. Treat them as a meal you enjoy
+          two or three times a week, and never as the thing carrying a day's protein.
+        </div>
+        <div class="meal-macros"><span class="fat">Under 9 g per 100 kcal</span></div>
+      </div>
+    </div>
+
+    <div class="workout-note" style="margin-top:16px">
+      <strong>Spread it, do not stack it.</strong> Aim for roughly <strong>35-45g of protein in each of your five meals</strong>
+      rather than a small breakfast and an enormous dinner. Muscle protein synthesis responds to each dose separately, so five
+      good doses beat two big ones. Your plans are already built this way.
+    </div>
+
+    <div class="workout-note" style="border-left-color:var(--blue)">
+      <strong style="color:var(--blue)">One thing that matters on a vegetarian diet.</strong> Plant proteins are generally lower
+      in leucine, the amino acid that actually triggers muscle growth, so a plant-heavy meal needs to be slightly larger to do
+      the same job. Dairy and eggs do not have this problem, which is your advantage over a vegan &mdash; use them. Mycoprotein
+      is the standout among the meat alternatives here: the research on Quorn shows it supports muscle building at least as well
+      as milk protein when the dose is matched. Pairing pulses with grains, as your plans do, also rounds out the amino acid
+      profile.
+    </div>
+
+    <div class="workout-note" style="border-left-color:var(--orange)">
+      <strong style="color:var(--orange)">On powder.</strong> If you want one, whey isolate is the most efficient protein you can
+      buy at 22g per 100 kcal, and you already tolerate dairy. But note your plans now hit 200g+ without any powder at breakfast,
+      so treat it as a convenience for busy days rather than something you need. Food first, powder to fill gaps.
+      Seitan is worth a mention too at 20g per 100 kcal, though it is low in lysine so it should not be your only source, and it
+      is pure gluten.
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-title">&#x1F969; Which product to reach for</div>
     <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;margin-bottom:14px">
@@ -1729,6 +1815,7 @@ const foodsData = [
   { name: 'Greek Yogurt (plain)', serving: '170g', calories: 100, protein: 17.0, carbs: 6.0, fat: 0.7 },
   { name: 'Cottage Cheese (2%)', serving: '100g', calories: 98, protein: 11.1, carbs: 3.4, fat: 4.3 },
   { name: 'Eggs (whole)', serving: '2 large', calories: 156, protein: 12.6, carbs: 1.1, fat: 10.6 },
+  { name: 'Egg Whites', serving: '100g (approx 3)', calories: 52, protein: 10.9, carbs: 0.7, fat: 0.2 },
   { name: 'Quinoa (cooked)', serving: '100g', calories: 120, protein: 4.4, carbs: 21.3, fat: 1.9 },
   { name: 'Edamame (shelled)', serving: '100g', calories: 121, protein: 11.9, carbs: 8.6, fat: 5.2 },
   { name: 'Seitan', serving: '100g', calories: 370, protein: 75.2, carbs: 14.0, fat: 1.9 },
