@@ -1011,17 +1011,38 @@ label {
     </div>
 
     <div class="workout-note" style="border-left-color:var(--orange)">
-      <strong style="color:var(--orange)">If you get the Claude icon instead of this one</strong>, that is because the shared
-      link opens inside Claude's own page, so the phone saves Claude's icon rather than the app's. To get the icon above you need
-      the page served on its own. Two ways: turn on GitHub Pages for the repository, which takes about two clicks in the
-      repository settings and gives you a permanent link; or ask me and I will walk you through it.
+      <strong style="color:var(--orange)">Getting the Claude icon instead of this one?</strong> That is expected if you added it
+      from a shared Claude link. The page runs inside Claude's own page there, so your phone saves Claude's icon and never sees
+      this one. Nothing is wrong with the app &mdash; it just needs the page to be the top-level page. Either of the two fixes
+      below gets you the right icon.
     </div>
 
-    <div class="workout-note" style="border-left-color:var(--red)">
-      <strong style="color:var(--red)">One thing to know before you publish it.</strong> GitHub Pages on a free account is
-      public, and your height, weight and age are written into this file. Anyone with the address could read them. Your logged
-      measurements are not in there &mdash; those stay on your phone &mdash; but the starting stats are. If you would rather they
-      stayed private, keep using the private link and live with whichever icon the phone picks.
+    <div class="meal-card" style="margin-top:14px">
+      <div class="meal-time" style="color:var(--accent)">Fix 1 &mdash; iPhone Shortcut, two minutes, nothing published</div>
+      <div class="meal-desc">
+        Save the icon image to your Photos first, then:<br><br>
+        <strong style="color:var(--text-primary)">1.</strong> Open the <strong style="color:var(--text-primary)">Shortcuts</strong> app and tap <strong style="color:var(--text-primary)">+</strong>.<br>
+        <strong style="color:var(--text-primary)">2.</strong> Tap <strong style="color:var(--text-primary)">Add Action</strong>, search for <strong style="color:var(--text-primary)">Open URLs</strong>, and choose it.<br>
+        <strong style="color:var(--text-primary)">3.</strong> Tap the URL field and paste the link to this app.<br>
+        <strong style="color:var(--text-primary)">4.</strong> Tap the arrow next to the shortcut's name at the top, then <strong style="color:var(--text-primary)">Add to Home Screen</strong>.<br>
+        <strong style="color:var(--text-primary)">5.</strong> On that screen, tap the little icon thumbnail beside the name, choose <strong style="color:var(--text-primary)">Choose Photo</strong>, and pick the icon.<br>
+        <strong style="color:var(--text-primary)">6.</strong> Name it VegFit and tap <strong style="color:var(--text-primary)">Add</strong>.<br><br>
+        You get exactly the icon you want and nothing leaves your phone. The one compromise is that tapping it flashes through
+        the Shortcuts app before opening, and it opens in Safari with the address bar showing rather than truly full screen.
+      </div>
+    </div>
+
+    <div class="meal-card" style="margin-top:12px">
+      <div class="meal-time" style="color:var(--blue)">Fix 2 &mdash; host the page properly, for real app behaviour</div>
+      <div class="meal-desc">
+        Serving this file at its own address is the only way to get the whole thing: the right icon, no address bar, its own
+        window in the app switcher, and a normal Add to Home Screen with no Shortcut in the way. All the metadata for that is
+        already built into this file and takes effect the moment the page is served on its own.
+        <br><br>
+        GitHub Pages does this free from the repository this app already lives in. The catch on a free account is that the page
+        is public, and your height, weight and age are written into the file. Ask me and I will move those into settings you
+        enter on your own device first, so the published copy carries no personal details at all.
+      </div>
     </div>
   </div>
 
