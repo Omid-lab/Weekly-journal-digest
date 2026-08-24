@@ -936,6 +936,11 @@ label {
 .core-divider-label { font-size: 0.85rem; font-weight: 700; color: var(--accent-light); }
 .core-divider-note { font-size: 0.78rem; color: var(--text-muted); }
 
+.freq-btn { padding: 7px 16px; background: none; border: none; border-radius: var(--radius-xs); color: var(--text-secondary); font: inherit; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: var(--transition); white-space: nowrap; }
+.freq-btn:hover { color: var(--text-primary); }
+.freq-btn.active { background: var(--accent); color: #fff; }
+.freq-btn:focus-visible { outline: 2px solid var(--accent-light); outline-offset: 2px; }
+
 /* Responsive */
 @media (max-width: 900px) {
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
@@ -1356,6 +1361,15 @@ label {
   </div>
 
   <div class="mode-bar">
+    <span class="mode-label">Days / week</span>
+    <div class="mode-switch">
+      <button class="freq-btn" onclick="setFrequency(3, this)">3 days</button>
+      <button class="freq-btn active" onclick="setFrequency(5, this)">5 days</button>
+    </div>
+    <span class="mode-hint" id="freqHint">Five-day push/pull/legs/upper/lower split. Switch to three if that is what you can hold down each week.</span>
+  </div>
+
+  <div class="mode-bar">
     <span class="mode-label">Equipment</span>
     <div class="mode-switch">
       <button class="mode-btn active" onclick="setEquipMode('free', this)">Free weights</button>
@@ -1364,39 +1378,15 @@ label {
     <span class="mode-hint">Switch the program to lead with your Technogym machines. The machine setup notes show in both modes.</span>
   </div>
 
-  <div class="tab-bar" id="workoutTabs">
-    <button class="tab-btn active" onclick="showWorkoutDay(0, this)">Day 1: Push</button>
-    <button class="tab-btn" onclick="showWorkoutDay(1, this)">Day 2: Pull</button>
-    <button class="tab-btn" onclick="showWorkoutDay(2, this)">Day 3: Legs</button>
-    <button class="tab-btn" onclick="showWorkoutDay(3, this)">Day 4: Upper</button>
-    <button class="tab-btn" onclick="showWorkoutDay(4, this)">Day 5: Lower</button>
-  </div>
+  <div class="tab-bar" id="workoutTabs"></div>
+
+  <div id="freqNote"></div>
 
   <div id="workoutContent"></div>
 
   <div class="card" style="margin-top:20px">
     <div class="card-title">&#x1F4A1; Rest Day Recommendations</div>
-    <div class="grid-2">
-      <div>
-        <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:8px"><strong style="color:var(--accent-light)">Days 6-7: Active Recovery</strong></p>
-        <ul style="color:var(--text-secondary);font-size:0.875rem;padding-left:18px;list-style:disc">
-          <li><strong style="color:var(--blue)">Skillrow</strong> or <strong style="color:var(--blue)">Excite Synchro</strong> &mdash; 20-30 min steady, low intensity. Both are non-impact and move blood through the legs without adding leg fatigue.</li>
-          <li><strong style="color:var(--blue)">Skillmill</strong> in unpowered walk mode &mdash; 20 min easy. Save the sled and sprint modes for days you are not lifting hard.</li>
-          <li><strong style="color:var(--blue)">Excite Recline</strong> if your legs are wrecked from Day 3 or Day 5 &mdash; seated, fully unloaded.</li>
-          <li>Mobility and foam rolling for 15-20 minutes</li>
-          <li>Focus on sleep quality (7-9 hours)</li>
-        </ul>
-      </div>
-      <div>
-        <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:8px"><strong style="color:var(--accent-light)">Recovery Tips</strong></p>
-        <ul style="color:var(--text-secondary);font-size:0.875rem;padding-left:18px;list-style:disc">
-          <li>Consume protein within 2 hours post-workout</li>
-          <li>Stay hydrated: 3-4 liters of water daily</li>
-          <li>Manage stress with meditation or deep breathing</li>
-          <li>Take a deload week every 4-6 weeks</li>
-        </ul>
-      </div>
-    </div>
+    <div id="restDayContent"></div>
   </div>
 </div>
 
@@ -2056,6 +2046,62 @@ const workoutDays = [
   }
 ];
 
+
+/* 3-day full-body alternative. Every muscle trained three times a week rather
+   than once, which is the right trade when there are only three sessions. */
+const workoutDays3 = [
+  {
+    name: 'Day 1: Full Body A (Squat emphasis)',
+    warmup: '5 min bike + leg swings + band pull-aparts (2x15) + two light ramp-up sets on the squat',
+    cooldown: 'Quad, hamstring and chest stretches, 3 min easy breathing',
+    exercises: [
+      { name: 'Barbell Back Squat', sets: '4', reps: '6-8', rest: '3 min' },
+      { name: 'Barbell Bench Press', sets: '4', reps: '6-8', rest: '3 min' },
+      { name: 'Barbell Bent-Over Row', sets: '4', reps: '8-10', rest: '2 min' },
+      { name: 'Romanian Deadlift', sets: '3', reps: '8-10', rest: '2 min' },
+      { name: 'Dumbbell Shoulder Press', sets: '3', reps: '8-10', rest: '90 sec' },
+      { name: 'Barbell Curl', sets: '3', reps: '10-12', rest: '60 sec' },
+      { name: 'Cable Pushdown', sets: '3', reps: '12-15', rest: '60 sec' },
+      { name: 'Standing Calf Raise', sets: '3', reps: '12-15', rest: '60 sec' },
+      { name: 'Cable Crunch', sets: '3', reps: '12-15', rest: '60 sec', core: true }
+    ]
+  },
+  {
+    name: 'Day 2: Full Body B (Hinge emphasis)',
+    warmup: '5 min rowing + hip hinges with a dowel + band pull-aparts (2x15) + ramp-up sets on the deadlift',
+    cooldown: 'Hamstring and lat stretches, foam roll the upper back',
+    exercises: [
+      { name: 'Deadlift (Conventional)', sets: '4', reps: '5-6', rest: '3 min' },
+      { name: 'Overhead Press (Barbell)', sets: '4', reps: '6-8', rest: '2.5 min' },
+      { name: 'Weighted Pull-Ups', sets: '4', reps: '6-8', rest: '2.5 min' },
+      { name: 'Leg Press', sets: '3', reps: '10-12', rest: '2 min' },
+      { name: 'Incline Dumbbell Press', sets: '3', reps: '8-10', rest: '90 sec' },
+      { name: 'Seated Cable Row', sets: '3', reps: '10-12', rest: '90 sec' },
+      { name: 'Lateral Raises', sets: '3', reps: '12-15', rest: '60 sec' },
+      { name: 'Hammer Curls', sets: '3', reps: '10-12', rest: '60 sec' },
+      { name: 'Hanging Leg Raise', sets: '3', reps: '10-15', rest: '60 sec', core: true }
+    ]
+  },
+  {
+    name: 'Day 3: Full Body C (Volume and single-leg)',
+    warmup: '5 min stair climber + hip circles + glute bridges (2x15) + shoulder dislocations with a band',
+    cooldown: 'Hip flexor and pec stretches, pigeon pose, 3 min controlled breathing',
+    exercises: [
+      { name: 'Front Squat', sets: '3', reps: '8-10', rest: '2.5 min' },
+      { name: 'Incline Barbell Press', sets: '3', reps: '8-10', rest: '2 min' },
+      { name: 'Lat Pulldown (Wide Grip)', sets: '3', reps: '10-12', rest: '90 sec' },
+      { name: 'Bulgarian Split Squat', sets: '3', reps: '10 each', rest: '90 sec' },
+      { name: 'Leg Curl (Lying)', sets: '3', reps: '10-12', rest: '90 sec' },
+      { name: 'Cable Chest Fly', sets: '3', reps: '12-15', rest: '60 sec' },
+      { name: 'Face Pulls', sets: '3', reps: '15-20', rest: '60 sec' },
+      { name: 'Overhead Tricep Extension', sets: '3', reps: '10-12', rest: '60 sec' },
+      { name: 'Pallof Press', sets: '3', reps: '12 each side', rest: '45 sec', core: true }
+    ]
+  }
+];
+
+let programme = workoutDays;      // the 5-day split by default
+
 /* Foods Database */
 const foodsData = [
   { name: 'Paneer', serving: '100g', calories: 265, protein: 18.3, carbs: 1.2, fat: 20.8 },
@@ -2168,7 +2214,9 @@ document.addEventListener('DOMContentLoaded', () => {
   updateAdvice();
   renderMacroBreakdown();
   showMealPlan('recomp', document.querySelector('#mealTabs .tab-btn'));
+  renderWorkoutTabs();
   showWorkoutDay(0, document.querySelector('#workoutTabs .tab-btn'));
+  renderRestDays();
   renderFoods();
   renderSupplements();
   loadHistory();
@@ -2386,7 +2434,7 @@ function showWorkoutDay(idx, btn) {
   if (btn) btn.classList.add('active');
   currentWorkoutDay = idx;
 
-  const day = workoutDays[idx];
+  const day = programme[idx];
   let coreStarted = false;
   const exercisesHTML = day.exercises.map(e => {
     let divider = '';
@@ -4222,5 +4270,91 @@ const corePhotos = {
 Object.assign(exerciseGuide, coreGuide);
 Object.assign(technogym, coreTechnogym);
 Object.assign(exercisePhotos, corePhotos);
+
+
+
+/* ========== TRAINING FREQUENCY ========== */
+const PROGRAMMES = {
+  3: {
+    days: workoutDays3,
+    tabs: ['Day 1: Full A', 'Day 2: Full B', 'Day 3: Full C'],
+    hint: 'Three full-body sessions. Every muscle gets trained three times a week instead of once, which is the right trade when you only have three days.'
+  },
+  5: {
+    days: workoutDays,
+    tabs: ['Day 1: Push', 'Day 2: Pull', 'Day 3: Legs', 'Day 4: Upper', 'Day 5: Lower'],
+    hint: 'Five-day push/pull/legs/upper/lower split. Switch to three if that is what you can hold down each week.'
+  }
+};
+let frequency = 5;
+
+function setFrequency(n, btn) {
+  frequency = n;
+  programme = PROGRAMMES[n].days;
+  document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.getElementById('freqHint').textContent = PROGRAMMES[n].hint;
+  renderFreqNote();
+  renderWorkoutTabs();
+  showWorkoutDay(0, document.querySelector('#workoutTabs .tab-btn'));
+  renderRestDays();
+}
+
+function renderWorkoutTabs() {
+  document.getElementById('workoutTabs').innerHTML = PROGRAMMES[frequency].tabs
+    .map((t, i) => `<button class="tab-btn${i === 0 ? ' active' : ''}" onclick="showWorkoutDay(${i}, this)">${t}</button>`)
+    .join('');
+}
+
+function renderRestDays() {
+  const el = document.getElementById('restDayContent');
+  if (!el) return;
+  const three = frequency === 3;
+  el.innerHTML = `
+    <div class="grid-2">
+      <div>
+        <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:8px"><strong style="color:var(--accent-light)">${three ? 'The four days you are not lifting' : 'Days 6-7: Active Recovery'}</strong></p>
+        <ul style="color:var(--text-secondary);font-size:0.875rem;padding-left:18px;list-style:disc;display:flex;flex-direction:column;gap:6px">
+          ${three ? `
+          <li>Four rest days is a lot of room. Use two of them for <strong style="color:var(--blue)">Skillmill or Skillrow</strong>, 25-35 min steady, which helps the deficit without touching recovery.</li>
+          <li>Leave at least one day fully off, and keep the day before Day 1 easy so you squat fresh.</li>
+          <li>Walking is the most underrated tool you have here. 8-10k steps on non-lifting days does more for fat loss than an extra gym session would.</li>` : `
+          <li><strong style="color:var(--blue)">Skillrow</strong> or <strong style="color:var(--blue)">Excite Synchro</strong> for 20-30 min steady, low intensity. Non-impact, so no added leg fatigue.</li>
+          <li><strong style="color:var(--blue)">Skillmill</strong> in unpowered walk mode, 20 min easy. Save sled and sprint modes for non-lifting weeks.</li>
+          <li><strong style="color:var(--blue)">Excite Recline</strong> if your legs are wrecked from Day 3 or Day 5.</li>`}
+          <li>Mobility and foam rolling, 15-20 minutes</li>
+          <li>Sleep is the actual recovery tool. 7-9 hours.</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:8px"><strong style="color:var(--accent-light)">Recovery Tips</strong></p>
+        <ul style="color:var(--text-secondary);font-size:0.875rem;padding-left:18px;list-style:disc;display:flex;flex-direction:column;gap:6px">
+          <li>Protein within a couple of hours of training</li>
+          <li>3-4 litres of water a day</li>
+          <li>${three ? 'With only three sessions, do not skip one. Missing a day here costs you a third of the week.' : 'Manage stress with meditation or breathing work'}</li>
+          <li>Deload every 4-6 weeks</li>
+        </ul>
+      </div>
+    </div>`;
+}
+
+
+
+function renderFreqNote() {
+  const el = document.getElementById('freqNote');
+  if (!el) return;
+  if (frequency !== 3) { el.innerHTML = ''; return; }
+  // TDEE assumes 5 sessions a week; 3 sessions is a lower activity factor
+  const tdee3 = Math.round(bmr * 1.40);
+  const recomp3 = tdee3 - 350;
+  const diff = goals.recomp.cal - recomp3;
+  el.innerHTML = `<div class="workout-note" style="border-left-color:var(--orange)">
+    <strong style="color:var(--orange)">Eat a bit less on this one.</strong> Every calorie target in this app assumes you are
+    training five days a week. On three days you burn less, so your recomposition target drops from
+    <strong>${goals.recomp.cal}</strong> to roughly <strong>${recomp3} kcal</strong> &mdash; about
+    <strong>${diff} kcal</strong> less a day. The simplest fix is to drop the afternoon snack from whichever plan you follow, or
+    ask me and I will rebuild the meal plans around the three-day figure properly.
+  </div>`;
+}
 
 </script>
